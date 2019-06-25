@@ -36,7 +36,7 @@ require_once('./include/db_info.inc.php');
   <div class="am-g ill" style="height: 20px;">
     <center><div class="link" style="cursor: pointer; height: 20px; width: 100px;"></div></center>
   </div>
-  <div class="am-g ill" style="height: 30px;"></div>
+  <div class="am-g ill" style="height: 30px;"></div> 
   <div class='am-g'>
     <!-- 公告模块 start -->
     <div class="am-u-md-8">
@@ -44,7 +44,7 @@ require_once('./include/db_info.inc.php');
         <div class="am-panel-hd" class="am-panel-title">News</div>
         <div class="am-panel-collapse am-collapse am-in">
           <div class="am-panel-bd">
-            <div class="am-panel-group" id="accordion">
+            <div class="am-panel-group" id="accordion">  
                 <?php
                 $n = count($news_title);
                 if ($n) { // 有公告的话
