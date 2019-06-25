@@ -23,6 +23,7 @@ $mysqli->query("set names utf8");
 //sychronize php and mysql server
 date_default_timezone_set("PRC");
 $mysqli->query("SET time_zone ='+8:00'");
+
 // 管理权限
 function HAS_PRI($pri_str){  // if has privilege
     //non-realtime
@@ -37,7 +38,7 @@ function HAS_PRI($pri_str){  // if has privilege
             $rs=$mysqli->query("SELECT * FROM privilege_distribution WHERE group_name='$group_name'");
             $arr=$rs->fetch_array();
             if($arr[$pri_str]){
-                return true;
+                return true;  
             }
         }
     }
