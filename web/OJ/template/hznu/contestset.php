@@ -20,7 +20,7 @@
     </ul>
   </div>
   <div class="am-avg-md-1">
-    <table class="am-table">
+    <table class="am-table am-table-hover am-table-striped">
       <thead>
       <th class='am-text-center'>ID</th>
       <th class='am-text-center'>Name</th>

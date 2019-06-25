@@ -33,8 +33,8 @@
   <?php endif ?>
   <?php if($can_enter_contest):?>
   <h1>Problems</h1><hr/>
-  <div class="well" style="font-size: normal;">
-    <table class="am-table am-table-striped table-problem">
+  <div class="" style="font-size: normal;">
+    <table class="am-table am-table-striped am-table-radius am-table-hover table-problem">
       <thead>
       <tr>
         <th style='width: 3%'></th>
