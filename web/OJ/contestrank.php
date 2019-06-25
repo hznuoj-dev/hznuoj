@@ -212,6 +212,7 @@ else{
 
 if(!$OJ_MEMCACHE) $result->free();
 
+
 /* origin sql
 $sql="SELECT
         users.user_id,users.nick,solution.result,solution.num,solution.in_date,users.real_name

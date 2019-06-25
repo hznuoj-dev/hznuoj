@@ -67,6 +67,12 @@
       .am-badge{
         font-weight: normal;
       }
+      .am-text-truncate {
+        word-wrap: normal; /* for IE */
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     </style>
   </head>
   <body class='am-with-topbar-fixed-top bg'>

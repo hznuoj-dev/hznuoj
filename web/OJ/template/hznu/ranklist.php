@@ -86,7 +86,7 @@
     </div>
   </div>
   <div class="am-avg-md-1">
-    <table class="am-table">
+    <table class="am-table am-table-striped">
       
       <!-- 表头 start -->
       <thead>

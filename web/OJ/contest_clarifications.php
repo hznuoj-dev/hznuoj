@@ -15,7 +15,7 @@ if (isset($_GET['cid'])){
     $view_cid=$cid;
     
     // check contest valid
-    $sql="SELECT * FROM `contest` WHERE `contest_id`='$cid' ";
+    $sql="SELECT * FROM `contest` WHERE `contest_id`='$cid'"; 
     $result=$mysqli->query($sql);
     $rows_cnt=$result->num_rows;
     $contest_ok=true;
@@ -82,7 +82,7 @@ if (isset($_GET['cid'])){
     }
     $result->free();
 
-    $sql = "SELECT num FROM contest_problem WHERE contest_id='$contest_id'";
+    $sql = "SELECT num FROM contest_problem WHERE contest_id='$contest_id' ORDER BY num";
     $res = $mysqli->query($sql);
     $problem_list=[];
     while($row=$res->fetch_object()) {
@@ -90,5 +90,5 @@ if (isset($_GET['cid'])){
     }
 
 }
-require_once "template/hznu/contest_discuss.php";
+require_once "template/hznu/contest_clarifications.php";
 ?>
