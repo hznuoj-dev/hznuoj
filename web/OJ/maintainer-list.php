@@ -28,6 +28,83 @@
         <div class="box">
             <table class="am-table">
                 <tbody>
+                    <tr>
+                        <td width="20%">Name</td>
+                        <td>Lvzhi Pan <span class="am-badge am-badge-success">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>School Year</td>
+                        <td>2017</td>
+                    </tr>
+                    <tr>
+                        <td>Sex</td>
+                        <td>Male</td>
+                    </tr>
+                    <tr>
+                        <td>Nickname</td>
+                        <td>Dup4</td>
+                    </tr>
+                    <tr>
+                        <td>E-Mail</td>
+                        <td><a href="mailto:panlvzhi@foxmail.com">panlvzhi@foxmail.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Blog</td>
+                        <td>
+                            <a href="https://github.com/Dup4">github.com/Dup4</a><br>
+                            <a href="https://www.cnblogs.com/Dup4">cnblogs.com/Dup4</a><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Motto</td>
+                        <td>
+                            <p>NULL.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="box">
+            <table class="am-table">
+                <tbody>
+                    <tr>
+                        <td width="20%">Name</td>
+                        <td>Kaiqing Zhang <span class="am-badge am-badge-success">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>School Year</td>
+                        <td>2016</td>
+                    </tr>
+                    <tr>
+                        <td>Sex</td>
+                        <td>Male</td>
+                    </tr>
+                    <tr>
+                        <td>Nickname</td>
+                        <td>ZKin</td>
+                    </tr>
+                    <tr>
+                        <td>E-Mail</td>
+                        <td><a href="mailto:zkqhnfg@gmail.com">zkqhnfg@gmail.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Blog</td>
+                        <td>
+                            <a href="https://github.com/ZKingQ">github.com/ZKingQ</a><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Motto</td>
+                        <td>
+                            <p>Make the world a better place</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="box">
+            <table class="am-table">
+                <tbody>
                 <tr>
                     <td width="20%">Name</td>
                     <td>Lixin Wei <span class="am-badge am-badge-success">Active</span></td>
@@ -60,44 +137,6 @@
                     <td>Motto</td>
                     <td>
                         <p>After all, tomorrow is another day.</p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-		<div class="box">
-            <table class="am-table">
-                <tbody>
-                <tr>
-                    <td width="20%">Name</td>
-                    <td>Kaiqing Zhang <span class="am-badge am-badge-success">Active</span></td>
-                </tr>
-                <tr>
-                    <td>School Year</td>
-                    <td>2016</td>
-                </tr>
-                <tr>
-                    <td>Sex</td>
-                    <td>Male</td>
-                </tr>
-                <tr>
-                    <td>Nickname</td>
-                    <td>ZKin</td>
-                </tr>
-                <tr>
-                    <td>E-Mail</td>
-                    <td><a href="mailto:zkqhnfg@gmail.com">zkqhnfg@gmail.com</a></td>
-                </tr>
-                <tr>
-                    <td>Blog</td>
-                    <td>
-                        <a href="https://github.com/ZKingQ">github.com/ZKingQ</a><br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Motto</td>
-                    <td>
-                        <p>Make the world a better place</p>
                     </td>
                 </tr>
                 </tbody>

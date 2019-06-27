@@ -51,7 +51,8 @@ class TM {
             $this->is_unknown[$pid]=true;
         }
         if ($res!=4){
-            if($res!=-1){
+            //未知、CE、PE不算罚时
+            if($res!=-1 && $res != 11 && $res != 5){
                 if(isset($this->p_wa_num[$pid])){
                     $this->p_wa_num[$pid]++;
                 }
