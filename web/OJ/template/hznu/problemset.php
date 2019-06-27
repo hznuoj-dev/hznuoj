@@ -138,7 +138,7 @@ function generate_url($data){
     }
   </style>
   <div class="am-avg-md-1">
-    <table class="am-table am-table-hover am-table-striped am-text-nowrap table-problem">
+    <table class="am-table am-table-hover am-text-nowrap table-problem">
       <thead>
       <tr>
         <th style='width:3%;'></th>

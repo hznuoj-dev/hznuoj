@@ -96,7 +96,7 @@
 
 </div>
 <div class="am-container">
-  <table class="am-table am-table-hover am-table-striped">
+  <table class="am-table am-table-hover">
     <thead>
       <tr>
         <th>Run.ID</th>

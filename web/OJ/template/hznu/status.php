@@ -103,7 +103,7 @@
     </div>
       <!-- 搜索框 start -->
     <div class="am-avg-md-1">
-      <table class="am-table am-table-hover am-table-striped">
+      <table class="am-table am-table-hover">
         <thead>
         <tr>
           <th>Run.ID</th>
