@@ -15,6 +15,12 @@
   }
   else require_once "header.php";
   require_once("include/const.inc.php");
+
+//比赛中禁用页面
+require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
+if(!HAS_PRI('enter_admin_page') && $OJ_FORBIDDEN) {
+  return require_once("error.php");
+}
 ?>
 <div class="am-container">
   <!-- Main component for a primary marketing message or call to action -->

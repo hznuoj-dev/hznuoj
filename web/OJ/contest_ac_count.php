@@ -1,5 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/OJ/template/hznu/header.php";
+require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
 ?>
 
 <style type="text/css">
@@ -15,15 +16,21 @@ require_once $_SERVER['DOCUMENT_ROOT']."/OJ/template/hznu/header.php";
 </style>
 
 <?php
-if(isset($_GET['cid'])){
+if(isset($_GET['cid']) && HAS_PRI("enter_admin_page")){
 	echo "<div class='am-container' style='max-width:500px;'>";
 	require_once("./include/const.inc.php");
 	$cid=$mysqli->real_escape_string($_GET['cid']);
-	$highlight_id = intval($_GET['highlight_id']);
+	$highlight_id = intval($_GET['highlight_id']); 
+	$floor = intval($_GET['floor']); 
+	$num = 20;
+	if (isset($_GET['num'])) {
+		$num = intval($_GET['num']);
+	}
 	$sql=<<<SQL
 		SELECT
 			team.nick,
-			solution.num
+			solution.num,
+			team.seat
 		FROM
 			solution
 		LEFT JOIN team ON solution.user_id = team.user_id
@@ -34,6 +41,7 @@ if(isset($_GET['cid'])){
 		ORDER BY
 			solution.in_date DESC
 SQL;
+	// echo $sql;
 	$res=$mysqli->query($sql);
 	$ac_log_arr = [];
 	while($row=$res->fetch_object()) {
@@ -65,18 +73,27 @@ SQL;
 		}
 	}
 
-	
 	echo "<table class='am-table am-table-striped am-table-hover'>";
-	for ($i=0 ; $i<$len ; $i++){
+	for ($i = 0 ; $i < $len ; $i++){
 		if (isset($ignore[$i])) {
 			continue;
 		}
 		$row = $ac_log_arr[$i];
+		if ($floor != "0") {
+			if ($row->seat[0] != $floor) {
+				continue;
+			}
+		}
 		$label = PID($row->num);
-		$class_str = $cnt==$highlight_id ? "strong" : "";
+		$class_str = $cnt<=$highlight_id ? "strong" : "";
 		$fb_class = $is_fb[$i] ? "fb" : "";
+		$fb = $is_fb[$i] ? "★" : "";
+		if ($cnt < $highlight_id - $num) { 
+			continue;
+		}
 		echo <<<HTML
 			<tr class="ac-row $class_str $fb_class" id="row_$cnt">
+				<td>$fb</td>
 				<td>$cnt</td>
 				<td>$label</td>
 				<td>$row->nick</td>
@@ -86,14 +103,24 @@ HTML;
 	}
 	echo "</table>";
 	echo "</div>";
-	require_once $_SERVER['DOCUMENT_ROOT']."/OJ/template/hznu/footer.php";
 }
+?>
+
+<?php 
+	require_once $_SERVER['DOCUMENT_ROOT']."/OJ/template/hznu/footer.php";
 ?>
 
 <script type="text/javascript">
 	$(".ac-row").click(function() {
 		var cid=<?php echo $cid ?>;
-		var highlight_id=$(this).attr("id").split('_')[1];
-		window.location.href="contest_ac_count.php?cid=" + cid + "&highlight_id=" + highlight_id; 
+		var highlight_id=$(this).attr("id").split('_')[1]; 
+		var floor = <?php echo $floor ?>;
+		var num = <?php echo $num ?>;
+		window.location.href="contest_ac_count.php?cid=" + cid + "&highlight_id=" + highlight_id + "&floor=" + floor + "&num=" + num; 
 	});
+
+$(document).ready(function(){
+	setInterval(function(){ location.reload(); }, 5000);
+});
+
 </script>

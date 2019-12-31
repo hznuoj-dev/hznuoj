@@ -222,7 +222,7 @@ else if(isset($_POST['gettestdatadate'])){
 	simid:<input type=text size=10 name="simid" value=0><br />
   	gettestdata:<input type=text size=10 name="filename" value="1000/test.in"><br />
 	
-        <input type='hidden' name='gettestdatalist' value='do'>
+    <input type='hidden' name='gettestdatalist' value='do'>
 	<input type=submit value='Judge'>
 </form>
 <?php 

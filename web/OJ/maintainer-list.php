@@ -30,7 +30,7 @@
                 <tbody>
                     <tr>
                         <td width="20%">Name</td>
-                        <td>Lvzhi Pan <span class="am-badge am-badge-success">Active</span></td>
+                        <td>Lyuzhi Pan <span class="am-badge am-badge-success">Active</span></td>
                     </tr>
                     <tr>
                         <td>School Year</td>

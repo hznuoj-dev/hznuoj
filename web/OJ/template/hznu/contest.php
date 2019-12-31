@@ -48,16 +48,16 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th title="in this contest">AC</th>
-                        <th title="in this contest">Submission</th>
-                        <?php if($practice): ?>
+                        <th title="in this contest">Submission</th> 
+<!--                         <?php if($practice): ?>
                             <th title="include submissions out of this contest">AC Total</th>
                             <th title="include submissions out of this contest">Sub. Total</th>
-                        <?php endif ?>
+                        <?php endif ?> -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    foreach($view_problemset as $row){
+                    foreach($view_problemset as $row){ 
                         echo "<tr'>";
                         foreach($row as $table_cell){
                             echo "<td>";

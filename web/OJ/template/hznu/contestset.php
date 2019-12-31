@@ -13,12 +13,12 @@
 <?php include "header.php" ?>
 
 <div class="am-container">
-  <div class="am-avg-md-1" style="margin-top: 20px; margin-bottom: 20px;">
+<!--   <div class="am-avg-md-1" style="margin-top: 20px; margin-bottom: 20px;">
     <ul class="am-nav am-nav-tabs">
       <li class="am-active"><a href="/OJ/contest.php">Local</a></li>
       <li><a href="/OJ/recent-contest.php">Remote</a></li>
     </ul>
-  </div>
+  </div> -->
   <div class="am-avg-md-1">
     <table class="am-table am-table-hover">
       <thead>

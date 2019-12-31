@@ -12,6 +12,13 @@
 <?php
 $title="ProblemSet";
 require_once("header.php");
+
+//比赛中禁用页面
+require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
+if(!HAS_PRI('enter_admin_page') && $OJ_FORBIDDEN) {
+  return require_once("error.php");
+}
+
 $args=Array();
 
 //default args
