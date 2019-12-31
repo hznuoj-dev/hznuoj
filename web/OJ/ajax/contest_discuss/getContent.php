@@ -1,16 +1,14 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
 session_start();
-$json = array();
-if (HAS_PRI("edit_contest")) {
+$json = array(); 
+if (HAS_PRI("edit_contest")) { 
     $question_id = intval($_POST['id']);
-    $reply_content = $mysqli->real_escape_string($_POST['content']);
-
-    $sql = "UPDATE contest_discuss SET reply='$reply_content', reply_date=NOW() WHERE id='$question_id'";
-
-    if($mysqli->query($sql)) {
+    $sql = "SELECT reply FROM contest_discuss WHERE id = '$question_id'";
+    if($res = $mysqli->query($sql)) {
+        $row = $res->fetch_object();
         $json['result'] = true;
-        $json['msg'] = "update done!";
+        $json['reply'] = $row->reply;
     } else {
         $json['result'] = false;
         $json['msg'] = "database error!";
@@ -19,5 +17,5 @@ if (HAS_PRI("edit_contest")) {
 } else {
     $json['result'] = false;
     $json['msg'] = "your have no privilege!";
+    echo json_encode($json);
 }
-?>

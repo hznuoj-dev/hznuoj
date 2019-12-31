@@ -24,8 +24,6 @@ if(isset($_GET['cid'])){
     if($dur>=$contest_len)$dur=$contest_len;
     $bar_percent=$dur/$contest_len*100;
 
-
-
     $bar_color="am-progress-bar-success";
     if($bar_percent==100)$bar_color="am-progress-bar-secondary";
     else if($bar_percent>=$warnning_percent)$bar_color="am-progress-bar-danger";

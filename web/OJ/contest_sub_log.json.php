@@ -1,5 +1,8 @@
 <?php
-if(isset($_GET['cid'])){
+require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
+?> 
+<?php
+if(isset($_GET['cid']) && HAS_PRI("enter_admin_page")){
 	require_once $_SERVER["DOCUMENT_ROOT"]."/OJ/include/db_info.inc.php";
 	$cid=$_GET['cid'];
 
@@ -27,6 +30,7 @@ if(isset($_GET['cid'])){
 			solution.solution_id,
 			solution.user_id,
 			team.nick,
+			team.class,
 			solution.num,
 			solution.result,
 			UNIX_TIMESTAMP(solution.in_date) AS in_date
@@ -35,6 +39,8 @@ if(isset($_GET['cid'])){
 		LEFT JOIN team ON solution.user_id = team.user_id
 		WHERE
 			solution.contest_id = $cid
+		AND result != 11
+		AND result != 5
 		ORDER BY
 			in_date
 SQL;
@@ -44,7 +50,8 @@ SQL;
 			SELECT
 				solution.solution_id,
 				solution.user_id,
-				users.nick,
+				users.nick as nick,
+				users.class,
 				solution.num,
 				solution.result,
 				UNIX_TIMESTAMP(solution.in_date) AS in_date
@@ -52,11 +59,14 @@ SQL;
 				solution
 			LEFT JOIN users ON solution.user_id = users.user_id
 			WHERE
-				solution.contest_id = "$cid"
+				solution.contest_id = $cid
+			AND result != 11
+			AND result != 5
 			ORDER BY
 				in_date
 SQL;
 	}
+	// echo $sql;
 	$res=$mysqli->query($sql);
 
 	$json['solutions']=array();
@@ -68,22 +78,25 @@ SQL;
 		if(isset($vis[$row['user_id']]));
 		else{
 			$json['users']["$id"]=array(
-				"name" => substr($row['nick'], 6),
-				"college" => "HZNU",
+				//截取名字部分
+				"name" => explode("-", $row['nick'])[3],
+				"college" => $row['class'],
 				"is_exclude" => isset($is_exclude[$row['user_id']])
 			);
 			$vis[$row['user_id']]="$id";
 			$id++;
 		}
-		$temp['user_id']=$vis[$row['user_id']];
+		$temp['user_id']=$vis[$row['user_id']]; 
 		$index=$row['num']+1;
 		$temp['problem_index']="$index";
 		$temp['verdict']=$row['result']==4?"AC":"WA";
 		$temp['submitted_seconds']=$row['in_date']-$start_time;
 
 		$run_id=$row['solution_id'];
-		$json['solutions']["$run_id"]=$temp;
+		$json['solutions']["$run_id"]=$temp; 
 	}
 	echo json_encode($json);
 }
+
+
 ?>

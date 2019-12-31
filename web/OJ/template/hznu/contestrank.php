@@ -256,6 +256,8 @@
     </tbody>
   </table>
   <!-- 排名表格 END -->
+
+
   <div class="am-modal am-modal-no-btn" tabindex="-1" id="modal-submission">
     <div class="am-modal-dialog">
       <div class="am-modal-hd">Submissions
@@ -281,7 +283,7 @@
     var else_width=$("#rank").outerWidth()+$("#user").outerWidth()+$("#solved").outerWidth()+$("#penalty").outerWidth();
     var left=c_width-p_cnt*p_width-else_width;
     left-=20;
-    $(".nick").css({'width':left});
+    $(".nick").css({'width':left}); 
   }
   $(document).ready(function(){
     change_max_width();

@@ -72,7 +72,7 @@ if (isset($_GET['cid'])){
     
     $user_id = $mysqli->real_escape_string($_SESSION['user_id']);
     $contest_id = $mysqli->real_escape_string($_GET['cid']);
-    $sql = "SELECT id, problem_id, content, reply, in_date, reply_date FROM contest_discuss WHERE user_id = '$user_id' and contest_id = '$contest_id'";
+    $sql = "SELECT id, problem_id, content, reply, in_date, reply_date FROM contest_discuss WHERE user_id = '$user_id' and contest_id = '$contest_id' ORDER BY id DESC";
     $result = $mysqli->query($sql);
     $discuss_list = [];
     if ($result){
@@ -87,6 +87,15 @@ if (isset($_GET['cid'])){
     $problem_list=[];
     while($row=$res->fetch_object()) {
         array_push($problem_list, $row);
+    }
+
+    $sql = "SELECT id, content FROM contest_broadcast WHERE contest_id = '$contest_id' ORDER BY id DESC";
+    // echo $sql;
+    $broadcast_list = [];
+    if ($res = $mysqli->query($sql)) {
+        while ($row = $res->fetch_object()) {
+            array_push($broadcast_list, $row); 
+        } 
     }
 
 }

@@ -95,78 +95,129 @@ if (isset($_GET['cid'])){
     if($can_enter_contest) {
         
     }
-    $sql=<<<SQL
-      SELECT
-        *
-      FROM
-        (
-          SELECT
-            `problem`.`title` AS `title`,
-            `problem`.`problem_id` AS `pid`,
-            source AS source,
-            author AS author,
-            num AS pnum,
-            contest_problem.score as score
-          FROM
-            `contest_problem`,
-            `problem`
-          WHERE
-            `contest_problem`.`problem_id` = `problem`.`problem_id`
-          AND `contest_problem`.`contest_id` = $cid
-          ORDER BY
-            `contest_problem`.`num`
-        ) problem
-      LEFT JOIN (
+
+//这个会查tot_ac tot_sub
+//     $sql=<<<SQL
+//       SELECT
+//         *
+//       FROM
+//         (
+//           SELECT
+//             `problem`.`title` AS `title`,
+//             `problem`.`problem_id` AS `pid`,
+//             source AS source,
+//             author AS author,
+//             num AS pnum,
+//             contest_problem.score as score
+//           FROM
+//             `contest_problem`,
+//             `problem`
+//           WHERE
+//             `contest_problem`.`problem_id` = `problem`.`problem_id`
+//           AND `contest_problem`.`contest_id` = $cid
+//           ORDER BY
+//             `contest_problem`.`num`
+//         ) problem
+//       LEFT JOIN (
+//         SELECT
+//           problem_id pid1,
+//           Count(DISTINCT user_id) accepted
+//         FROM
+//           solution
+//         WHERE
+//           result = 4
+//         AND contest_id = $cid
+//         GROUP BY
+//           pid1
+//       ) p1 ON problem.pid = p1.pid1
+//       LEFT JOIN (
+//         SELECT
+//           problem_id pid2,
+//           Count(1) submit
+//         FROM
+//           solution
+//         WHERE
+//           contest_id = $cid
+//         GROUP BY
+//           pid2
+//       ) p2 ON problem.pid = p2.pid2
+//       LEFT JOIN (
+//         SELECT
+//           problem_id pid3,
+//           Count(DISTINCT user_id) total_accepted
+//         FROM
+//           solution
+//         WHERE
+//           result = 4
+//         GROUP BY
+//           pid3
+//       ) p3 ON problem.pid = p3.pid3
+//       LEFT JOIN (
+//         SELECT
+//           problem_id pid4,
+//           Count(1) total_submit
+//         FROM
+//           solution
+//         GROUP BY
+//           pid4
+//       ) p4 ON problem.pid = p4.pid4
+//       ORDER BY
+//         pnum
+// SQL;
+
+$sql = <<<SQL
+    SELECT
+    *
+    FROM (
         SELECT
-          problem_id pid1,
-          Count(DISTINCT user_id) accepted
+        `problem`.`title` AS `title`,
+        `problem`.`problem_id` AS `pid`,
+        source AS source,
+        author AS author,
+        num AS pnum,
+        contest_problem.score as score
         FROM
-          solution
+        `contest_problem`,
+        `problem`
         WHERE
-          result = 4
+        `contest_problem`.`problem_id` = `problem`.`problem_id`
+        AND `contest_problem`.`contest_id` = $cid
+        ORDER BY
+        `contest_problem`.`num`
+    ) problem
+    LEFT JOIN (
+        SELECT
+        problem_id pid1,
+        Count(DISTINCT user_id) accepted
+        FROM
+        solution
+        WHERE
+        result = 4
         AND contest_id = $cid
         GROUP BY
-          pid1
-      ) p1 ON problem.pid = p1.pid1
-      LEFT JOIN (
+        pid1
+    ) p1 ON problem.pid = p1.pid1
+    LEFT JOIN (
         SELECT
-          problem_id pid2,
-          Count(1) submit
+        problem_id pid2,
+        Count(1) submit
         FROM
-          solution
+        solution
         WHERE
-          contest_id = $cid
+        contest_id = $cid
         GROUP BY
-          pid2
-      ) p2 ON problem.pid = p2.pid2
-      LEFT JOIN (
-        SELECT
-          problem_id pid3,
-          Count(DISTINCT user_id) total_accepted
-        FROM
-          solution
-        WHERE
-          result = 4
-        GROUP BY
-          pid3
-      ) p3 ON problem.pid = p3.pid3
-      LEFT JOIN (
-        SELECT
-          problem_id pid4,
-          Count(1) total_submit
-        FROM
-          solution
-        GROUP BY
-          pid4
-      ) p4 ON problem.pid = p4.pid4
-      ORDER BY
-        pnum
+        pid2
+    ) p2 ON problem.pid = p2.pid2
+    ORDER BY
+    pnum;
 SQL;
+
+    //echo $sql;
     $result=$mysqli->query($sql);
     $view_problemset=Array();
     
     $cnt=0;
-    $can_edit_contest = HAS_PRI("edit_contest");
+    $can_edit_contest = HAS_PRI("edit_contest"); 
     while ($row=$result->fetch_object()){
         $view_problemset[$cnt][0]="";
         if (isset($_SESSION['user_id']))
@@ -182,10 +233,10 @@ SQL;
         $view_problemset[$cnt][4]=$row->author;
         $view_problemset[$cnt][5]=$row->accepted ;
         $view_problemset[$cnt][6]=$row->submit ;
-        if($practice) {
-            $view_problemset[$cnt][7]=$row->total_accepted ;
-            $view_problemset[$cnt][8]=$row->total_submit ;
-        }
+        // if($practice) {
+        //     $view_problemset[$cnt][7]=$row->total_accepted ;
+        //     $view_problemset[$cnt][8]=$row->total_submit ;
+        // }
         $cnt++;
     }
     $result->free();

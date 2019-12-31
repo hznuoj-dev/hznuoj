@@ -6,13 +6,14 @@
 ?>
 <?php  
 
-  static  $DB_HOST="localhost";
+  static  $DB_HOST="172.22.237.6";
   static  $DB_VJHOST="172.17.151.3";
   static  $DB_NAME="jol";
   static  $DB_VJNAME="vhoj";
   static  $DB_USER="root";
   static  $DB_VJUSER="root";
-  static  $DB_PASS="root";
+  //static  $DB_PASS="root";
+  static  $DB_PASS="hznuonlinejudge!!!";
   static  $DB_VJPASS="root";
 
   $OJ_HOME=dirname(dirname(__FILE__));//:OJ/
@@ -40,6 +41,8 @@
   static  $OJ_SHOW_DIFF=false;
   static  $OJ_TEST_RUN = true;
   static $OJ_OPENID_PWD = '8a367fe87b1e406ea8e94d7d508dcf01';
+  static $OJ_FORBIDDEN = false;  //比赛中选用，是否禁止其它无关页面的访问
+  static $OJ_MONITOR = false; //比赛中选用，是否监听广播
 
 
   static $ICON_PATH = "image/hznuoj.ico";

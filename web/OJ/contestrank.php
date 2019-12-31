@@ -279,6 +279,8 @@ if ($cls == "") {
               WHERE team.class='$cls'
               ORDER BY team.user_id,in_date";
 }
+
+
 /* 获取查询的SQL语句 end */
 
 /* 执行查询 start */
