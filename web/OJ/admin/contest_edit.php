@@ -184,7 +184,7 @@ while($uid=$res->fetch_array()[0]){
     <option value='Y' <?php echo $open_souce=='Y'?'selected=selected':''?>>Y</option>
     <option value='N' <?php echo $open_souce=='N'?'selected=selected':''?>>N</option>
   </select>
-  <br />
+  <br/>
   <div>
     <div>
       <button class="btn btn-default" id="btn_add">+</button>

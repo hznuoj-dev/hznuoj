@@ -12,7 +12,7 @@ require_once('./include/cache_start.php');
 require_once('./include/db_info.inc.php');
 require_once('./include/my_func.inc.php');
 require_once('./include/setlang.php');
-require_once './include/const.inc.php';
+require_once('./include/const.inc.php');
 $view_title= $MSG_CONTEST;
 function formatTimeLength($length) {
     $result = "";
@@ -231,8 +231,8 @@ SQL;
         else
             $view_problemset[$cnt][3]= "<a href='problem.php?cid=$cid&pid=$cnt'>$row->title</a>";
         $view_problemset[$cnt][4]=$row->author;
-        $view_problemset[$cnt][5]=$row->accepted ;
-        $view_problemset[$cnt][6]=$row->submit ;
+        $view_problemset[$cnt][5]=$row->accepted;
+        $view_problemset[$cnt][6]=$row->submit;
         // if($practice) {
         //     $view_problemset[$cnt][7]=$row->total_accepted ;
         //     $view_problemset[$cnt][8]=$row->total_submit ;
