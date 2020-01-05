@@ -6,7 +6,7 @@
 ?>
 <?php  
 
-  static  $DB_HOST="127.0.0.1";
+  static  $DB_HOST="127.0.0.2";
   static  $DB_VJHOST="127.0.0.1";
   static  $DB_NAME="jol";
   static  $DB_VJNAME="vhoj";
