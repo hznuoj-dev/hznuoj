@@ -16,7 +16,7 @@
 
 在末尾加入以下指令即可
 
-```
+```shell
 set fileencodings=utf-8,gb2312,gbk,gb18030
 set termencoding=utf-8
 set encoding=prc
@@ -85,3 +85,26 @@ set encoding=prc
 然后重启程序
 
 `sudo judged`
+
+
+### 编译<bits/stdc++.h>内存不足
+
+Ubuntu 16.04 下g++版本默认为5.4，之前OJ一直跑在Ubuntu 14.04下，g++版本默认都是用的4.8
+
+所以将g++版本降级成4.8会比较稳定，这个问题也会得以解决
+
+安装`gcc/g++4.8`
+```shell
+sudo apt-get  install -y gcc-4.8
+sudo apt-get install -y g++-4.8
+```
+
+链接`gcc/g++`实现降级
+```shell
+cd /usr/bin
+sudo rm gcc
+sudo ln -s gcc-4.8 gcc
+sudo rm g++
+sudo ln -s g++-4.8 g++
+```
+

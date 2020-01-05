@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e -x
-#before install check DB setting in 
+#before install check DB setting in
 #	judge.conf 
 #	hustoj-read-only/web/include/db_info.inc.php
 #	and down here
 #and run this with root
 
 #CENTOS/REDHAT/FEDORA WEBBASE=/var/www/html APACHEUSER=apache 
-WEBBASE=/var/www/
+WEBBASE=/var/www
 APACHEUSER=www-data
 DBUSER=root
 DBPASS=root
