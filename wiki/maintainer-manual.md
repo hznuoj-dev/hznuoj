@@ -108,3 +108,12 @@ sudo rm g++
 sudo ln -s g++-4.8 g++
 ```
 
+### E: Unable to locate package libapache2-mod-php7.0
+
+在执行`./install.sh`之前，执行以下：
+```shell
+sudo add-apt-repository ppa:ondrej/php
+```
+
+
+
