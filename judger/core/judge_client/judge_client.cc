@@ -431,12 +431,17 @@ const char * getFileNameFromPath(const char * path) {
 void make_diff_out_full(FILE *f1, FILE *f2, int c1, int c2, const char * path) {
 	
 	execute_cmd("echo '========Failed test [%s]========='>>diff.out",getFileNameFromPath(path));
+	execute_cmd("echo '\n'>>diff.out");
 	execute_cmd("echo '------Top 100 lines of input------'>>diff.out");
 	execute_cmd("head -100 data.in>>diff.out");
+	execute_cmd("echo '\n'>>diff.out");
 	execute_cmd("echo '------Top 100 lines of standard output-----'>>diff.out");
 	execute_cmd("head -100 '%s'>>diff.out",path);
+	execute_cmd("echo '\n'>>diff.out");
+	execute_cmd("echo '\n'>>diff.out");
 	execute_cmd("echo '------Top 100 lines of user output-----'>>diff.out");
 	execute_cmd("head -100 user.out>>diff.out");
+	execute_cmd("echo '\n'>>diff.out");
 	execute_cmd("echo '------Diff out 200 lines-----'>>diff.out");
 	execute_cmd("diff '%s' user.out|head -200>>diff.out",path);
 	execute_cmd("echo '=============================='>>diff.out");
@@ -922,9 +927,9 @@ void umount(char * work_dir){
 int compile(int lang,char * work_dir) {
 	int pid;
 
-	const char * CP_C[] = { "gcc", "Main.c", "-o", "Main", "-fno-asm", "-Wall",
+	const char * CP_C[] = { "gcc", "Main.c", "-o", "Main", "-O2", "-fno-asm", "-Wall",
 			"-lm", "--static", "-std=c99", "-DONLINE_JUDGE", NULL };
-	const char * CP_X[] = { "g++", "-fno-asm", "-Wall",
+	const char * CP_X[] = { "g++", "-fno-asm", "-Wall", "-O2",
 			"-lm", "--static", "-std=c++11", "-DONLINE_JUDGE", "-o", "Main", "Main.cc", NULL };
 	const char * CP_P[] =
 			{ "fpc", "Main.pas","-Cs32000000","-Sh", "-O2", "-Co", "-Ct", "-Ci", NULL };
@@ -942,9 +947,9 @@ int compile(int lang,char * work_dir) {
 			"/usr/include/GNUstep/", "-L", "/usr/lib/GNUstep/Libraries/",
 			"-lobjc", "-lgnustep-base", NULL };
 	const char * CP_BS[] = { "fbc","-lang","qb", "Main.bas", NULL };
-	const char * CP_CLANG[]={"clang", "Main.c", "-o", "Main", "-fno-asm", "-Wall",
+	const char * CP_CLANG[]={"clang", "Main.c", "-o", "Main", "-O2", "-fno-asm", "-Wall",
 	         		"-lm", "--static", "-std=c99", "-DONLINE_JUDGE", NULL };
-	const char * CP_CLANG_CPP[]={"clang++", "Main.cc", "-o", "Main", "-fno-asm", "-Wall",
+	const char * CP_CLANG_CPP[]={"clang++", "Main.cc", "-o", "Main", "-O2", "-fno-asm", "-Wall",
 	         		"-lm", "--static", "-std=c++0x",  "-DONLINE_JUDGE", NULL };
 	const char * CP_LUA[] = { "luac","-o","Main", "Main.lua", NULL };
 	//const char * CP_JS[] = { "js24","-c", "Main.js", NULL };
