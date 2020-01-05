@@ -14,6 +14,6 @@ judger/core/sim/.idea/
 /index.html
 /OJ/index.html
 /web/OJ/upload/*
-
+/web/OJ/include/static.php
 /.vs
 .DS_Store
