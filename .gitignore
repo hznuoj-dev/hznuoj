@@ -13,7 +13,7 @@ judger/core/sim/.idea/
 /web/JudgeOnline/
 /index.html
 /OJ/index.html
+/web/OJ/upload/*
 
-/web/OJ/include/static.*
 /.vs
 .DS_Store
