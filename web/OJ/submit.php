@@ -9,34 +9,34 @@ require_once "include/check_post_key.php";
 require_once("include/db_info.inc.php");
 require_once("include/const.inc.php");
 require_once("include/my_func.inc.php");
-  $now=strftime("%Y-%m-%d %H:%M",time());
+$now=strftime("%Y-%m-%d %H:%M",time());
 $user_id=$_SESSION['user_id'];
 if (isset($_POST['cid'])){
 	$pid=intval($_POST['pid']);
 	$cid=intval($_POST['cid']);
 	$sql="SELECT `problem_id` from `contest_problem` 
-				where `num`='$pid' and contest_id=$cid";
+	where `num`='$pid' and contest_id=$cid";
 }else{
 	$id=intval($_POST['id']);
 	if(HAS_PRI("see_hidden_".get_problemset($id)."_problem"))
 		$sql="SELECT `problem_id` from `problem` where `problem_id`='$id'";
 	else
 		$sql=<<<SQL
-SELECT problem_id FROM `problem`
-WHERE
-  `problem_id`=$id
-  AND `defunct`='N'
-  AND `problem_id` NOT IN (
-    SELECT `problem_id` FROM `contest_problem`
-    WHERE
-      `contest_id` IN(
-        SELECT `contest_id` FROM `contest`
-        WHERE
-          `end_time`>NOW()
-          AND start_time <NOW()
-          AND practice = 0
-      )
-  )
+	SELECT problem_id FROM `problem`
+	WHERE
+	`problem_id`=$id
+	AND `defunct`='N'
+	AND `problem_id` NOT IN (
+		SELECT `problem_id` FROM `contest_problem`
+		WHERE
+		`contest_id` IN(
+			SELECT `contest_id` FROM `contest`
+			WHERE
+			`end_time`>NOW()
+			AND start_time <NOW()
+			AND practice = 0
+			)
+		)
 SQL;
 
 }
@@ -44,10 +44,10 @@ SQL;
 //echo $sql;
 $res=$mysqli->query($sql);
 if ($res&&$res->num_rows<1&&!((isset($cid)&&$cid<=0) || (isset($id)&&$id<=0))){
-		$res->free();
-		$view_errors=  "<span class='am-text-danger'>Problem Not Available!</span>";
-		require("template/".$OJ_TEMPLATE."/error.php");
-		exit(0);
+	$res->free();
+	$view_errors=  "<span class='am-text-danger'>Problem Not Available!</span>";
+	require("template/".$OJ_TEMPLATE."/error.php");
+	exit(0);
 }
 $res->free();
 
@@ -55,11 +55,11 @@ $res->free();
 $test_run=false;
 if (isset($_POST['id'])) {
 	$id=intval($_POST['id']);
-        $test_run=($id<=0);
+	$test_run=($id<=0);
 }else if (isset($_POST['pid']) && isset($_POST['cid'])&&$_POST['cid']!=0){
 	$pid=intval($_POST['pid']);
 	$cid=intval($_POST['cid']);
-        $test_run=($cid<0);
+	$test_run=($cid<0);
 	if($test_run) $cid=-$cid;
 	// check user if private
 	$sql="SELECT `private` FROM `contest` WHERE `contest_id`='$cid' AND `start_time`<='$now' AND `end_time`>'$now'";
@@ -102,13 +102,13 @@ if (isset($_POST['id'])) {
 		$result->free();
 	}
 }else{
-       $id=0;
+	$id=0;
 /*
 	$view_errors= "No Such Problem!\n";
 	require("template/".$OJ_TEMPLATE."/error.php");
 	exit(0);
 */
-       $test_run=true;
+	$test_run=true;
 }
 $language=intval($_POST['language']);
 if ($language>count($language_name) || $language<0) $language=0;
@@ -132,12 +132,12 @@ if($test_run) $id=-$id;
 //use append Main code
 $prepend_file="$OJ_DATA/$id/prepend.$language_ext[$language]";
 if(isset($OJ_APPENDCODE)&&$OJ_APPENDCODE&&file_exists($prepend_file)){
-     $source=$mysqli->real_escape_string(file_get_contents($prepend_file)."\n").$source;
+	$source=$mysqli->real_escape_string(file_get_contents($prepend_file)."\n").$source;
 }
 
 $append_file="$OJ_DATA/$id/append.$language_ext[$language]";
 if(isset($OJ_APPENDCODE)&&$OJ_APPENDCODE&&file_exists($append_file)){
-    $source.=$mysqli->real_escape_string("\n".file_get_contents($append_file));
+	$source.=$mysqli->real_escape_string("\n".file_get_contents($append_file));
 }
 //end of append 
 
@@ -145,8 +145,6 @@ if($test_run) $id=0;
 
 $len=strlen($source);
 //echo $source;
-
-
 
 setcookie('lastlang',$language,time()+360000);
 
@@ -168,7 +166,7 @@ $submit_interval_limit=5;
 $now=strftime("%Y-%m-%d %X",time()-$submit_interval_limit);
 $sql="SELECT `in_date` from `solution` where `user_id`='$user_id' and in_date>'$now' order by `in_date` desc limit 1";
 $res=$mysqli->query($sql);
-if ($res->num_rows>0){
+if ($res->num_rows > 0 && !HAS_PRI("enter_admin_page")){
 	$view_errors="You should not submit more than twice in $submit_interval_limit seconds.....<br>";
 	require("template/".$OJ_TEMPLATE."/error.php");
 	exit(0);
@@ -180,10 +178,10 @@ if(($OJ_LANGMASK)&(1<<$language)){
 	if(isset($_SESSION['store_id'])) $store_id=$_SESSION['store_id'];
 
 	if (!isset($pid)){
-	$sql="INSERT INTO solution(problem_id,user_id,in_date,language,ip,code_length)
+		$sql="INSERT INTO solution(problem_id,user_id,in_date,language,ip,code_length)
 		VALUES('$id','$user_id',NOW(),'$language','$ip','$len')";
 	}else{
-	$sql="INSERT INTO solution(problem_id,user_id,in_date,language,ip,code_length,contest_id,num)
+		$sql="INSERT INTO solution(problem_id,user_id,in_date,language,ip,code_length,contest_id,num)
 		VALUES('$id','$user_id',NOW(),'$language','$ip','$len','$cid','$pid')";
 	}
 	$mysqli->query($sql);
@@ -202,47 +200,47 @@ if(($OJ_LANGMASK)&(1<<$language)){
 }
 
 
-	 $statusURI=strstr($_SERVER['REQUEST_URI'],"submit",true)."status.php";
-	 if (isset($cid)) 
-	    $statusURI.="?cid=$cid";
-	    
-        $sid="";
-        if (isset($_SESSION['user_id'])){
-                $sid.=session_id().$_SERVER['REMOTE_ADDR'];
-        }
-        if (isset($_SERVER["REQUEST_URI"])){
-                $sid.=$statusURI;
-        }
+$statusURI=strstr($_SERVER['REQUEST_URI'],"submit",true)."status.php";
+if (isset($cid)) 
+	$statusURI.="?cid=$cid";
+
+$sid="";
+if (isset($_SESSION['user_id'])){
+	$sid.=session_id().$_SERVER['REMOTE_ADDR'];
+}
+if (isset($_SERVER["REQUEST_URI"])){
+	$sid.=$statusURI;
+}
    // echo $statusURI."<br>";
-  
-        $sid=md5($sid);
-        $file = "cache/cache_$sid.html";
+
+$sid=md5($sid);
+$file = "cache/cache_$sid.html";
     //echo $file;  
-    if($OJ_MEMCACHE){
-		$mem = new Memcache;
-                if($OJ_SAE)
-                        $mem=memcache_init();
-                else{
-                        $mem->connect($OJ_MEMSERVER,  $OJ_MEMPORT);
-                }
-        $mem->delete($file,0);
-    }
-	else if(file_exists($file)) 
-	     unlink($file);
+if($OJ_MEMCACHE){
+	$mem = new Memcache;
+	if($OJ_SAE)
+		$mem=memcache_init();
+	else{
+		$mem->connect($OJ_MEMSERVER,  $OJ_MEMPORT);
+	}
+	$mem->delete($file,0);
+}
+else if(file_exists($file)) 
+	unlink($file);
     //echo $file;
-    
-  $statusURI="status.php?user_id=".$_SESSION['user_id'];
-  if (isset($cid))
-	    $statusURI.="&cid=$cid";
-	 
-   if(!$test_run){
-   	header("Location: $statusURI");
-   }
-   else{
-     $para = "user_id={$_SESSION['user_id']}";
-     if(isset($cid)) {
-       $para .= "&cid=$cid";
-     }
-     echo "<script>window.location.href='/OJ/status.php?$para'</script>";
-   }
+
+$statusURI="status.php?user_id=".$_SESSION['user_id'];
+if (isset($cid))
+	$statusURI.="&cid=$cid";
+
+if(!$test_run){
+	header("Location: $statusURI");
+}
+else{
+	$para = "user_id={$_SESSION['user_id']}";
+	if(isset($cid)) {
+		$para .= "&cid=$cid";
+	}
+	echo "<script>window.location.href='/OJ/status.php?$para'</script>";
+}
 ?>
