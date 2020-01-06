@@ -63,10 +63,11 @@ int LANG_YV[1024] = {0,1,2,3,4,5,6,8,9,10,12,13,14,16,20,21,59,78,79,89,97,99,10
 		SYS_munmap, SYS_open, SYS_read, SYS_readlink, SYS_rt_sigaction,
 		SYS_rt_sigprocmask, SYS_set_robust_list, SYS_set_tid_address, SYS_stat,
 		SYS_write, 0 };
+
 //php
-int LANG_PHV[1024] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,99,158,202,218,231,257,273,
-		257, 20, 146, 78, 158, 117, 60, 39, 102, 191, 302，SYS_access,
-		SYS_brk, SYS_clone, SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl,
+int LANG_PHV[1024] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,20,21,28,39,59,60,78,79,97,99,102,117,
+		146,158,191,202,218,231,257,273,302
+		SYS_access,SYS_brk, SYS_clone, SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl,
 		SYS_fstat, SYS_futex, SYS_getcwd, SYS_getdents64, SYS_getrlimit,
 		SYS_gettimeofday, SYS_ioctl, SYS_lseek, SYS_lstat, SYS_mmap,
 		SYS_mprotect, SYS_munmap, SYS_open, SYS_read, SYS_readlink,
