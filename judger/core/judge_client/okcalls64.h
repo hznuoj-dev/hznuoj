@@ -36,7 +36,7 @@ int LANG_JV[1024] = { 0,2,3,4,5,9,10,11,12,13,14,21,56,59,89,97,104,158,202,218,
 		SYS_set_tid_address, SYS_set_robust_list, SYS_exit_group, 158, 0 };
 //ruby
 int LANG_RV[1024] = { 0,1,2,3,4,5,6,9,10,12,13,14,16,20,21,22,56,59,72,97,98,107,108,131,158,202,218,228,231,273,293,318
-		,96, 340, 4, 126,79, SYS_access, SYS_arch_prctl, SYS_brk,
+		,96, 340, 4, 126,79, 302,SYS_access, SYS_arch_prctl, SYS_brk,
 		SYS_close, SYS_execve, SYS_exit_group, SYS_fstat, SYS_futex,
 		SYS_getegid, SYS_geteuid, SYS_getgid, SYS_getuid, SYS_getrlimit,
 		SYS_mmap, SYS_mprotect, SYS_munmap, SYS_open, SYS_read,
@@ -44,7 +44,7 @@ int LANG_RV[1024] = { 0,1,2,3,4,5,6,9,10,12,13,14,16,20,21,22,56,59,72,97,98,107
 		SYS_set_tid_address, SYS_write, 0 };
 //bash
 int LANG_BV[1024] = { 0,1,2,3,4,5,8,9,10,12,13,14,16,21,33,39,59,63,72,79,97,99,102,104,107,108,110,111,158,231,
-		96, 22, 61, 56, 42, 41, 79, 158, 117, 60, 39, 102, 191,
+		96, 22, 61, 56, 42, 41, 79, 158, 117, 60, 39, 102, 191,302,
 		183, SYS_access, SYS_arch_prctl, SYS_brk, SYS_close, SYS_dup2,
 		SYS_execve, SYS_exit_group, SYS_fcntl, SYS_fstat, SYS_getegid,
 		SYS_geteuid, SYS_getgid, SYS_getpgrp, SYS_getpid, SYS_getppid,
@@ -74,7 +74,7 @@ int LANG_PHV[1024] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,158,20
 		SYS_write, 0 };
 //perl
 int LANG_PLV[1024] = {0,1,2,3,4,5,8,9,10,12,13,14,16,21,59,72,89,97,102,104,107,108,158,202,218,231,273,
-		 96, 78, 158, 117, 60, 39, 102, 191, SYS_access, SYS_brk,
+		 96, 78, 158, 117, 60, 39, 102, 191, 302,SYS_access, SYS_brk,
 		SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl, SYS_fstat, SYS_futex,
 		SYS_getegid, SYS_geteuid, SYS_getgid, SYS_getrlimit, SYS_getuid,
 		SYS_ioctl, SYS_lseek, SYS_mmap, SYS_mprotect, SYS_munmap, SYS_open,
@@ -84,7 +84,7 @@ int LANG_PLV[1024] = {0,1,2,3,4,5,8,9,10,12,13,14,16,21,59,72,89,97,102,104,107,
 //c-sharp
 int LANG_CSV[1024] = {0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,24,41,42,56,59,63,72,78,79,89,97
 		,102,131,137,158,202,204,218,229,231,234,257,273, 257, 141, 95, 64, 65, 66
-		, 83, 24, 42, 41, 158, 117, 60,
+		, 83, 24, 42, 41, 158, 117, 60,302,
 		39, 102, 191, SYS_access, SYS_brk, SYS_chmod, SYS_clock_getres,
 		SYS_clock_gettime, SYS_clone, SYS_close, SYS_execve, SYS_exit_group,
 		SYS_fcntl, SYS_fstat, SYS_ftruncate, SYS_futex, SYS_getcwd,
