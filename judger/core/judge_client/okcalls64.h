@@ -80,7 +80,7 @@ int LANG_PHV[1024] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,20,21,28,39,59,60,78,
 		SYS_write, 0 };
 //perl
 int LANG_PLV[1024] = {0,1,2,3,4,5,8,9,10,12,13,14,16,21,39,59,60,72,78,89,96,97,102,104,107,108,117,
-		158,191,202,218,231,273,302,
+		158,191,202,218,231,257,273,302,
 		SYS_access, SYS_brk,
 		SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl, SYS_fstat, SYS_futex,
 		SYS_getegid, SYS_geteuid, SYS_getgid, SYS_getrlimit, SYS_getuid,
