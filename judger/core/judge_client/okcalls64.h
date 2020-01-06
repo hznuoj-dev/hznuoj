@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with HUSTOJ. if not, see <http://www.gnu.org/licenses/>.
  */
+
 //c & c++
 int LANG_CV[1024] = {0,1,2,3,4,5,8,9,11,12,14,20,21,59,63,89,99,158,186,231,234,240, SYS_time, SYS_read, SYS_uname, SYS_write, SYS_open,
 		SYS_close, SYS_execve, SYS_access, SYS_brk, SYS_munmap, SYS_mprotect,
@@ -63,7 +64,7 @@ int LANG_YV[1024] = {0,1,2,3,4,5,6,8,9,10,12,13,14,16,20,21,59,78,79,89,97,99,10
 		SYS_rt_sigprocmask, SYS_set_robust_list, SYS_set_tid_address, SYS_stat,
 		SYS_write, 0 };
 //php
-int LANG_PHV[1024] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,158,202,218,231,257,273,
+int LANG_PHV[1024] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,99,158,202,218,231,257,273,
 		257, 20, 146, 78, 158, 117, 60, 39, 102, 191, 302，SYS_access,
 		SYS_brk, SYS_clone, SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl,
 		SYS_fstat, SYS_futex, SYS_getcwd, SYS_getdents64, SYS_getrlimit,
@@ -81,9 +82,10 @@ int LANG_PLV[1024] = {0,1,2,3,4,5,8,9,10,12,13,14,16,21,59,72,89,97,102,104,107,
 		SYS_read, SYS_readlink, SYS_rt_sigaction, SYS_rt_sigprocmask,
 		SYS_set_robust_list, SYS_set_thread_area, SYS_set_tid_address, SYS_stat,
 		SYS_time, SYS_uname, SYS_write, 0 };
+
 //c-sharp
 int LANG_CSV[1024] = {0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,24,41,42,56,59,63,72,78,79,89,97
-		,102,131,137,158,202,204,218,229,231,234,257,273, 257, 141, 95, 64, 65, 66
+		,102,131,137,157,158,202,204,218,229,231,234,257,273, 257, 141, 95, 64, 65, 66
 		, 83, 24, 42, 41, 158, 117, 60,302,
 		39, 102, 191, SYS_access, SYS_brk, SYS_chmod, SYS_clock_getres,
 		SYS_clock_gettime, SYS_clone, SYS_close, SYS_execve, SYS_exit_group,
