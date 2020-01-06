@@ -21,7 +21,7 @@ int LANG_CV[1024] = {0,1,2,3,4,5,8,9,11,12,14,20,21,59,63,89,99,158,186,231,234,
 		SYS_close, SYS_execve, SYS_access, SYS_brk, SYS_munmap, SYS_mprotect,
 		SYS_mmap, SYS_fstat, SYS_set_thread_area, 252, SYS_arch_prctl, 0 };
 //pascal
-int LANG_PV[256] = {0,1,2,3,4,9,11,13,16,59,89,97,201,231,SYS_open, SYS_set_thread_area, SYS_brk, SYS_read,
+int LANG_PV[1024] = {0,1,2,3,4,9,11,13,16,59,89,97,201,231,SYS_open, SYS_set_thread_area, SYS_brk, SYS_read,
 		SYS_uname, SYS_write, SYS_execve, SYS_ioctl, SYS_readlink, SYS_mmap,
 		SYS_rt_sigaction, SYS_getrlimit, 252, 191, 158, 231, SYS_close,
 		SYS_exit_group, SYS_munmap, SYS_time, 4, 0 };
@@ -35,7 +35,7 @@ int LANG_JV[1024] = { 0,2,3,4,5,9,10,11,12,13,14,21,56,59,89,97,104,158,202,218,
 		SYS_getuid, SYS_getgid, SYS_geteuid, SYS_getegid, SYS_set_thread_area,
 		SYS_set_tid_address, SYS_set_robust_list, SYS_exit_group, 158, 0 };
 //ruby
-int LANG_RV[256] = { 0,1,2,3,4,5,6,9,10,12,13,14,16,20,21,22,56,59,72,97,98,107,108,131,158,202,218,228,231,273,293,318
+int LANG_RV[1024] = { 0,1,2,3,4,5,6,9,10,12,13,14,16,20,21,22,56,59,72,97,98,107,108,131,158,202,218,228,231,273,293,318
 		,96, 340, 4, 126,79, SYS_access, SYS_arch_prctl, SYS_brk,
 		SYS_close, SYS_execve, SYS_exit_group, SYS_fstat, SYS_futex,
 		SYS_getegid, SYS_geteuid, SYS_getgid, SYS_getuid, SYS_getrlimit,
@@ -43,7 +43,7 @@ int LANG_RV[256] = { 0,1,2,3,4,5,6,9,10,12,13,14,16,20,21,22,56,59,72,97,98,107,
 		SYS_rt_sigaction, SYS_rt_sigprocmask, SYS_set_robust_list,
 		SYS_set_tid_address, SYS_write, 0 };
 //bash
-int LANG_BV[256] = { 0,1,2,3,4,5,8,9,10,12,13,14,16,21,33,39,59,63,72,79,97,99,102,104,107,108,110,111,158,231,
+int LANG_BV[1024] = { 0,1,2,3,4,5,8,9,10,12,13,14,16,21,33,39,59,63,72,79,97,99,102,104,107,108,110,111,158,231,
 		96, 22, 61, 56, 42, 41, 79, 158, 117, 60, 39, 102, 191,
 		183, SYS_access, SYS_arch_prctl, SYS_brk, SYS_close, SYS_dup2,
 		SYS_execve, SYS_exit_group, SYS_fcntl, SYS_fstat, SYS_getegid,
@@ -63,7 +63,7 @@ int LANG_YV[1024] = {0,1,2,3,4,5,6,8,9,10,12,13,14,16,20,21,59,78,79,89,97,99,10
 		SYS_rt_sigprocmask, SYS_set_robust_list, SYS_set_tid_address, SYS_stat,
 		SYS_write, 0 };
 //php
-int LANG_PHV[256] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,158,202,218,231,257,273,
+int LANG_PHV[1024] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,158,202,218,231,257,273,
 		257, 20, 146, 78, 158, 117, 60, 39, 102, 191, 302，SYS_access,
 		SYS_brk, SYS_clone, SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl,
 		SYS_fstat, SYS_futex, SYS_getcwd, SYS_getdents64, SYS_getrlimit,
@@ -73,7 +73,7 @@ int LANG_PHV[256] = { 0,1,2,3,4,5,6,8,9,10,11,12,13,14,16,21,28,59,79,97,158,202
 		SYS_set_thread_area, SYS_set_tid_address, SYS_stat, SYS_time, SYS_uname,
 		SYS_write, 0 };
 //perl
-int LANG_PLV[256] = {0,1,2,3,4,5,8,9,10,12,13,14,16,21,59,72,89,97,102,104,107,108,158,202,218,231,273,
+int LANG_PLV[1024] = {0,1,2,3,4,5,8,9,10,12,13,14,16,21,59,72,89,97,102,104,107,108,158,202,218,231,273,
 		 96, 78, 158, 117, 60, 39, 102, 191, SYS_access, SYS_brk,
 		SYS_close, SYS_execve, SYS_exit_group, SYS_fcntl, SYS_fstat, SYS_futex,
 		SYS_getegid, SYS_geteuid, SYS_getgid, SYS_getrlimit, SYS_getuid,
@@ -82,7 +82,7 @@ int LANG_PLV[256] = {0,1,2,3,4,5,8,9,10,12,13,14,16,21,59,72,89,97,102,104,107,1
 		SYS_set_robust_list, SYS_set_thread_area, SYS_set_tid_address, SYS_stat,
 		SYS_time, SYS_uname, SYS_write, 0 };
 //c-sharp
-int LANG_CSV[256] = {0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,24,41,42,56,59,63,72,78,79,89,97
+int LANG_CSV[1024] = {0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,24,41,42,56,59,63,72,78,79,89,97
 		,102,131,137,158,202,204,218,229,231,234,257,273, 257, 141, 95, 64, 65, 66
 		, 83, 24, 42, 41, 158, 117, 60,
 		39, 102, 191, SYS_access, SYS_brk, SYS_chmod, SYS_clock_getres,
@@ -97,14 +97,14 @@ int LANG_CSV[256] = {0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,24,41,42,56,59,63,72,7
 		SYS_set_thread_area, SYS_set_tid_address, SYS_sigaltstack, SYS_stat,
 		SYS_statfs, SYS_tgkill, SYS_time, SYS_uname, SYS_unlink, SYS_write, 0 };
 //objective-c
-int LANG_OV[256] = { 0,1,2,3,4,5,9,10,12,21,59,158,231, 102, 191, SYS_access, SYS_brk, SYS_close,
+int LANG_OV[1024] = { 0,1,2,3,4,5,9,10,12,21,59,158,231, 102, 191, SYS_access, SYS_brk, SYS_close,
 		SYS_execve, SYS_exit_group, SYS_fstat, SYS_futex, SYS_getcwd,
 		SYS_getrlimit, SYS_gettimeofday, SYS_mmap, SYS_mprotect, SYS_munmap,
 		SYS_open, SYS_read, SYS_readlink, SYS_rt_sigaction, SYS_rt_sigprocmask,
 		SYS_set_robust_list, SYS_set_thread_area, SYS_set_tid_address,
 		SYS_uname, SYS_write, 0 };
 //freebasic
-int LANG_BASICV[256] = { 0,1,2,3,4,5,9,10,12,13,14,16,21,59,97,158,173,202,218,231,273,
+int LANG_BASICV[1024] = { 0,1,2,3,4,5,9,10,12,13,14,16,21,59,97,158,173,202,218,231,273,
 		101, 54, 122, 175, 174, 240, 311, 258, 243, 6, 197,
 		252, 146, 195, 192, 33, 45, 125, 191, SYS_access, SYS_brk, SYS_close,
 		SYS_execve, SYS_exit_group, SYS_fstat, SYS_futex, SYS_getrlimit,
@@ -112,7 +112,7 @@ int LANG_BASICV[256] = { 0,1,2,3,4,5,9,10,12,13,14,16,21,59,97,158,173,202,218,2
 		SYS_rt_sigprocmask, SYS_set_robust_list, SYS_set_thread_area,
 		SYS_set_tid_address, SYS_stat, SYS_uname, SYS_write, 0 };
 //scheme
-int LANG_SV[256] = { 0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,56,59,72,97,158,202,204,218,228,229,234,273,293,0,
+int LANG_SV[1024] = { 0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,56,59,72,97,158,202,204,218,228,229,234,273,293,0,
 		SYS_fcntl, SYS_getdents64, SYS_getrlimit, SYS_rt_sigprocmask, SYS_futex,
 		SYS_read, SYS_mmap, SYS_stat, SYS_open, SYS_close, SYS_execve,
 		SYS_access, SYS_brk, SYS_readlink, SYS_munmap, SYS_close, SYS_uname,
@@ -121,8 +121,8 @@ int LANG_SV[256] = { 0,1,2,3,4,5,8,9,10,11,12,13,14,16,21,56,59,72,97,158,202,20
 		SYS_set_thread_area, SYS_set_tid_address, SYS_set_robust_list,
 		SYS_exit_group, 158, 0 };
 //lua
-int LANG_LUAV[256]={0,1,2,3,4,5,9,10,11,12,13,21,59,158,231,292,0};
+int LANG_LUAV[1024]={0,1,2,3,4,5,9,10,11,12,13,21,59,158,231,292,0};
 //nodejs javascript
-int LANG_JSV[256]={0,1,2,3,4,5,6,9,10,11,12,13,14,16,21,56,59,79,89,96,97,158,186,202,218,228,231,232,233,273,290,291,293,0};
+int LANG_JSV[1024]={0,1,2,3,4,5,6,9,10,11,12,13,14,16,21,56,59,79,89,96,97,158,186,202,218,228,231,232,233,273,290,291,293,0};
 //go-lang
-int LANG_GOV[256]={0,1,9,11,13,14,56,59,131,158,186,202,204,231,0};
+int LANG_GOV[1024]={0,1,9,11,13,14,56,59,131,158,186,202,204,231,0};
