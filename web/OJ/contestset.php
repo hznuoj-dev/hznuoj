@@ -81,7 +81,7 @@ while ($row = $result->fetch_object()) {
     } else if ($now < $start_time){ // pending
         // $view_contest[$i][4]= "<span style='color: #03a9f4;'>$MSG_Start@$row->start_time&nbsp;";
         // $view_contest[$i][4].= "$MSG_TotalTime ".formatTimeLength($length)."</span>";
-        $view_contest[$i][4] = "<span style='color: #03a9f4;'>$MSG_Start";
+        $view_contest[$i][4] = "<span style='color: #03a9f4;'>$MSG_Pending";
     } else { // running
         // $view_contest[$i][4]= "<span style='color: #ff5722;'> $MSG_Running&nbsp;";
         // $view_contest[$i][4].= "$MSG_LeftTime ".formatTimeLength($left)." </span>";
