@@ -17,6 +17,7 @@ if (isset($_SESSION['OJ_LANG'])) $OJ_LANG=$_SESSION['OJ_LANG'];
 $mysqli=new mysqli($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
 if($mysqli->connect_errno)
     die('Could not connect: ' . $mysqli->connect_error);
+
 // use db
 $mysqli->query("set names utf8");
 //if(!$OJ_SAE)mysqli_set_charset("utf8");
@@ -44,13 +45,13 @@ function HAS_PRI($pri_str){  // if has privilege
     }
     return false;
 }
+
 /*Count the hit time START*/
-//if($_SERVER['REMOTE_ADDR']!='127.0.0.1') {
-    $user_id="";
-    if(isset($_SESSION['user_id'])) $user_id=$_SESSION['user_id'];
-    $require_path=$mysqli->real_escape_string($_SERVER['REQUEST_URI']);
-    $sql="INSERT INTO hit_log (ip, time, path, user_id) VALUES ('{$_SERVER['REMOTE_ADDR']}', NOW(), '$require_path', '$user_id')";
-    $mysqli->query($sql);
-//}
+$user_id="";
+if(isset($_SESSION['user_id'])) $user_id=$_SESSION['user_id'];
+$require_path=$mysqli->real_escape_string($_SERVER['REQUEST_URI']);
+$sql="INSERT INTO hit_log (ip, time, path, user_id) VALUES ('{$_SERVER['REMOTE_ADDR']}', NOW(), '$require_path', '$user_id')";
+$mysqli->query($sql);
 /*Count the hit time END*/
+
 ?>

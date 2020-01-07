@@ -40,7 +40,7 @@ else $_SESSION['tag'] = "N";
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title><?php if(isset($title))echo $OJ_NAME."--".$title?></title>  
+    <title><?php if(isset($title))echo $OJ_NAME."--".$title?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
@@ -48,7 +48,6 @@ else $_SESSION['tag'] = "N";
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="alternate icon" type="image/jpg" href="image/hznuoj.ico">
     <link rel="stylesheet" href="/OJ/plugins/AmazeUI/css/amazeui.min.css"/>
-    <!-- <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css"/> -->
     <style type="text/css">
     .blog-footer {
         padding: 10px 0;
@@ -97,14 +96,14 @@ else $_SESSION['tag'] = "N";
                     ?>><a href="/OJ/problemset.php">ProblemSet</a></li>
                     <!-- ProblemSet部分 end -->
 
-                    <!-- Contest部分 start -->
+                    <!-- Contests部分 start -->
                     <li <?php
                     $page_name=basename($_SERVER['SCRIPT_NAME']);
-                    if($page_name=="contest.php" || $page_name=="recent-contest.php") {
+                    if($page_name=="contestset.php") {
                         echo "class='am-active'";
                     }
-                    ?>><a href="/OJ/contest.php">Contest</a></li>
-                    <!-- Contest部分 end -->
+                    ?>><a href="/OJ/contestset.php">Contests</a></li>
+                    <!-- Contests部分 end -->
 
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="faqs.php"){echo "class='am-active'";} ?>><a href="/OJ/faqs.php">F.A.Q</a></li>
 
@@ -125,7 +124,7 @@ else $_SESSION['tag'] = "N";
                 <!-- 用户部分 start -->
                 <?php
                 if (!isset($_SESSION['user_id'])){
-                    echo <<<BOT
+                    echo <<<HTML
                     <div class="am-topbar-right">
                     <ul class="am-nav am-nav-pills am-topbar-nav">
                     <li class="am-dropdown" data-am-dropdown>
@@ -133,51 +132,51 @@ else $_SESSION['tag'] = "N";
                     <ul class="am-dropdown-content">
                     <li><a href="/OJ/loginpage.php"><span class="am-icon-user"></span> Login</a></li>
                     <li><a href="/OJ/registerpage.php"><span class="am-icon-pencil"></span> Register</a></li>
-BOT;
+HTML;
                     if ($show_tag) echo "<li><a href='/OJ/changeTag.php'><span class='am-icon-toggle-on'></span> Hide Tag</a></li>";
                     else echo "<li><a href='/OJ/changeTag.php'><span class='am-icon-toggle-off'></span> Show Tag</a></li>";
-                    echo <<<BOT
+                    echo <<<HTML
                     </ul>
                     </li>
                     </ul>
                     </div>
-BOT;
+HTML;
                 } else {
                     $user_session = $_SESSION['user_id'];
-                    echo <<<BOT
+                    echo <<<HTML
                     <div class="am-topbar-right">
                     <ul class="am-nav am-nav-pills am-topbar-nav">
                     <li class="am-dropdown" data-am-dropdown>
                     <a class='am-dropdown-toggle' data-am-dropdown-toggle href='javascript:;'><span class='am-icon-user'></span> {$_SESSION['user_id']}<span class='am-icon-caret-down'></span></a>
                     <ul class="am-dropdown-content">
-BOT;
+HTML;
                     if (!isset($_SESSION['contest_id'])) {
-                        echo <<<BOT
+                        echo <<<HTML
                         <li><a href="/OJ/modifypage.php"><span class="am-icon-eraser"></span> Modify Info</a></li>
                         <li><a href="/OJ/userinfo.php?user={$_SESSION['user_id']}"><span class="am-icon-info-circle"></span> User Info</a></li>
                         <!-- <li><a href="/OJ/mail.php"><span class="am-icon-comments"></span> Mail</a></li> -->
                         <li><a href="/OJ/status.php?user_id=$user_session"><span class="am-icon-leaf"></span> Recent</a></li>                
-BOT;
+HTML;
                     }
                     if ($show_tag) echo "<li><a href='/OJ/changeTag.php'><span class='am-icon-toggle-on'></span> Hide Tag</a></li>";
                     else echo "<li><a href='/OJ/changeTag.php'><span class='am-icon-toggle-off'></span> Show Tag</a></li>";
                     echo "<li><a href='/OJ/logout.php'><span class='am-icon-reply'></span> Logout</a></li>";
 
                     if(HAS_PRI('enter_admin_page')){
-                        echo <<<BOT
+                        echo <<<HTML
                         <li><a href="/OJ/admin/index.php"><span class="am-icon-cog"></span> Admin</a></li>
                         </ul>
                         </li>
                         </ul>
                         </div>
-BOT;
+HTML;
                     }else{
-                        echo <<<BOT
+                        echo <<<HTML
                         </ul>
                         </li>
                         </ul>
                         </div>
-BOT;
+HTML;
                     }
                 }
                 ?>
@@ -185,5 +184,9 @@ BOT;
             </div>
         </div>
     </header>
+
+
+
+
 <!--   <marquee behavior="alternate" direction="right" style = "margin-left: 300px; margin-right:300px;" scrollamount = "12px">
     <a href="index.php" >欢迎加入计算机科技协会！</a></marquee> -->
