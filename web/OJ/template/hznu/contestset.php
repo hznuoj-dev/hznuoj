@@ -40,7 +40,6 @@ function generate_url($page){
     <!-- 通过关键词查找 start -->
     <div class='am-g' style = "width:35%;padding-top:20px;">
         <form class="am-form am-form-horizontal">
-            <input type="hidden" name="csrf_token" value="f31605cce38e27bcb4e8a76188e92b3b">
             <div class="am-u-sm-9">
                 <div class="am-form-group am-form-icon">
                     <i class="am-icon-binoculars"></i>

@@ -165,8 +165,8 @@ else
 echo $mysqli->error;
 
 //$row = mysql_fetch_object ( $result );
-$view_total=$row['mycount'];
-$view_total_page = ($view_total + $page_size - 1 )/ $page_size;
+$view_total = $row['mycount'];
+$view_total_page = intval(($view_total + $page_size - 1 )/ $page_size);
 
 if(!$OJ_MEMCACHE)  $result->free();
 
