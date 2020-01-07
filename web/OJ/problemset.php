@@ -146,7 +146,7 @@ if($first) $sql="";
 $result=$mysqli->query($sql) or die($mysqli->error);
 
 /* 计算页数cnt start */
-$view_total_page = ($cnt + $page_cnt - 1) / $page_cnt;
+$view_total_page = intval(($cnt + $page_cnt - 1) / $page_cnt);
 $cnt = 0;
 $view_problemset = Array();
 /* 计算页数cnt end */

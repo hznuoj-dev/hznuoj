@@ -55,17 +55,14 @@ SQL;
 
 $res = $mysqli->query($sql);
 $total = $res->num_rows;
-$view_total_page = ($total + $page_cnt - 1) / $page_cnt;
+$view_total_page = intval(($total + $page_cnt - 1) / $page_cnt);
 $start = ($page - 1) * $page_cnt;
 $sql .= " LIMIT $start, $page_cnt";
 
-// $sql="select * from contest left join (select * from privilege where rightstr like 'm%') p on concat('m',contest_id)=rightstr where contest.defunct='N' and contest.title like '%$keyword%'  order by contest_id desc limit 1000;";
 
 $result = $mysqli->query($sql);
 $view_contest = Array();
 $i = 0;
-
-
 while ($row = $result->fetch_object()) {
     $view_contest[$i][0]= $row->contest_id;
     $view_contest[$i][1]= "<a href='contest.php?cid=$row->contest_id'>$row->title</a>";
