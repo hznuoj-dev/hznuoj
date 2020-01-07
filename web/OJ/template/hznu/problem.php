@@ -397,9 +397,10 @@ HTML;
     <!-- 提交等按钮 end -->
 
 </div>
+
 <?php require_once("footer.php"); ?>
 
-<!-- 增加样例复制功能 -->
+<!-- clipboard.js START-->
 <script src="/OJ/plugins/clipboard/dist/clipboard.min.js"></script>
 <script>
     $(document).ready(function(){
@@ -408,7 +409,6 @@ HTML;
             // console.info('Action:', e.action);
             // console.info('Text:', e.text);
             // console.info('Trigger:', e.trigger);
-
             e.clearSelection();
         });
         clipboard.on('error', function(e) {
@@ -417,27 +417,7 @@ HTML;
         });
     });
 </script>
-
-<!--加载MathJax的最新文件， async表示异步加载进来 -->
-<script type="text/javascript" async src="/OJ/plugins/MathJax/MathJax.js"></script>
-<!-- 增加Mathjax渲染支持 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    showProcessingMessages: false, //关闭js加载过程信息
-    messageStyle: "none", //不显示信息
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-    //$表示行内元素，$$表示块状元素
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-    processEscapes: true
-},
-"HTML-CSS": { 
-availableFonts: ["TeX"] 
-}
-});
-</script>
+<!-- clipboard.js END-->
 
 <!-- ajax for adding user's own tag -->
 <script>
@@ -486,6 +466,8 @@ pre.prettyprint{
     hljs.initLineNumbersOnLoad();
 </script>
 <!-- highlight.js END-->
+
+
 <!--auto folding code START-->
 <script type="text/javascript">
     $(document).ready(function(){

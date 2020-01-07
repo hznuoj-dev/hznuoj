@@ -12,7 +12,6 @@
   static  $DB_VJNAME="vhoj";
   static  $DB_USER="root";
   static  $DB_VJUSER="root";
-  //static  $DB_PASS="root";
   static  $DB_PASS="hznuonlinejudge!!!";
   static  $DB_VJPASS="root"; 
 

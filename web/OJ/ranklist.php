@@ -34,11 +34,15 @@ if(isset($_GET['order_by'])) {
 if($order_by!=""&&$order_by!='ac')
     $order_by='s';
 
+$page_size=50;
 $rank = 0;
 $start = 0;
-if(isset( $_GET ['start'] )) {
-    $start = $rank = intval ( $_GET ['start'] );
+$page = 1;
+if(isset( $_GET ['page'] )) {
+    $page = intval($_GET['page']);
 }
+
+$start = $rank = ($page - 1) * $page_size;
 
 if (isset($_GET['class'])) {
     $cls = $mysqli->real_escape_string($_GET['class']);
@@ -52,8 +56,7 @@ $filter_url=htmlentities($filter_url);
 if(isset($OJ_LANG)){
     require_once("./lang/$OJ_LANG.php");
 }
-$page_size=30;
-//$rank = intval ( $_GET ['start'] );
+
 if ($rank < 0) $rank = 0;
 
 if ($order_by=='ac') $sql = "SELECT * FROM users ".$filter_sql."ORDER BY solved DESC, submit, reg_time LIMIT ".strval($rank).",$page_size";
@@ -160,10 +163,10 @@ if($OJ_MEMCACHE)
 else
     $row=$result->fetch_array();
 echo $mysqli->error;
+
 //$row = mysql_fetch_object ( $result );
 $view_total=$row['mycount'];
-
-//              mysql_free_result ( $result );
+$view_total_page = ($view_total + $page_size - 1 )/ $page_size;
 
 if(!$OJ_MEMCACHE)  $result->free();
 
