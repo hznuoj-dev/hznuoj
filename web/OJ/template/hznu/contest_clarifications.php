@@ -94,8 +94,6 @@ HTML;
 <?php include "footer.php" ?>
 
 
-
-
 <script type="text/javascript">
     $("#submit").click(function(e) {
         e.preventDefault();

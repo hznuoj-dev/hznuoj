@@ -13,14 +13,18 @@
 
 
 <?php $title=$view_title;?>
-<?php
-if (isset($_GET['OJ'])) $OJ = $_GET['OJ'];
-else $OJ = "HZNU";
 
-if ($_GET['cid']) require_once("contest_header.php");
-else {
-    require_once("header.php");
+<?php
+
+if (isset($_GET['cid'])) require_once("contest_header.php"); 
+else require_once("header.php");
+
+//比赛期间暂时关闭
+if (!isset($_GET['cid']) && !HAS_PRI('enter_admin_page') && $OJ_FORBIDDEN) {
+    $view_errors = "The page is temporarily closed!";
+    return require_once("error.php");
 }
+
 function sss($str){
     $after = preg_replace( '/<[^<]+?>/' ,'FUCK$0FUCK', $str);
     $after = preg_replace( '/(?<!FUCK)</' ,'&lt;', $after);
@@ -30,7 +34,6 @@ function sss($str){
     return $after;
 }
 ?>
-
 
 <!-- Sample Input 和 Sample Output 的背景色 start -->
 <style type="text/css">
@@ -64,7 +67,6 @@ function sss($str){
 }
 </style>
 <!-- Sample Input 和 Sample Output 的背景色 end -->
-
 
 <div class="am-container">
     <?php
@@ -170,7 +172,8 @@ if ($show_tag && !isset($_GET['cid'])) {
             <?php endif;?>
 
         </div>
-        <br />
+        <br/>
+
         <!-- 提交等按钮 start -->
         <div class="am-text-center">
             <a href="
@@ -184,6 +187,7 @@ if ($show_tag && !isset($_GET['cid'])) {
                 " style="color:white">
                 <button type="button" class="am-btn am-btn-sm am-btn-success ">Submit</button>
             </a>
+
             <?php
             if(!isset($_GET['cid']) || $is_practice==1) {
                 echo<<<HTML
@@ -289,6 +293,7 @@ HTML;
 HTML;
             }
         }
+
         $str=sss($html_samples);
         if($str) {
             echo <<<HTML
@@ -314,6 +319,7 @@ HTML;
         ?>
 
         <?php
+if (!isset($_GET['cid'])) {
         $str=sss($row->author);
         if($str) {
             echo <<<HTML
@@ -323,6 +329,7 @@ HTML;
             </p></div>
 HTML;
         }
+}
         ?>
 
         <?php
@@ -336,6 +343,12 @@ if (!isset($_GET['cid'])) { // hide source if the problem is in contest
         </p></div>
 HTML;
     }
+}
+?>
+
+<?php 
+if (isset($_GET['cid'])) {
+    $can_see_video = 0;
 }
 ?>
 
@@ -360,10 +373,10 @@ HTML;
         <?php
         if ($pr_flag){
             echo "submitpage.php?id=$id";
-            }else{
+            } else {
                 echo "submitpage.php?cid=$cid&pid=$pid&langmask=$langmask";
             }
-            ?>
+        ?>
             " style="color:white">
             <button type="button" class="am-btn am-btn-sm am-btn-success ">Submit</button>
         </a>
@@ -439,6 +452,7 @@ HTML;
 <link href="/OJ/plugins/highlight/styles/github-gist.css" rel="stylesheet">
 <script src="/OJ/plugins/highlight/highlight.pack.js"></script>
 <script src="/OJ/plugins/highlight/highlightjs-line-numbers.min.js"></script>
+
 <style type="text/css">
 .hljs-line-numbers {
     text-align: right;
@@ -461,6 +475,7 @@ pre.prettyprint{
     background-color: red !important;
 }
 </style>
+
 <script>
     hljs.initHighlightingOnLoad();
     hljs.initLineNumbersOnLoad();

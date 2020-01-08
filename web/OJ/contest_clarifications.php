@@ -3,8 +3,8 @@ require_once('./include/db_info.inc.php');
 require_once('./include/my_func.inc.php');
 require_once('./include/setlang.php');
 require_once './include/const.inc.php';
-if (isset($_GET['cid'])){
 
+if (isset($_GET['cid'])){
     if (isset($_SESSION['contest_id']) && $_SESSION['contest_id']!=$_GET['cid']) {
         $view_errors = "<font style='color:red;text-decoration:underline;'>You can only enter the correspond contest!</font>";
         require("template/".$OJ_TEMPLATE."/error.php");
@@ -24,9 +24,11 @@ if (isset($_GET['cid'])){
     if (get_magic_quotes_gpc ()) {
         $password = stripslashes ($password);
     }
+
     if ($rows_cnt==0){
         $result->free();
-        $view_title= "比赛已经关闭!";
+        $view_errors = "The Contest is Not Available!";
+        return require_once("template/hznu/error.php");
     } else {
         $row=$result->fetch_object();
         if($row->user_limit=="Y" && $_SESSION['contest_id']!=$cid && !HAS_PRI("edit_contest")){
@@ -35,6 +37,7 @@ if (isset($_GET['cid'])){
             require_once "template/hznu/footer.php";
             exit(0);
         }
+
         $view_private=$row->private;
         if($password!=""&&$password==$row->password) $_SESSION['c'.$cid]=true;
         if ($row->private && !isset($_SESSION['c'.$cid])) $contest_ok=false;
@@ -97,7 +100,11 @@ if (isset($_GET['cid'])){
             array_push($broadcast_list, $row); 
         } 
     }
-
+    
+} else {
+    return require_once("template/hznu/error.php");
 }
+
+
 require_once "template/hznu/contest_clarifications.php";
 ?>

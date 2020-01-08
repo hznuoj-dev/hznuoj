@@ -12,16 +12,15 @@
 <?php
 $title="ProblemSet";
 require_once("header.php");
+require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
 
 //比赛中禁用页面
-require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
 if (!HAS_PRI('enter_admin_page') && $OJ_FORBIDDEN) {
-    $view_errors = "";
-    return require_once("error.php"); 
+    $view_errors = "The page is temporarily closed!";
+    return require_once("error.php");
 }
 
 $args=Array();
-
 //default args
 if($OJ!="all")$args['OJ']=$OJ;
 if(isset($sort_method)) $args['sort_method']=$sort_method;
@@ -46,7 +45,6 @@ function generate_url($data){
     return $link;
 }
 ?>
-
 
 <div class="am-container">
     <div class="am-avg-md-1" style="margin-top: 20px; margin-bottom: 20px;">

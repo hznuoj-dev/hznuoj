@@ -96,6 +96,9 @@ $sql=   "SELECT floor(UNIX_TIMESTAMP((in_date))/$res)*$res*1000 md,count(1) c FR
 /////////////////////////Template
 require("template/".$OJ_TEMPLATE."/conteststatistics.php");
 /////////////////////////Common foot
+
+
+
 if(file_exists('./include/cache_end.php'))
 	require_once('./include/cache_end.php');
 ?>

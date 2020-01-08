@@ -11,10 +11,11 @@
 
 <?php $title="Login";?>
 <?php include "header.php" ?>
+
 <div class="am-g">
   <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered" style="max-width: 600px;">
     <br>
-      <h3>Login Page</h3>
+      <h1>Login Page</h1>
     <hr>
     <form action="login.php" method="post" class="am-form am-form-horizontal">
       <?php include_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/set_post_key.php"?>
@@ -48,4 +49,5 @@
   <br>
   <br>
 </div>
+
 <?php include "footer.php" ?>

@@ -34,9 +34,9 @@ if (isset($_GET['cid'])){
         require("template/".$OJ_TEMPLATE."/error.php");
         exit(0);
     }
-    
+
     $cid=intval($_GET['cid']);
-    $view_cid=$cid;
+    $view_cid=$cid; 
     
     // check contest valid
     $sql="SELECT * FROM `contest` WHERE `contest_id`='$cid' ";
@@ -44,9 +44,10 @@ if (isset($_GET['cid'])){
     $rows_cnt=$result->num_rows;
     $contest_ok=true;
     $password="";
+
     if(isset($_POST['pwd'])) $password=$mysqli->real_escape_string($_POST['pwd']);
-    if (get_magic_quotes_gpc ()) {
-        $password = stripslashes ($password);
+    if (get_magic_quotes_gpc()) {
+        $password = stripslashes($password);
     }
     if ($rows_cnt==0){
         $result->free();
@@ -172,9 +173,10 @@ $sql = <<<SQL
         SELECT
         `problem`.`title` AS `title`,
         `problem`.`problem_id` AS `pid`,
-        source AS source,
         author AS author,
         num AS pnum,
+        time_limit AS time,
+        memory_limit AS memory,
         contest_problem.score as score
         FROM
         `contest_problem`,
@@ -187,8 +189,8 @@ $sql = <<<SQL
     ) problem
     LEFT JOIN (
         SELECT
-        problem_id pid1,
-        Count(DISTINCT user_id) accepted
+        problem_id AS pid1, 
+        Count(DISTINCT user_id) AS accepted
         FROM
         solution
         WHERE
@@ -199,8 +201,8 @@ $sql = <<<SQL
     ) p1 ON problem.pid = p1.pid1
     LEFT JOIN (
         SELECT
-        problem_id pid2,
-        Count(1) submit
+        problem_id AS pid2,
+        Count(1) AS submit
         FROM
         solution
         WHERE
@@ -211,83 +213,56 @@ $sql = <<<SQL
     ORDER BY
     pnum;
 SQL;
-
-    //echo $sql;
+    // echo $sql;
     $result=$mysqli->query($sql);
     $view_problemset=Array();
     
     $cnt=0;
     $can_edit_contest = HAS_PRI("edit_contest"); 
-    while ($row=$result->fetch_object()){
-        $view_problemset[$cnt][0]="";
-        if (isset($_SESSION['user_id']))
-            $view_problemset[$cnt][0]=check_ac($cid,$cnt);
-        $view_problemset[$cnt][1] = $row->score;
-        if ($practice || $now>$end_time || HAS_PRI("edit_contest")) // 比赛结束，或者是practice，或者当前用户是管理员则显示 Problem ID
-            $view_problemset[$cnt][2]= "<a href='problem.php?id=$row->pid' style='margin:10px;'>$row->pid</a>";
-        $view_problemset[$cnt][2] .= "Problem &nbsp;".PID($cnt);
+    while ($row = $result->fetch_object()){
+        // 比赛结束，或者是practice，或者当前用户是管理员则显示 Problem ID
+        if ($practice || $now > $end_time || HAS_PRI("edit_contest")) 
+            $view_problemset[$cnt][0]= "<a href='problem.php?id=$row->pid' style='margin:10px;'>$row->pid</a>";
+        $view_problemset[$cnt][0] .= "Problem &nbsp;".PID($cnt);
+        
         if($practice && is_in_running_contest($row->pid) && !$can_edit_contest)
-            $view_problemset[$cnt][3]= "<span style='color: dimgrey;' title='this problem is locked because they are in running contest.'>$row->title <i class='am-icon-lock'></i></span>";
+            $view_problemset[$cnt][1]= "<span style='color: dimgrey;' title='this problem is locked because they are in running contest.'>$row->title <i class='am-icon-lock'></i></span>";
         else
-            $view_problemset[$cnt][3]= "<a href='problem.php?cid=$cid&pid=$cnt'>$row->title</a>";
-        $view_problemset[$cnt][4]=$row->author;
-        $view_problemset[$cnt][5]=$row->accepted;
-        $view_problemset[$cnt][6]=$row->submit;
+            $view_problemset[$cnt][1]= "<a href='problem.php?cid=$cid&pid=$cnt'>$row->title</a>";
+
+        if (isset($_SESSION['user_id'])) {
+            $view_problemset[$cnt][2]="";
+            $view_problemset[$cnt][2] = check_ac($cid, $cnt);
+        }
+
+        $view_problemset[$cnt][3] = $row->score;
+        $view_problemset[$cnt][4]=$row->time."s";
+        $view_problemset[$cnt][5]=$row->memory."MB";
+        
+        if ($row->submit == 0) {
+            $view_problemset[$cnt][6] = "N/A(0/0)";
+        } else {
+            $view_problemset[$cnt][6]= sprintf("%.2f", $row->accepted / $row->submit * 100)."%"."(".$row->accepted."/".$row->submit.")";
+        }
+
         // if($practice) {
-        //     $view_problemset[$cnt][7]=$row->total_accepted ;
-        //     $view_problemset[$cnt][8]=$row->total_submit ;
+        //     $view_problemset[$cnt][7]=$row->total_accepted;
+        //     $view_problemset[$cnt][8]=$row->total_submit;
         // }
         $cnt++;
     }
     $result->free();
 }
 else {
-    $keyword="";
-    if(isset($_POST['keyword'])){
-        $keyword=$mysqli->real_escape_string($_POST['keyword']);
-    }
-    $sql="SELECT * FROM `contest` WHERE `defunct`='N' ORDER BY `contest_id` DESC limit 1000";
-    // $sql="select * from contest left join (select * from privilege where rightstr like 'm%') p on concat('m',contest_id)=rightstr where contest.defunct='N' and contest.title like '%$keyword%'  order by contest_id desc limit 1000;";
-    $result=$mysqli->query($sql);
-    $view_contest=Array();
-    $i=0;
-    while ($row=$result->fetch_object()){
-        $view_contest[$i][0]= $row->contest_id;
-        $view_contest[$i][1]= "<a href='contest.php?cid=$row->contest_id'>$row->title</a>";
-        $start_time=strtotime($row->start_time);
-        $end_time=strtotime($row->end_time);
-        $now=time();
-        $length=$end_time-$start_time;
-        $left=$end_time-$now;
-        
-        if ($now>$end_time) { // past
-            $view_contest[$i][2]= "<span style='color: #9e9e9e;'>$MSG_Ended@$row->end_time</span>";
-        } else if ($now<$start_time){ // pending
-            $view_contest[$i][2]= "<span style='color: #03a9f4;'>$MSG_Start@$row->start_time&nbsp;";
-            $view_contest[$i][2].= "$MSG_TotalTime ".formatTimeLength($length)."</span>";
-        } else { // running
-            $view_contest[$i][2]= "<span style='color: #ff5722;'> $MSG_Running&nbsp;";
-            $view_contest[$i][2].= "$MSG_LeftTime ".formatTimeLength($left)." </span>";
-        }
-        $type = "<span style='color: green;'>Public</span>";
-        if($row->private) $type = "<span style='color: dodgerblue;'>Password</span>";
-        if($row->user_limit=="Y") $type = "<span style='color: #f44336;'>Special</span>";
-        if($row->practice) $type = "<span style='color: #009688;'>Practice</span>";
-        $view_contest[$i][4]= $type;
-        $view_contest[$i][6]=$row->user_id;
-        $i++;
-    }
-    $result->free();
+    $view_errors = "";
+    return require_once"template/hznu/error.php";
 }
 
 
 /////////////////////////Template
 if(isset($_GET['cid']))
     require("template/".$OJ_TEMPLATE."/contest.php");
-else
-    require("template/".$OJ_TEMPLATE."/contestset.php");
 /////////////////////////Common foot
-
 
 
 if(file_exists('./include/cache_end.php')) {

@@ -6,13 +6,15 @@ require_once("./include/setlang.php");
 $view_title= "LOGIN";
 
 if (isset($_SESSION['user_id'])){
-	echo "<a href=logout.php>Please logout First!</a>";
-	exit(1);
+    $view_errors = "<a href=logout.php>Please logout First!</a>";
+    return require_once("template/hznu/error.php");
 }
 
 /////////////////////////Template
 require("template/".$OJ_TEMPLATE."/loginpage.php");
 /////////////////////////Common foot
+
+
 if(file_exists('./include/cache_end.php'))
 	require_once('./include/cache_end.php');
 ?>
