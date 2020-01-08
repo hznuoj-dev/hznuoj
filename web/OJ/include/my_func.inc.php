@@ -106,13 +106,13 @@ function check_ac($cid,$pid){
     $row=$result->fetch_array();
     $ac=intval($row[0]);
     $result->free();
-    if ($ac>0) return "<font color=green>Y</font>";
+    if ($ac>0) return "<font color=green>Yes</font>";
     $sql="SELECT count(*) FROM `solution` WHERE `contest_id`='$cid' AND `num`='$pid' AND `user_id`='".$_SESSION['user_id']."'";
     $result=$mysqli->query($sql);
     $row=$result->fetch_array();
     $sub=intval($row[0]);
     $result->free();
-    if ($sub>0) return "<font color=red>N</font>";
+    if ($sub>0) return "<font color=red>No</font>";
     else return "";
 }
 

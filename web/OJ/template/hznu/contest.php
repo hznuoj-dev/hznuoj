@@ -13,7 +13,7 @@
 ?>
 
 <?php $title="Contest";?>
-<?php include "template/hznu/contest_header.php"; ?>
+<?php require_once "template/hznu/contest_header.php"; ?>
 <style type="text/css" media="screen">
 .well{
     display: block;
@@ -36,19 +36,21 @@
 }
 </style>
 <div class="am-container" style="margin-top: 20px;">
+
     <?php if($can_enter_contest):?>
         <h1>Problems</h1><hr/>
         <div class="bx" style="font-size: normal;">
             <table class="am-table am-table-hover table-problem">
                 <thead>
                     <tr>
-                        <th style='width: 3%'></th>
-                        <th>Score</th>
-                        <th>Problem ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th title="in this contest">AC</th>
-                        <th title="in this contest">Submission</th> 
+                        <th class = 'am-text-center' style = 'width:10%;'>Problem ID</th>
+                        <th class = '' style = 'width:30%;'>Title</th>
+                        <th style='width: 5%'>Solved</th>
+                        <th class = '' style = 'width:5%;'>Score</th>
+                        <th class = '' style = 'width:5%;'>Time</th>
+                        <th class = '' style = 'width:5%;'>Memory</th>
+                        <th class = '' style = 'width:8%;'>Ratio(AC/All)</th>
+
 <!--                         <?php if($practice): ?>
                             <th title="include submissions out of this contest">AC Total</th>
                             <th title="include submissions out of this contest">Sub. Total</th>
@@ -57,9 +59,9 @@
                 </thead>
                 <tbody>
                     <?php
-                    foreach($view_problemset as $row){ 
-                        echo "<tr'>";
-                        foreach($row as $table_cell){
+                    foreach($view_problemset as $row){
+                        echo "<tr class = '' >"; 
+                        foreach ($row as $table_cell){
                             echo "<td>";
                             echo $table_cell;
                             echo "</td>";
@@ -71,11 +73,13 @@
             </table>
         </div>
     <?php endif?>
+
     <?php if($view_description):?>
         <h1>Announcement</h1><hr/>
         <div class="box" style="font-size: 1.3rem;"><?php echo $view_description?></div>
     <?php endif ?>
+
 </div>
 
 
-<?php include "footer.php" ?>
+<?php require_once "footer.php" ?>

@@ -20,8 +20,6 @@ function generate_url($page){
     $link .= "&search=".$search;
     return $link;
 }
-
-
 ?>
 
 <div class="am-container">
@@ -36,6 +34,7 @@ function generate_url($page){
  -->
 
 <div class="am-avg-md-1">
+
 
     <!-- 通过关键词查找 start -->
     <div class='am-g' style = "width:35%;padding-top:20px;">
@@ -72,7 +71,7 @@ function generate_url($page){
     <!-- 页标签 end -->
     <?php endif ?>
 
-    <table class="am-table am-table-hover" style = "margin-top:-20px;">
+    <table class="am-table am-table-hover" style = "margin-top:0px;">
         <thead>
             <th class='am-text-center'>ID</th>
             <th class='am-text-center'>Name</th>

@@ -49,6 +49,13 @@ if(isset($_GET['search'])) {
 $sql = <<<SQL
         SELECT * FROM `contest`
         WHERE `defunct` = 'N' 
+SQL;
+
+//如果是team账号，就只显示对应的contest
+if (isset($_SESSION['contest_id'])) {
+    $sql .= "AND contest_id = ".$_SESSION['contest_id'];
+}
+    $sql .= <<<SQL
         AND title LIKE '%$search%'
         ORDER BY `contest_id` DESC
 SQL;

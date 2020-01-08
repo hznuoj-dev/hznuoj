@@ -11,7 +11,13 @@
 
 <?php 
 $title="Ranklist";
-require_once("header.php"); ?>
+require_once("header.php"); 
+//比赛中禁用页面
+if (!HAS_PRI('enter_admin_page') && $OJ_FORBIDDEN) {
+    $view_errors = "The page is temporarily closed!";
+    return require_once("error.php");
+}
+?>
 
 <?php
 function generate_url($page){
