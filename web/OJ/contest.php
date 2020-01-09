@@ -230,6 +230,7 @@ SQL;
         else
             $view_problemset[$cnt][1]= "<a href='problem.php?cid=$cid&pid=$cnt'>$row->title</a>";
 
+		$view_problemset[$cnt][2] = "";
         if (isset($_SESSION['user_id'])) {
             $view_problemset[$cnt][2]="";
             $view_problemset[$cnt][2] = check_ac($cid, $cnt);
@@ -242,6 +243,12 @@ SQL;
         if ($row->submit == 0) {
             $view_problemset[$cnt][6] = "N/A(0/0)";
         } else {
+			if ($row->accepted == null) {
+				$row->accepted = 0;
+			}
+			if ($row->submit == null) {
+				$row->submit = 0;
+			}
             $view_problemset[$cnt][6]= sprintf("%.2f", $row->accepted / $row->submit * 100)."%"."(".$row->accepted."/".$row->submit.")";
         }
 
