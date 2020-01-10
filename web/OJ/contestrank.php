@@ -79,8 +79,9 @@ function s_cmp($A,$B){
 
 $real_name_mode = false;
 if(isset($_GET['real_name_mode']) && HAS_PRI("see_hidden_user_info")) {
-  $real_name_mode = true;
+    $real_name_mode = true;
 }
+
 // contest start time
 if (!isset($_GET['cid'])) die("No Such Contest!");
 $cid=intval($_GET['cid']);
@@ -159,8 +160,6 @@ if(isset($_GET['unlock']) && HAS_PRI("edit_contest")){
 $first_prize=$row['first_prize'];
 $second_prize=$row['second_prize'];
 $third_prize=$row['third_prize'];
-
-
 
 $sql="SELECT count(1) as pbc FROM `contest_problem` WHERE `contest_id`='$cid'";
 //$result=$mysqli->query($sql);

@@ -8,7 +8,7 @@
 <?php @session_start();
 
 ini_set("display_errors","Off");
-require_once($_SERVER['DOCUMENT_ROOT']."/OJ/include/static.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/OJ/include/static.php"); 
 
 //if(date('H')<5||date('H')>21||isset($_GET['dark'])) $OJ_CSS="dark.css";
 if (isset($_SESSION['OJ_LANG'])) $OJ_LANG=$_SESSION['OJ_LANG'];
@@ -16,7 +16,7 @@ if (isset($_SESSION['OJ_LANG'])) $OJ_LANG=$_SESSION['OJ_LANG'];
 //for normal install
 $mysqli=new mysqli($DB_HOST,$DB_USER,$DB_PASS,$DB_NAME);
 if($mysqli->connect_errno)
-    die('Could not connect: ' . $mysqli->connect_error);
+    die('Could not connect: '.$mysqli->connect_error);
 
 // use db
 $mysqli->query("set names utf8");
@@ -26,11 +26,7 @@ date_default_timezone_set("PRC");
 $mysqli->query("SET time_zone ='+8:00'");
 
 // 管理权限
-function HAS_PRI($pri_str){  // if has privilege
-    //non-realtime
-    //return $_SESSION[$pri_str];
-    
-    //realtime checking
+function HAS_PRI($pri_str){  
     global $mysqli;
     if(isset($_SESSION['user_id'])){
         $sql="SELECT `rightstr` FROM `privilege` WHERE `user_id`='".$mysqli->real_escape_string($_SESSION['user_id'])."'";
