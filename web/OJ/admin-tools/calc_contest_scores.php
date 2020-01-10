@@ -1,5 +1,5 @@
 <?php
-
+$TEAM_MODE = false;
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,8 +38,6 @@
 <?php
 
 
-$TEAM_MODE = true;
-
 if (!isset($_POST['stuidList']) || !isset($_POST['cid'])) return;
 $stuidList=explode("\r\n",trim($_POST['stuidList']));
 $cid = intval($_POST['cid']);
@@ -62,7 +60,6 @@ require_once("../include/my_func.inc.php");
         <th>Rank_Score</th>
         </tr>
 HTML;
-
 
 
 class TM {
@@ -153,8 +150,9 @@ while($row = $res->fetch_array()) {
 $U = array();
 $user_cnt = 0;
 foreach ($stuidList as $stuid) {
-    $user_cnt++; 
-    $U[$user_cnt] = new TM();
+    $stuid = trim($stuid);
+    $user_cnt++;
+    $U[$user_cnt - 1] = new TM();
     $stuid = $mysqli->real_escape_string($stuid);
     $sql = <<<SQL
         SELECT DISTINCT user_id, stu_id, class, real_name FROM (
@@ -190,16 +188,16 @@ SQL;
 
     $res = $mysqli->query($sql) or die($mysqli->error);
     if ($res->num_rows == 0) {
-        $U[$user_cnt]->user_id = "NULL";
-        $U[$user_cnt]->real_name = "NULL";
-        $U[$user_cnt]->stu_id = $stuid;
-        $U[$user_cnt]->class = "NULL";
+        $U[$user_cnt - 1]->user_id = "NULL";
+        $U[$user_cnt - 1]->real_name = "NULL";
+        $U[$user_cnt - 1]->stu_id = $stuid;
+        $U[$user_cnt - 1]->class = "NULL";
     } else {
         $row = $res->fetch_object();
-        $U[$user_cnt]->user_id = $row->user_id;
-        $U[$user_cnt]->real_name = $row->real_name;
-        $U[$user_cnt]->stu_id = $row->stu_id;
-        $U[$user_cnt]->class = $row->class;
+        $U[$user_cnt - 1]->user_id = $row->user_id;
+        $U[$user_cnt - 1]->real_name = $row->real_name;
+        $U[$user_cnt - 1]->stu_id = $row->stu_id;
+        $U[$user_cnt - 1]->class = $row->class;
         $sql = <<<SQL
             SELECT num, in_date, result FROM solution
             WHERE solution.contest_id = '$cid'
@@ -209,17 +207,21 @@ SQL;
 SQL;
         $res = $mysqli->query($sql) or die($mysqli->error);
         while ($row = $res->fetch_object()) {
-            $U[$user_cnt]->Add($row->num, strtotime($row->in_date) - $start_time, intval($row->result)); 
+            $U[$user_cnt - 1]->Add($row->num, strtotime($row->in_date) - $start_time, intval($row->result)); 
         }
     }
 }
 usort($U,"s_cmp");
 
+$need = count($stuidList);
+$done = 0;
 foreach($stuidList as $stuid) {
+    $stuid = trim($stuid);
     for ($i = 0; $i < $user_cnt; ++$i) {
         $rank = $i + 1;
         $rank_score = max(70, 100 - $i);
         if ($U[$i]->stu_id == $stuid) {
+            ++$done;
             echo <<<HTML
                 <tr>
                 <td>{$U[$i]->stu_id}</td>
@@ -230,7 +232,7 @@ foreach($stuidList as $stuid) {
                 <td>{$U[$i]->solved}</td>
                 <td>{$U[$i]->time}</td>
                 <td>$rank</td>
-                <td>$rank_score</td>  
+                <td>$rank_score</td>
                 </tr>
 HTML;
             break;
@@ -239,6 +241,10 @@ HTML;
 }
 
 echo "</table>";
+echo "need: ".$need;
+echo "<br>";
+echo "done: ".$done;
+echo "<br>"; 
 echo "DONE!";
 ?>
 
