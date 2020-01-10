@@ -178,8 +178,7 @@ SQL;
                 FROM 
                 sim, solution
                 WHERE 
-                sim > 90
-                AND sim < 100
+                sim >= 90
                 AND solution.user_id = '$user_mysql'
                 AND sim.s_id = solution.solution_id
                 AND result = 4
