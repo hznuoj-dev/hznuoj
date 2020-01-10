@@ -63,9 +63,10 @@ HTML;
             SELECT user_id FROM users 
             WHERE stu_id = '$stuid' 
             AND solved >= (
-                SELECT MAX(solved) FROM solution
+                SELECT MAX(solved) FROM users
                 WHERE stu_id = '$stuid')
 SQL;
+
         $res = $mysqli->query($sql) or die($mysqli->error);
         if ($res->num_rows == 0) {
             echo <<<HTML
@@ -165,6 +166,7 @@ SQL;
                 AND sim.s_id = solution.solution_id
                 AND result = 4
 SQL;
+            echo $sql;
             $copy_100 = 0;
             $res = $mysqli->query($sql) or die($mysqli->error);
             if ($res->num_rows > 0) {
