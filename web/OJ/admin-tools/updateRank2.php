@@ -11,14 +11,8 @@
 
 <?php
 
+//跑这个脚本之前先跑updateScores更新题目分数
 require_once('../include/db_info.inc.php');
-
-// 获取解题数大于10的用户数量存入user_cnt_divisor
-$sql = "SELECT user_id FROM users WHERE solved>10";
-$result  = $mysqli->query($sql) or die($mysqli->error);
-if($result) $user_cnt_divisor = $result->num_rows;
-else $user_cnt_divisor = 1;
-echo $user_cnt_divisor."<br>";
 
 // 获取用户总量
 $sql = "SELECT user_id FROM users";
@@ -42,20 +36,22 @@ for ($i=0; $i<$user_cnt; $i++) {
     $strength = 0;
     $level = "斗之气一段";
     $color = "#E0E0E0";
+
     //calculate strength
-    $sql="SELECT DISTINCT problem_id FROM solution WHERE user_id='$user_mysql' AND result=4 ORDER BY problem_id";
-    $res=$mysqli->query($sql);
-    while($pid=$res->fetch_array()[0]){
-        //calculate strength
-        $sql = "SELECT solved_user, submit_user FROM problem WHERE problem_id=".$pid;
-        $y_result=$mysqli->query($sql);
-        $y_row = $y_result->fetch_object();
-        $solved = $y_row->solved_user;
-        $submit = $y_row->submit_user;
-        $scores = 100.0 * (1-($solved+$submit/2.0)/$user_cnt_divisor);
-        if ($scores < 10) $scores = 10;
-        $strength += $scores;
+    $sql = <<<SQL
+        SELECT SUM(score) AS sum FROM problem WHERE problem_id IN (
+        SELECT problem_id FROM solution
+        WHERE user_id = '$user_mysql'
+        AND result = 4
+);
+SQL;
+
+    $res = $mysqli->query($sql) or die($mysqli->error);
+    if ($res->num_rows > 0) {
+        $row = $res->fetch_object();
+        $strength = floatval($row->sum);
     }
+    
     // count hznuoj solved
     $sql="SELECT count(DISTINCT problem_id) as ac FROM solution WHERE user_id='".$user_mysql."' AND result=4";
     $result=$mysqli->query($sql) or die($mysqli->error);
@@ -88,10 +84,9 @@ for ($i=0; $i<$user_cnt; $i++) {
     // 更新用户信息
     $sql="UPDATE users SET solved=".$AC.",submit=".$Submit.",level='".$level."',strength=".$strength.",color='".$color."' WHERE user_id='".$user_mysql."'";
     $result=$mysqli->query($sql);
-    echo "<pre>$sql</pre>";
-    
+    echo $user_mysql.": ".$AC.",".$Submit.",".$strength;
+    echo "<br>";
 }
 
 echo "update rank successfully!";
-
 ?>

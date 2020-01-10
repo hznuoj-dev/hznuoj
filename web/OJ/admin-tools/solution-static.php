@@ -10,7 +10,7 @@ require_once "../include/db_info.inc.php";
 <script src="/OJ/plugins/echarts/echarts/echarts.min.js"></script>
 
 <?php 
-$sql = "SELECT DATE_FORMAT(in_date,'%Y/%m/%d') days, count(*) FROM solution GROUP BY days"; 
+$sql = "SELECT DATE_FORMAT(in_date,'%Y/%m/%d') AS days, count(*) FROM solution GROUP BY days"; 
 $res = $mysqli->query($sql);
 $data = "";
 $date = "";

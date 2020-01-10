@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="/OJ/plugins/AmazeUI/css/amazeui.min.css"/>
 </head>
 <body>
+
     <form action="" method="post">
     classList:
     <textarea name="classList" rows="15">
@@ -76,6 +77,7 @@ if(isset($_POST['classList'])) {
             if($result) $user_cnt_divisor = $result->num_rows;
             else $user_cnt_divisor = 1;
             $result->free();
+
             //get ac set and calculate strength
             $ac_set=array();
             $sql="SELECT DISTINCT problem_id FROM solution WHERE user_id='$user_mysql' AND result=4 AND in_date<='$time' ORDER BY problem_id";
@@ -85,6 +87,7 @@ if(isset($_POST['classList'])) {
                 if(!$ac_set[$set_name])$ac_set[$set_name]=array();
                 array_push($ac_set[$set_name], $pid);
             }
+
             // count hznuoj solved
             $sql="SELECT count(DISTINCT problem_id) as ac FROM solution WHERE user_id='".$user_mysql."' AND result=4  AND in_date<='$time' ";
             $result=$mysqli->query($sql) or die($mysqli->error);
@@ -192,5 +195,5 @@ if(isset($_POST['classList'])) {
 </body>
 </html>
 
-<link rel="stylesheet" href="/OJ/plugins/AmazeUI/css/amazeui.min.css"/>
+
 
