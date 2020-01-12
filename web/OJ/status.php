@@ -44,10 +44,14 @@ else if($OJ_TEMPLATE!="classic")
 //echo $OJ_SHOW_DIFF;
 $str2="";
 $lock=false;
-$sql="SELECT * FROM `solution` WHERE problem_id>0";
+$sql="SELECT * FROM `solution` WHERE problem_id > 0";
+$cntSql = "SELECT COUNT(*) AS sum FROM `solution` WHERE problem_id > 0"; 
+
 if (isset($_GET['cid'])){
     $cid=intval($_GET['cid']);
     $sql=$sql." AND `contest_id`='$cid' and num>=0 ";
+    $cntSql .= " AND `contest_id`='$cid' and num>=0 ";
+
     $str2=$str2."&cid=$cid";
     $sql_lock="SELECT * FROM `contest` WHERE `contest_id`='$cid'";
     $result=$mysqli->query($sql_lock) or die($mysqli->error);
@@ -55,61 +59,56 @@ if (isset($_GET['cid'])){
     $start_time=0;
     $end_time=0;
     if ($rows_cnt>0){
-        $row=$result->fetch_object();
-        $start_time=strtotime($row->start_time);
-        $title=$row->title;
-        $end_time=strtotime($row->end_time);
-$open_source = $row->open_source=="Y"?1:0; // 默认值为0
-$defunct_TA = $row->defunct_TA=="Y"?1:0; // 默认值为0
-$lock_time=$row->lock_time;
-$unlock=$row->unlock;
+        $row = $result->fetch_object();
+        $start_time = strtotime($row->start_time);
+        $title = $row->title;
+        $end_time = strtotime($row->end_time);
+        $open_source = $row->open_source=="Y"?1:0; // 默认值为0
+        $defunct_TA = $row->defunct_TA=="Y"?1:0; // 默认值为0
+        $lock_time = $row->lock_time;
+        $unlock = $row->unlock;
 }
-$lock_t=$end_time-$lock_time;
-$time_sql="";
-if(time()>$lock_t && !$unlock){
-//echo $time_sql;
-    $lock=true;
-}else{
-    $lock=false;
-}
-//require_once("contest-header.php");
+    $lock_t=$end_time-$lock_time;
+    $time_sql="";
+    if(time() > $lock_t && !$unlock) {
+    //echo $time_sql;
+        $lock=true;
+    }else {
+        $lock=false;
+    }
 } else {
-//require_once("oj-header.php");
-    $sql="SELECT * FROM `solution` WHERE contest_id is null ";
+    $sql = "SELECT * FROM `solution` WHERE contest_id is NULL ";
+    $cntSql = "SELECT COUNT(*) AS sum FROM `solution` WHERE contest_id is NULL ";
 }
-$start_first=true;
-$order_str=" ORDER BY `solution_id` DESC ";
-
-// check the top arg
-if (isset($_GET['top'])){
-    $top=strval(intval($_GET['top']));
-    if ($top!=-1) $sql=$sql."AND `solution_id`<='".$top."' ";
-}
+$start_first = true;
 
 // check the problem arg
 $problem_id="";
 if (isset($_GET['problem_id'])&&$_GET['problem_id']!=""){
-
     if(isset($_GET['cid'])){
         $problem_id=$_GET['problem_id'];
         $num=get_id_from_label($problem_id);
-        $sql=$sql."AND `num`='".$num."' ";
+        $sql=$sql." AND `num`='".$num."' ";
+        $cntSql .= " AND `num`='".$num."' ";
         $str2=$str2."&problem_id=".$problem_id;
     }else{
         $problem_id=strval(intval($_GET['problem_id']));
         if ($problem_id!='0'){
-            $sql=$sql."AND `problem_id`='".$problem_id."' ";
+            $sql=$sql." AND `problem_id`='".$problem_id."' ";
+            $cntSql .= " AND `problem_id`='".$problem_id."' ";
             $str2=$str2."&problem_id=".$problem_id;
         }
         else $problem_id="";
     }
 }
+
 // check the user_id arg
 $user_id="";
 if (isset($_GET['user_id'])){
     $user_id=trim($_GET['user_id']);
     if (is_valid_user_name($user_id) && $user_id!=""){
         $sql=$sql."AND `user_id`='".$user_id."' ";
+        $cntSql .= "AND `user_id`='".$user_id."' ";
         if ($str2!="") $str2=$str2."&";
         $str2=$str2."user_id=".$user_id;
     }else $user_id="";
@@ -120,6 +119,7 @@ else $language=-1;
 if ($language>count($language_ext) || $language<0) $language=-1;
 if ($language!=-1){
     $sql=$sql."AND `language`='".strval($language)."' ";
+    $cntSql .= "AND `language`='".strval($language)."' ";
     $str2=$str2."&language=".$language;
 }
 if (isset($_GET['jresult'])) $result=intval($_GET['jresult']);
@@ -128,13 +128,42 @@ else $result=-1;
 if ($result>12 || $result<0) $result=-1;
 if ($result!=-1&&!$lock){
     $sql=$sql."AND `result`='".strval($result)."' ";
+    $cntSql .= "AND `language`='".strval($language)."' ";
     $str2=$str2."&jresult=".$result;
 }
 
+$order_str = " ORDER BY `solution_id` DESC ";
+$sql = $sql.$order_str; 
+
+/* 获取当前页数 start */
+$page_cnt = 15;
+if (isset($_GET['page_cnt'])) {
+    $page_cnt = intval($_GET['page_cnt']);
+    $str2 .= "&page_cnt".$page_cnt;
+}
+$page = 1;
+if (isset($_GET['page'])) {
+    $page = intval($_GET['page']);
+}
+$res = $mysqli->query($cntSql) or die($mysqli->error);
+$cnt = $res->fetch_object()->sum;
+$st = ($page - 1) * $page_cnt;
+$view_total_page = intval(($cnt + $page_cnt - 1) / $page_cnt);
+if($st < 0) $st = 0;
+/* 获取当前页数 start */
+
+
+//if is rankist query, show all submissions
+if(!isset($_GET['ranklist_ajax_query'])){
+    $sql .= " LIMIT $st, $page_cnt";
+}
 
 if($OJ_SIM){
-    $old=$sql;
-    $sql="SELECT * from ($sql order by solution_id desc limit 1000) solution left join `sim` on solution.solution_id=sim.s_id WHERE 1 ";
+    $old = $sql;
+    $sql = "SELECT * FROM ($old) AS solution LEFT JOIN `sim` on solution.solution_id = sim.s_id WHERE 1 ";
+    // echo $sql;
+
+    //sim >= showsim的提交
     if(isset($_GET['showsim'])&&intval($_GET['showsim']) > 0){
         $showsim=intval($_GET['showsim']);
         $sql="select * from ($old ) solution 
@@ -144,15 +173,8 @@ if($OJ_SIM){
         on old.old_s_id=sim_s_id WHERE  old_user_id!=user_id and sim_s_id!=solution_id ";
         $str2.="&showsim=$showsim";
     }
-//$sql=$sql.$order_str." LIMIT 20";
 }
 
-$sql=$sql.$order_str;
-//if is rankist query, show all submissions
-if(!isset($_GET['ranklist_ajax_query'])){
-    $sql.=" LIMIT 20";
-}
-//echo $sql;
 
 if($OJ_MEMCACHE){
     require("./include/memcache.php");
@@ -209,9 +231,8 @@ for ($i=0;$i<$rows_cnt;$i++){
         $view_status[$i][2]= "<div class=center><a href='problem.php?id=".$row['problem_id']."'>".$row['problem_id']."</a></div>";
     }
 
-
-
     $WA_or_PE = (intval($row['result'])==5||intval($row['result'])==6);
+
 
 // =========reinfo, includes WA,RE,PE,TSET_RUN===========
 // 确认该用户是否可以查看reinfo
@@ -342,6 +363,8 @@ if(!$OJ_MEMCACHE) $result->free();
 <?php endif ?>
 <!-- ranklist ajax query mod END -->
 
+
+
 <?php
 /////////////////////////Template
 if (isset($_GET['cid']))
@@ -353,5 +376,7 @@ else
 
 if(file_exists('./include/cache_end.php'))
     require_once('./include/cache_end.php');
+
+
 ?>
 

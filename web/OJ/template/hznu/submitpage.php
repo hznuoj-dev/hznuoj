@@ -10,13 +10,14 @@
 ?>
 
 <?php
-  $title="Submit";
-  if(isset($_GET['id']))
+    $title="Submit";
+    if(isset($_GET['id']))
     require_once("header.php");
-  else
+    else
     require_once("contest_header.php");
-  require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/const.inc.php";
+    require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/const.inc.php";
 ?>
+
 <div class="am-container" style="padding-top: 20px;">
   <?php
   if(isset($_GET['cid'])) {

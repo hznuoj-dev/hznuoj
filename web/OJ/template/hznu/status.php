@@ -11,6 +11,20 @@
 
 <?php $title="Status";?>
 <?php include "header.php" ?>
+
+<?php
+
+function generate_url($page){
+    global $str2;
+    $link = "status.php?";
+    $link .= $str2;
+    $link .= "&page=".$page;
+    return $link;
+}
+
+
+?>
+
 <style>
 .am-form-inline > .am-form-group {
     margin-left: 15px;
@@ -91,17 +105,20 @@ for ($j=0;$j<12;$j++){
 }
 ?>
 </select>
+
+
 <span class="am-form-caret"></span>
 </div>
 <button type="submit" class="am-btn am-btn-secondary"><span class='am-icon-filter'></span> Filter</button>
 </form>
-<form action="status.php" method="get" class="am-form am-form-inline" role="form" style="float: left;;">
+<form action="status.php" method="get" class="am-form am-form-inline" role="form" style="float: left;">
     <input type="hidden" name="csrf_token" value="f31605cce38e27bcb4e8a76188e92b3b">
     <button type="submit" class="am-btn am-btn-default">Reset</button>
 </form>
 </div>
 </div>
-<!-- 搜索框 start -->
+<!-- 搜索框 end -->
+
 <div class="am-avg-md-1">
     <table class="am-table am-table-hover">
         <thead>
@@ -133,7 +150,10 @@ for ($j=0;$j<12;$j++){
         </tbody>
     </table>
 </div>
-<div class="am-g am-u-sm-centered am-u-sm-offset-10 am-u-sm-2">
+
+
+<!-- 不用啦 -->
+<!-- <div class="am-g am-u-sm-centered am-u-sm-offset-10 am-u-sm-2">
     <ul class="am-pagination">
         <?php echo "<li><a href=\"status.php?".htmlentities($str2)."\">Top</a></li>&nbsp;&nbsp;";
         if (isset($_GET['prevtop']))
@@ -143,6 +163,66 @@ for ($j=0;$j<12;$j++){
         echo "<li><a href=\"status.php?".htmlentities($str2)."&top=".$bottom."&prevtop=$top\">Next &raquo;</a></li>";
         ?>
     </ul>
+</div> -->
+
+
+
+<?php if ($view_total_page > 1): ?>
+<!-- 页标签 start -->
+<div class="am-g">
+    <ul class="am-pagination am-text-center">
+        <?php
+            $show_page = array();
+            array_push($show_page, 1);
+            array_push($show_page, $view_total_page);
+            if ($page != $view_total_page && $page != 1) {
+                array_push($show_page, $page);
+            }
+            $bit = 1;
+            $current_page = $page;
+            while (1) {
+                $current_page -= $bit;
+                if ($current_page > 1) {
+                    array_push($show_page, $current_page);
+                } else {
+                    break;
+                }
+                $bit <<= 1;
+            }
+
+            $bit = 1;
+            $current_page = $page;
+            while (1) {
+                $current_page += $bit;
+                if ($current_page < $view_total_page) {
+                    array_push($show_page, $current_page);
+                } else {
+                    break;
+                }
+                $bit <<= 1;
+            }
+            sort($show_page);
+            foreach ($show_page as $i) {
+                $link=generate_url($i);
+                if($page == $i) 
+                    echo "<li class='am-active'><a href=\"$link\">{$i}</a></li>";
+                else
+                    echo "<li><a href=\"$link\">{$i}</a></li>";
+            }
+        ?>
+    </ul>
 </div>
+<!-- 页标签 end -->
+<?php endif ?>
+
 </div>
+
+
+
+
+
+
+
+
+
 <?php include "footer.php" ?>

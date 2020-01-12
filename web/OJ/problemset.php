@@ -14,7 +14,7 @@ require_once('./include/setlang.php');
 
 /* 获取当前页数 start */
 $page_cnt = 100;
-$page="1";
+$page=1;
 if (isset($_GET['page'])) {
     $page = intval($_GET['page']);
 }

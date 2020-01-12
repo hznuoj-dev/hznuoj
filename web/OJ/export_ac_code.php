@@ -2,10 +2,12 @@
 <?php 
 @session_start();
 if (!isset($_SESSION['user_id'])){
-	$view_errors= "<a href=./loginpage.php>$MSG_Login</a>";
+	$view_errors= "<a href=loginpage.php>$MSG_Login</a>";
 	require("template/".$OJ_TEMPLATE."/error.php");
 	exit(0);
 }
+
+
 require_once('./include/db_info.inc.php');
 $sql="select distinct source,problem_id from source_code right join 
 		(select solution_id,problem_id from solution where user_id='".$_SESSION['user_id']."' and result=4) S 
