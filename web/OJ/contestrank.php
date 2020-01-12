@@ -15,7 +15,6 @@ require_once('./include/setlang.php');
 require_once("./include/const.inc.php");
 require_once("./include/my_func.inc.php");
 
-
 $view_title= $MSG_CONTEST.$MSG_RANKLIST;
 $title="";
 
@@ -302,7 +301,6 @@ $user_name='';
 $U=array();
 $U[$user_cnt]=new TM();
 $U[0]->solved=-1;
-
 
 
 // 查询user部分

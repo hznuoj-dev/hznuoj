@@ -86,7 +86,13 @@ if(isset($_GET['cid'])) {
                 <ul class="am-nav am-nav-pills am-topbar-nav">
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="index.php"){echo "class='am-active'";} ?>><a class="am-icon-chevron-left" href="/OJ/contestset.php"> Back</a></li>
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contest.php"){echo "class='am-active'";} ?>><a href='./contest.php?cid=<?php echo $cid?>'>Overview</a></li>
-                    <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="status.php"){echo "class='am-active'";} ?>><a href='./status.php?cid=<?php echo $cid?>'>Status</a></li>
+                    <?php 
+                        $status_url = "./status.php?cid=".$cid;
+                        if (isset($_SESSION['user_id'])) {
+                            $status_url .= "&user_id=".$_SESSION['user_id'];
+                        }
+                    ?>
+                    <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="status.php"){echo "class='am-active'";} ?>><a href='<?php echo $status_url; ?>'>Status</a></li>
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contestrank.php"){echo "class='am-active'";} ?>><a href='./contestrank.php?cid=<?php echo $cid?>'>Standings</a></li> 
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contest_clarifications.php"){echo "class='am-active'";} ?>><a href='./contest_clarifications.php?cid=<?php echo $cid?>'>Clarifications</a></li>      
                     <?php 
@@ -99,7 +105,7 @@ HTML;
                         }
                      ?>
                     <!-- 暂时关闭打印功能 -->
-<!--                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contest_code_printer.php"){echo "class='am-active'";} ?>><a href='./contest_code_printer.php?cid=<?php echo $cid?>'>Printer</a></li>  -->
+<!--                      <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contest_code_printer.php"){echo "class='am-active'";} ?>><a href='./contest_code_printer.php?cid=<?php echo $cid?>'>Printer</a></li>   -->
                 </ul>
                 <!-- 用户部分 start -->
                 <?php

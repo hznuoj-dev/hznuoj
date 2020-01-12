@@ -166,7 +166,7 @@ SQL;
                 AND sim.s_id = solution.solution_id
                 AND result = 4
 SQL;
-            echo $sql;
+            // echo $sql;
             $copy_100 = 0;
             $res = $mysqli->query($sql) or die($mysqli->error);
             if ($res->num_rows > 0) {
