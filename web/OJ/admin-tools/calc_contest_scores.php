@@ -1,5 +1,5 @@
 <?php
-$TEAM_MODE = false;
+$TEAM_MODE = true;
 ?>
 <!DOCTYPE html>
 <html>
