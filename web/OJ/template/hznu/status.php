@@ -174,7 +174,9 @@ for ($j=0;$j<12;$j++){
         <?php
             $show_page = array();
             array_push($show_page, 1);
-            array_push($show_page, $view_total_page);
+            if ($view_total_page != 1) {
+                array_push($show_page, $view_total_page);
+            }
             if ($page != $view_total_page && $page != 1) {
                 array_push($show_page, $page);
             }

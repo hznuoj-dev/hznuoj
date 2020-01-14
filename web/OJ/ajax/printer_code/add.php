@@ -20,5 +20,7 @@ if(isset($_SESSION['user_id'])){
     $json['msg'] = "please log in first!";
 }
 
+
+
 echo json_encode($json);
 ?>

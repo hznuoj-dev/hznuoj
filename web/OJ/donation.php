@@ -9,6 +9,7 @@
 
 <?php $title="ACM Foundation"; ?>
 <?php require_once "template/hznu/header.php"; ?>
+
 <style>
     .box{
         border: 1px solid #eee;
@@ -63,6 +64,7 @@
         float: right;
     }
 </style>
+
 <div class="am-container" style="padding-top: 30px;">
     <div class="box">
         <div class="class-title">

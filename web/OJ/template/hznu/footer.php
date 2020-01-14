@@ -163,27 +163,29 @@ function monitor() {
 
 
 <!-- MathJax.js BEGIN -->
-<!--加载MathJax的最新文件， async表示异步加载进来 -->
-<script type="text/javascript" async src="/OJ/plugins/MathJax/MathJax.js"></script>
 <!-- 增加Mathjax渲染支持 -->
 <script type="text/x-mathjax-config;">
-MathJax.Hub.Config({
-    showProcessingMessages: false, //关闭js加载过程信息
-    messageStyle: "none", //不显示信息
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-    //$表示行内元素，$$表示块状元素
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-    processEscapes: true
-},
-"HTML-CSS": { 
-    availableFonts: ["TeX"] 
+    MathJax.Hub.Config({
+        showProcessingMessages: false, //关闭js加载过程信息
+        messageStyle: "none", //不显示信息
+        config: ["MMLorHTML.js"],
+        extensions: ["TeX/AMSmath.js", "TeX/AMSsymbols.js", "MathMenu.js", "MathZoom.js", "tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+        //$表示行内元素，$$表示块状元素
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    "HTML-CSS": { 
+        availableFonts: ["TeX"]
     }
 });
+MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 </script>
 <!-- MathJax.js END -->
+<!--加载MathJax的最新文件， async表示异步加载进来 -->
+<script type="text/javascript" async src="/OJ/plugins/MathJax/MathJax.js"></script>
 
 
 </body>
