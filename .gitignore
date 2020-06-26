@@ -2,7 +2,7 @@
 *.o
 *.exe
 .idea/
-forum/
+/web/wiki/
 judger/core/judge_client/.idea/
 judger/core/judge_client/judge_client
 judger/core/judged/.idea/

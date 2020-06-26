@@ -2,7 +2,7 @@
 <?php
 
 if(isset($_POST['pid'])){
-    $pid=$_POST['pid'];
+    $pid=intval($_POST['pid']);
 }
 else{
     exit(0);

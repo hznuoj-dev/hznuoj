@@ -52,7 +52,7 @@
                         <td>Blog</td>
                         <td>
                             <a href="https://github.com/Dup4">github.com/Dup4</a><br>
-                            <a href="https://www.cnblogs.com/Dup4">cnblogs.com/Dup4</a><br>
+                            <a href="https://dup4.top">dup4.top</a><br>
                         </td>
                     </tr>
                     <tr>

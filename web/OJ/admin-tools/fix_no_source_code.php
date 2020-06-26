@@ -1,3 +1,4 @@
+<?php return;?>
 <?php
 //修复有solution但是没有source_code的提交
 //增加一行空代码，防止一直在编译的状况

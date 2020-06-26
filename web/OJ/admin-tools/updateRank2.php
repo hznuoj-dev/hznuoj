@@ -1,3 +1,5 @@
+<?php return; ?>
+
 <?php
 /**
  * This file is created

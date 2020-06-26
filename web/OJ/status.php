@@ -128,7 +128,7 @@ else $result=-1;
 if ($result>12 || $result<0) $result=-1;
 if ($result!=-1&&!$lock){
     $sql=$sql."AND `result`='".strval($result)."' ";
-    $cntSql .= "AND `language`='".strval($language)."' ";
+    $cntSql .= "AND `result`='".strval($result)."' ";
     $str2=$str2."&jresult=".$result;
 }
 
