@@ -1,3 +1,4 @@
+<?php return; ?>
 <?php
 /**
 * This file is written by yybird

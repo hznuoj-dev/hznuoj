@@ -1,6 +1,6 @@
-<?php session_start();
 
-if (!isset($_SESSION['user_id'])){
+<?php session_start();
+if (!isset($_SESSION['user_id'])) {
 	require_once("oj-header.php");
 	echo "<a href='loginpage.php'>$MSG_Login</a>";
 	require_once("oj-footer.php");
@@ -14,6 +14,8 @@ require_once("include/my_func.inc.php");
 $now = strftime("%Y-%m-%d %H:%M",time()); 
 
 $user_id=$_SESSION['user_id'];
+
+
 if (isset($_POST['cid'])) {
 	$pid = intval($_POST['pid']);
 	$cid = intval($_POST['cid']);
@@ -52,7 +54,7 @@ SQL;
 }
 
 //echo $sql;
-$res = $mysqli->query($sql) or die($mysqli);
+$res = $mysqli->query($sql) or die($mysqli->error);
 if ($res->num_rows != 1){
 	$res->free();
 	$view_errors = "Problem Not Available!";
@@ -60,15 +62,16 @@ if ($res->num_rows != 1){
 }
 $res->free();
 
+
 if (isset($_POST['id'])) {
 
 } else if (isset($_POST['pid']) && isset($_POST['cid'])) {
 	// check user if private
 	$sql = "SELECT `private` FROM `contest` WHERE `contest_id`='$cid' AND `start_time`<='$now' AND `end_time`>'$now'";
-	$res = $mysqli->query($sql);
-	$rows_cnt = $res->num_rows;
+	$result = $mysqli->query($sql) or die($mysqli->error);
+	$rows_cnt = $result->num_rows;
 	if ($rows_cnt!=1){
-		$res->free();
+		$result->free();
 		$view_errors = "You Can't Submit Now Because Your are not invited by the contest or the contest is not running!";
 		return require_once("template/".$OJ_TEMPLATE."/error.php");
 	} else {
@@ -88,8 +91,8 @@ if (isset($_POST['id'])) {
 		}
 	}
 	$sql = "SELECT `problem_id` FROM `contest_problem` WHERE `contest_id`='$cid' AND `num`='$pid'";
-	$res = $mysqli->query($sql);
-	$rows_cnt = $res->num_rows;
+	$result = $mysqli->query($sql);
+	$rows_cnt = $result->num_rows;
 	if ($rows_cnt != 1){
 		$result->free();
 		$view_errors= "No Such Problem!";

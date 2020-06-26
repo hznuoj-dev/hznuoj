@@ -1,6 +1,11 @@
 <?php
 //通过学号获取系统分数
 ?>
+
+<?php
+	return;
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

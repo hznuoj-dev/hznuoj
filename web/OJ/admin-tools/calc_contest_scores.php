@@ -1,6 +1,10 @@
 <?php
 $TEAM_MODE = true;
 ?>
+
+<?php
+return;
+?>
 <!DOCTYPE html>
 <html>
 <head>

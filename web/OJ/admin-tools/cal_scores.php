@@ -1,3 +1,6 @@
+<?php
+return;
+?>
 <!DOCTYPE html>
 <html>
 <head>

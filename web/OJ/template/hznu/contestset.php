@@ -42,7 +42,7 @@ function generate_url($page){
             <div class="am-u-sm-9">
                 <div class="am-form-group am-form-icon">
                     <i class="am-icon-binoculars"></i>
-                    <input type="text" class="am-form-field" placeholder=" &nbsp;Keywords" name="search" value="<?php echo $search ?>">
+                    <input type="text" class="am-form-field" placeholder=" &nbsp;Keywords" name="search" value="<?php echo htmlentities($search) ?>">
                 </div>
             </div>
             <button type="submit" class="am-u-sm-3 am-btn am-btn-secondary ">Search</button>

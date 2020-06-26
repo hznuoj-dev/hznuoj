@@ -49,7 +49,17 @@ else $_SESSION['tag'] = "N";
     <link rel="alternate icon" type="image/jpg" href="image/hznuoj.ico">
     <link rel="stylesheet" href="/OJ/plugins/AmazeUI/css/amazeui.min.css"/>
     <style type="text/css">
-    .blog-footer {
+
+/*
+	body * {
+		-webkit-filter: grayscale(100%);
+		-moz-filter: grayscale(100%);
+		-ms-filter: grayscale(100%);
+		-o-filter:grayscale(100%);
+		filter:grayscale(100%);
+	}
+*/
+	.blog-footer {
         padding: 10px 0;
         text-align: center;
     }
