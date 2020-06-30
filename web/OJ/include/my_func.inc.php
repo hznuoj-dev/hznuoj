@@ -7,6 +7,23 @@
 ?>
 <?php
 
+function getClientIP() 
+{
+    $clientIps = $_SERVER['HTTP_X_FORWARDED_FOR'];
+
+    if (empty($clientIps)) {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
+    $clientIps = explode(',', $clientIps);
+
+    if (empty($clientIps)) {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
+    return current($clientIps);
+}
+
 function pwGen($password,$md5ed=False)
 {
     if (!$md5ed) $password=md5($password);
