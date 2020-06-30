@@ -8,6 +8,7 @@
 
 <?php 
 require_once("my_func.inc.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/OJ/include/my_func.inc.php");
 
 
 function check_login($user_id, $password, $cid){
@@ -27,7 +28,8 @@ function check_login($user_id, $password, $cid){
             $result->free();
         }
         if ($canLogin) {
-            $sql="INSERT INTO `loginlog` (user_id,password,ip,`time`)VALUES('$user_id','$pass2','".$_SERVER['REMOTE_ADDR']."',NOW())";
+            $user_ip = getClientIP();
+            $sql="INSERT INTO `loginlog` (user_id,password,ip,`time`)VALUES('$user_id','$pass2','".$user_ip."',NOW())";
             @$mysqli->query($sql) or die($mysqli->error);
             $sql="SELECT `user_id`,`password` FROM `users` WHERE `user_id`='".$user_id."'";
             $result=$mysqli->query($sql);
