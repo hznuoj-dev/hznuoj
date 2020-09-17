@@ -15,7 +15,6 @@ $now = strftime("%Y-%m-%d %H:%M",time());
 
 $user_id=$_SESSION['user_id'];
 
-
 if (isset($_POST['cid'])) {
 	$pid = intval($_POST['pid']);
 	$cid = intval($_POST['cid']);
@@ -112,6 +111,8 @@ if ($language > count($language_name) || $language < 0) $language = 0;
 $language = strval($language);
 
 $source=$_POST['source'];
+$source=substr($source, 0, strlen($source) - 4);
+$source=base64_decode($source);
 $input_text=$_POST['input_text'];
 if(get_magic_quotes_gpc()){
 	$source=stripslashes($source);
