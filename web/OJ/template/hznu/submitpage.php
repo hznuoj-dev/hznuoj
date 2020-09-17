@@ -100,6 +100,8 @@
 <script src="/OJ/plugins/ace/mode-lua.js" type="text/javascript" charset="utf-8"></script>
 <script src="/OJ/plugins/ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
 <script src="/OJ/plugins/ace/mode-golang.js" type="text/javascript" charset="utf-8"></script>
+<script src="/OJ/plugins/js-base64/base64.js" type="text/javascript" charset="utf-8"></script>
+
 <script>
     language_mod = ["c_cpp","c_cpp","pascal","java","ruby","batchfile","python","php","perl","csharp","objectivec","plain_text","scheme","c_cpp","c_cpp","lua","javascript","golang","python"];
     var editor = ace.edit("editor");
@@ -108,7 +110,9 @@
     editor.getSession().setMode("ace/mode/"+language_mod[lang]);
     editor.setTheme("ace/theme/xcode");
     $("#submit_form").submit(function () {
-        $("#source").val(editor.getValue());
+        var code = Base64.encode(editor.getValue());
+        code = code + "HZNU";
+        $("#source").val(code);
         return true;
     });
     
