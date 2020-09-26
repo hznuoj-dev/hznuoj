@@ -143,11 +143,11 @@ setcookie('lastlang',$language,time()+360000);
 
 $ip = $_SERVER['REMOTE_ADDR'];
 
-if ($len < 2){
-	$view_errors="Code too short!";
-	require("template/".$OJ_TEMPLATE."/error.php");
-	exit(0);
-}
+// if ($len < 2){
+// 	$view_errors="Code too short!";
+// 	require("template/".$OJ_TEMPLATE."/error.php");
+// 	exit(0);
+// }
 
 if ($len > 131072) {
 	$view_errors="Code too long!";
