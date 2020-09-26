@@ -69,8 +69,8 @@
       </div>
       <div class="class-description">
         《程序设计基础》是高等学校计算机科学与技术、软件工程等专业的一门重要的基础课程。是后续课程的先修课。<br>
-          <a href="/OJ/upload/file/20180916/20180916214410_30851.doc">程序设计基础教学大纲</a>&nbsp;
-          <a href="/OJ/upload/file/20180916/20180916214446_68972.doc">程序设计基础实践教学大纲</a>
+          <a href="/OJ/upload/file/20200918/20200918144610_30851.doc">程序设计基础教学大纲</a>&nbsp;
+          <a href="/OJ/upload/file/20200918/20200918144610_68972.doc">程序设计基础实践教学大纲</a>
       </div>
     </div>
     <div class="am-g">
