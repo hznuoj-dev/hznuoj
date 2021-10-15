@@ -8,6 +8,7 @@
 
 <?php
 ////////////////////////////Common head
+
 $cache_time=10;
 $OJ_CACHE_SHARE=false;
 require_once('./include/cache_start.php');
@@ -47,6 +48,10 @@ for (; $row=$result->fetch_array(); ++$i) {
 /////////////////////////Template
 require("template/".$OJ_TEMPLATE."/index.php");
 /////////////////////////Common foot
+
+
 if(file_exists('./include/cache_end.php'))
   require_once('./include/cache_end.php');
+
+
 ?>
