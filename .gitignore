@@ -3,7 +3,9 @@
 *.exe
 .idea
 .vscode
+
 .DS_Store
+*.swp
 
 judger/core/judge_client/.idea/
 judger/core/judge_client/judge_client
@@ -17,3 +19,5 @@ judger/core/sim/.idea/
 
 web/OJ/upload/*
 web/OJ/upload
+
+/web/OJ/include/static.php

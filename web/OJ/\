@@ -43,12 +43,21 @@ if ($login == -1) {
 }
 
 if ($login) { // 登录成功
-        $_SESSION['tmp_user_id'] = $login;
-	if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w*/", $password)) {
-    echo "<script type=\"text/javascript\"> location.href='resetPasswordPage.php'; </script>";
+        $_SESSION['user_id']=$login;
+//	if (!preg_match("/(?![0-9A-Z]+$)(?![0-9a-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,22}$/", $password)) { // if password is week, then add a prefix "Hznu" to the original password.
+	if ($user_id=="test100" && $password=="123456") {
+	    //$new_password="H2nu".$password;
+	    //$new_password=pwGen($new_password);
+	   //$sql = "UPDATE `users` SET `password` = '".($new_password)."' WHERE `user_id` = '".($user_id)."'";
+	   //$mysqli->query($sql) or die ($mysqli->error);
+	    echo "<script language='javascript'>\n";
+   	    echo "alert('UserID or Password or ContestID Wrong!');\n";
+    	    echo "history.go(-1);\n";
+   	    echo "</script>";
 	} else {
 	//echo $login;
-	    $_SESSION['user_id']=$login;
+        //echo "<sctipr type=\"text/javascript\"> alert(\"$login\");  <\script>";
+	    //$_SESSION['user_id']=$login;
 	    echo $mysqli->error;
 
 	//set privileges (for non-realtime privilege check)
