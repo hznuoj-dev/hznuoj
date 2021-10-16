@@ -5,7 +5,7 @@ require_once("./include/my_func.inc.php");
 $user_id = $_SESSION['tmp_user_id'];
 $npassword = $_POST['npassword'];
 $rpassword = $_POST['rpassword'];
-if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w{6,22}$/", $npassword)) {
+if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w/", $npassword) || !preg_match("/^.{6,22}$/", $npassword)) {
 echo "<script type=\"text/javascript\"> alert(\"The password must consist of upper case letters, lower case letters and numbers, with a length of 6 ~ 22 digits!\"); history.go(-1); </script>";
   exit(0);
 }
