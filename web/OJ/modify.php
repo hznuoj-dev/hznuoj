@@ -78,7 +78,7 @@ if ($len>100){
     $err_str=$err_str."Email Too Long!";
     $err_cnt++;
 }
-if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w*/", $_POST['npassword'])) {
+if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w{6,22}$/", $_POST['npassword'])) {
    $err_str=$err_str."The password must consist of upper case letters, lower case letters and numbers, with a length of 6 ~ 22 digits!\\n";
     $err_cnt++;
 }
