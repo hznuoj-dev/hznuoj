@@ -14,7 +14,7 @@
         <label for="npwd" class="am-u-sm-4 am-form-label">New Password: </label>
         <div class="am-u-sm-8">
           <input type="password" name="npassword" id="npwd" value="" placeholder="Your Password" style="width:100%;"
-          pattern="^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w*" required/>
+          pattern="^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w{6,22}$" required/>
         </div>
       </div>
       <div class="am-form-group">

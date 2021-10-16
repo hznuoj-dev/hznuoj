@@ -44,7 +44,7 @@ if ($login == -1) {
 
 if ($login) { // 登录成功
         $_SESSION['tmp_user_id'] = $login;
-	if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w*/", $password)) {
+	if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w{6,22}$/", $password)) {
     echo "<script type=\"text/javascript\"> location.href='resetPasswordPage.php'; </script>";
 	} else {
 	//echo $login;

@@ -72,7 +72,7 @@
     $err_str=$err_str."Email Illegal!\\n";
     $err_cnt++;
   }
-  if (!preg_match("/(?![0-9A-Z]+$)(?![0-9a-z]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,22}$/", $_POST['password'])) {
+  if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w{6,22}$/", $_POST['password'])) {
    $err_str=$err_str."The password must consist of upper case letters, lower case letters and numbers, with a length of 6 ~ 22 digits!\\n";
     $err_cnt++;
   }

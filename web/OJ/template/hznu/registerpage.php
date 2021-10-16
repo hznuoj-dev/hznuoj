@@ -33,7 +33,7 @@
       </label>
       <div class="am-u-sm-8">
         <input type="password" name="password" id="pwd" value="" placeholder="6-22 characters" style="width:300px;"
-          pattern="^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w" required/>
+          pattern="^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w{6,22}$" required/>
       </div>
     </div>
     <div class="am-form-group">
