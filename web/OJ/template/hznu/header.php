@@ -123,6 +123,7 @@ else $_SESSION['tag'] = "N";
                         <ul class="am-dropdown-content">
                             <li><a href="/OJ/c_course.php">Programming Fundamentals</a></li>
                             <li><a href="/OJ/donation.php">Donation</a></li>
+			    <li><a href="/OJ/keywords_page.php">KeyWords</a></li>
                             <!-- <li><a href="/forum/">Forum</a></li> -->
                         </ul>
                     </li>

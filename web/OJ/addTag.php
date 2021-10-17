@@ -23,7 +23,9 @@
     
     $uid = $_SESSION['user_id'];
     $pid = $_POST['id'];
+    $pid = addslashes_deep($pid);
     $tag = $_POST['myTag'];
+    $tag = addslashes_deep($tag);
 
     // 如果用户还没AC本题，则弹出警告并退出
     $sql = "SELECT solution_id FROM solution WHERE user_id='$uid' AND problem_id='$pid' AND result='4'";

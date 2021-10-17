@@ -57,13 +57,13 @@ if ($row && pwCheck($password,$row['password'])) $rows_cnt = 1;
 else $rows_cnt = 0;
 $result->free();
 if ($rows_cnt==0){
-    $err_str=$err_str."Old Password Wrong";
+    $err_str=$err_str."Old Password Wrong!\\n";
     $err_cnt++;
 }
 $len=strlen($_POST['npassword']);
-if ($len<6 && $len>0){
+if ($len<6 && $len>0 || ($len > 22)){
     $err_cnt++;
-    $err_str=$err_str."Password should be Longer than 6!\\n";
+    $err_str=$err_str."Password should be Longer than 6 and Less than 22!\\n";
 }else if (strcmp($_POST['npassword'],$_POST['rptpassword'])!=0){
     $err_str=$err_str."Two Passwords Not Same!";
     $err_cnt++;
@@ -76,6 +76,10 @@ if ($len>100){
 $len=strlen($_POST['email']);
 if ($len>100){
     $err_str=$err_str."Email Too Long!";
+    $err_cnt++;
+}
+if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w/", $_POST['npassword']) || !preg_match("/^.{6,22}$/", $_POST['npassword'])) {
+   $err_str=$err_str."The password must consist of upper case letters, lower case letters and numbers, with a length of 6 ~ 22 digits!\\n";
     $err_cnt++;
 }
 if ($err_cnt>0){
