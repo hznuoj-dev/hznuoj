@@ -9,6 +9,7 @@
 <?php 
 require_once("./include/db_info.inc.php");
 require_once "include/check_post_key.php";
+require_once("./include/my_func.inc.php");
 $vcode=trim($_POST['vcode']);
 if($OJ_VCODE&&($vcode!= $_SESSION["vcode"]||$vcode==""||$vcode==null) ){
     echo "<script language='javascript'>\n";
@@ -22,6 +23,7 @@ require_once("./include/login-".$OJ_LOGIN_MOD.".php");
 
 $user_id=$_POST['user_id'];
 $password=$_POST['password'];
+
 $cid = $_POST['contest_id'];
 //  echo $password;
 //  echo $user_id."<br>";
@@ -41,39 +43,42 @@ if ($login == -1) {
 }
 
 if ($login) { // 登录成功
-//echo $login;
-    $_SESSION['user_id']=$login;
-    echo $mysqli->error;
+        $_SESSION['tmp_user_id'] = $login;
+	if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w/", $password) || !preg_match("/^.{6,22}$/", $password)) {
+    echo "<script type=\"text/javascript\"> location.href='resetPasswordPage.php'; </script>";
+	} else {
+	//echo $login;
+	    $_SESSION['user_id']=$login;
+	    echo $mysqli->error;
 
-//set privileges (for non-realtime privilege check)
-    while($group_name=$result->fetch_array()['rightstr']){
-        $rs=$mysqli->query("SELECT * FROM privilege_distribution WHERE group_name='$group_name'");
-        $arr=$rs->fetch_array();
-//print_r($arr);
-        foreach ($arr as $key => $value) {
-            if($key!="group_name"){
-                $_SESSION[$key]=$value;
-            }
-        }
-    }
-    $result->free();
+	//set privileges (for non-realtime privilege check)
+	    while($group_name=$result->fetch_array()['rightstr']){
+		$rs=$mysqli->query("SELECT * FROM privilege_distribution WHERE group_name='$group_name'");
+		$arr=$rs->fetch_array();
+	//print_r($arr);
+		foreach ($arr as $key => $value) {
+		    if($key!="group_name"){
+			$_SESSION[$key]=$value;
+		    }
+		}
+	    }
+	    $result->free();
+	    // $sql = "SELECT email FROM users WHERE user_id='".$user_id."'";
+	    // $result = $mysqli->query($sql) or die($mysqli->error);
+	    // $row = $result->fetch_array();
+	    // $email = $row[0];
 
-    // $sql = "SELECT email FROM users WHERE user_id='".$user_id."'";
-    // $result = $mysqli->query($sql) or die($mysqli->error);
-    // $row = $result->fetch_array();
-    // $email = $row[0];
+	//    echo $email;
 
-//    echo $email;
+	// 数据库连接切换至bbs
+	//require_once("./discuz-api/config.inc.php");
+	//require_once("./discuz-api/uc_client/client.php");
+	//$uid = uc_user_register($user_id, $password, $email);
 
-// 数据库连接切换至bbs
-//require_once("./discuz-api/config.inc.php");
-//require_once("./discuz-api/uc_client/client.php");
-//$uid = uc_user_register($user_id, $password, $email);
-
-    echo "<script language='javascript'>\n";
-    echo "history.go(-2);\n";
-    echo "</script>";
-
+	    echo "<script language='javascript'>\n";
+	    echo "history.go(-2);\n";
+	    echo "</script>";
+	}
 } else {
 
     echo "<script language='javascript'>\n";

@@ -6,13 +6,13 @@
 ?>
 <?php  
 
-  static  $DB_HOST="172.22.237.6";
+  static  $DB_HOST="127.0.0.1";
   static  $DB_VJHOST="127.0.0.1";
   static  $DB_NAME="jol";
   static  $DB_VJNAME="vhoj";
   static  $DB_USER="root";
   static  $DB_VJUSER="root";
-  static  $DB_PASS="hznuonlinejudge!!!";
+  static  $DB_PASS="root";
   static  $DB_VJPASS="root"; 
 
   $OJ_HOME=dirname(dirname(__FILE__));//:OJ/
@@ -44,7 +44,6 @@
   static $OJ_FORBIDDEN = false;  //比赛中选用，是否禁止其它无关页面的访问
   static $OJ_MONITOR = false; //比赛中选用，是否监听广播
 
-
   static $ICON_PATH = "image/hznuoj.ico";
   static $GOLD_RATE = 0.10; // 金牌比例
   static $SILVER_RATE = 0.20; // 银牌比例
@@ -56,6 +55,6 @@
   /* Email configuration */
   static $SMTP_SERVER = "smtp.exmail.qq.com";
   static $SMTP_SERVER_PORT = 25;
-  static $SMTP_USER = "forgot@hsacm.com";
-  static $SMTP_PASS = "hznuojForgot123";
+  static $SMTP_USER = "";
+  static $SMTP_PASS = "";
 ?>

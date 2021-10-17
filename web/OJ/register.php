@@ -15,7 +15,6 @@
   $err_cnt=0;
   $len;
   $user_id=$mysqli->real_escape_string(trim($_POST['user_id']));
-  
   $len=$mysqli->real_escape_string(strlen($user_id));
   $email=$mysqli->real_escape_string(trim($_POST['email']));
   $school=$mysqli->real_escape_string(trim($_POST['school']));
@@ -71,6 +70,10 @@
   }
   if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/", $email)) {
     $err_str=$err_str."Email Illegal!\\n";
+    $err_cnt++;
+  }
+  if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w/", $_POST['password']) || !preg_match("/^.{6,22}$/", $_POST['password'])) {
+   $err_str=$err_str."The password must consist of upper case letters, lower case letters and numbers, with a length of 6 ~ 22 digits!\\n";
     $err_cnt++;
   }
   if ($err_cnt>0){

@@ -18,9 +18,22 @@ if(isset($_POST['do'])){
 	require_once("../include/check_post_key.php");
 	//echo $_POST['passwd'];
 	require_once("../include/my_func.inc.php");
-	
+	$err_cnt=0;
+	$err_str="";
 	$user_id=$_POST['user_id'];
-    $passwd =$_POST['passwd'];
+	$passwd =$_POST['passwd'];
+	if (!preg_match("/^.*(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])\w{6,22}$/", $_POST['passwd'])) {
+	$err_str=$err_str."The password must consist of upper case letters, lower case letters and numbers, with a length of 6 ~ 22 digits!\\n";
+	$err_cnt++;
+	}
+	if ($err_cnt>0){
+	    print "<script language='javascript'>\n";
+	    print "alert('";
+	    print $err_str;
+	    print "');\n history.go(-1);\n</script>";
+	    exit(0);
+	}
+
     if(get_order(get_group($user_id))<=get_order(get_group())){
     	$view_error="You can't edit this user!";
 		require_once("error.php");
