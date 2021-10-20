@@ -45,6 +45,8 @@ if (isset($_GET['cid'])){
         if (HAS_PRI("edit_contest")) $contest_ok=true;
         
         if (!$contest_ok){
+            $cid = htmlEntities($cid, ENT_QUOTES);
+            $MSG_PRIVATE_WARNING = htmlEntities($MSG_PRIVATE_WARNING, ENT_QUOTES);
             $view_errors = "<font style='color:red;text-decoration:underline;'>$MSG_PRIVATE_WARNING</font><br>";
             $view_errors .= "Click <a href=contestrank.php?cid=$cid>HERE</a> to watch contest rank, or input password to enter it.";
             $view_errors .= "<form method=post action='contest.php?cid=$cid' class='am-form-inline am-text-center'>";
