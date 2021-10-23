@@ -53,7 +53,7 @@
 ```bash
 docker build -t hznuoj:latest -f docker/Dockerfile ./
 ```
- 
+
 等待build完成即可。
 
 完成后`docker image ls`，若有看到hznuoj的镜像即为成功。
@@ -72,16 +72,25 @@ docker pull wlx65003/hznuoj
 
 ### 启动容器
 
-```
-docker run -it --rm -p 90:80 hznuoj:latest
+```bash
+docker run -it --rm --privileged=true -p 8001:80 -d \
+--name=hznuoj \
+-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
+-v /var/hznuoj/upload:/var/www/web/OJ/upload \
+hznuoj:latest
 ```
 
-其中`-p 90:80`表示把容器的80端口映射到宿主机的90端口，可自行修改，可以直接改成http默认的80端口以省去网址里的端口号。
+其中 `-p 8001:80` 表示把容器的 80 端口映射到宿主机的90端口，可自行修改，可以直接改成 http 默认的 80 端口以省去网址里的端口号。
 
 `--rm` 表示运行一次就删除容器，如果你想长期运行，当虚拟机用，需要去掉。
 
-然后访问localhost:90即可。
+然后访问 localhost:8001 即可。
 
+### 进入容器
+
+```bash
+docker exec -it hznuoj bash
+```
 
 ## 使用源码
 
