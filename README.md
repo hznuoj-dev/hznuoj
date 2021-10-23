@@ -61,7 +61,7 @@ docker build -t hznuoj:latest -f docker/Dockerfile ./
 ### 启动容器
 
 ```bash
-docker run -it --rm --privileged=true -p 8001:80 -d \
+docker run -it --rm -p 8001:80 -d \
 --name=hznuoj \
 -v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
 -v /var/hznuoj/upload:/var/www/web/OJ/upload \
