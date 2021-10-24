@@ -37,3 +37,6 @@ sed -i -e 's/\/var\/www\/html/\/var\/www\/web/g' /etc/apache2/sites-available/00
 
 # forbid directory access
 sed -i -e 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/apache2/apache2.conf
+
+# set limit of prefork mode
+cat "${TOP_DIR}/etc/apache2/mods-available/mpm_prefork.conf" >/etc/apache2/mods-available/mpm_prefork.conf
