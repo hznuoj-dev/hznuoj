@@ -39,11 +39,14 @@
             <select id="language" name="language" data-am-selected="{searchBox: 1, maxHeight: 400}">
                 <?php
                 $lang_count=count($language_ext);
+
                 if(isset($contest_langmask))
                     $langmask=$contest_langmask;
                 else
                     $langmask=$OJ_LANGMASK;
+
                 $lang=((int)$langmask)&((1<<($lang_count))-1);
+								
                 if(isset($_COOKIE['lastlang'])) $lastlang=$_COOKIE['lastlang'];
                 else $lastlang=0;
                 for($i=0;$i<$lang_count;$i++){
@@ -103,7 +106,7 @@
 <script src="/OJ/plugins/js-base64/base64.js" type="text/javascript" charset="utf-8"></script>
 
 <script>
-    language_mod = ["c_cpp","c_cpp","pascal","java","ruby","batchfile","python","php","perl","csharp","objectivec","plain_text","scheme","c_cpp","c_cpp","lua","javascript","golang","python"];
+    language_mod = ["c_cpp","c_cpp","pascal","java","ruby","batchfile","python","php","perl","csharp","objectivec","plain_text","scheme","c_cpp","c_cpp","lua","javascript","golang","python", "c_cpp", "c_cpp", "c_cpp"];
     var editor = ace.edit("editor");
     var $obj_select_lang = $("#language");
     var lang = $obj_select_lang.val();
