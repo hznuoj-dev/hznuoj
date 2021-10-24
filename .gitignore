@@ -7,6 +7,8 @@
 .DS_Store
 *.swp
 
+debug.sh
+
 judger/core/judge_client/.idea/
 judger/core/judge_client/judge_client
 judger/core/judged/.idea/
