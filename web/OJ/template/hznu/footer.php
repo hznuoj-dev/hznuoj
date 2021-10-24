@@ -11,7 +11,7 @@
 
 <footer class="blog-footer">
     <hr />
-    <a href="https://github.com/wlx65003/HZNUOJ">HZNUOJ</a> is based on <a href="https://github.com/zhblue/hustoj" target="_blank">HUSTOJ</a><br />
+    <a href="https://github.com/hznuoj-dev/hznuoj">HZNUOJ</a> is based on <a href="https://github.com/zhblue/hustoj" target="_blank">HUSTOJ</a><br />
     <a href="/OJ/maintainer-list.php">--- Maintainer List ---</a><br>
     Server Time: <span id='footerdate'><?php echo date('20y-m-d h:i:s',time()); ?></span>
 
@@ -111,13 +111,13 @@ setInterval(update, 1000);
 <!-- contest time bar END -->
 <?php endif ?>
 
-<?php if (isset($_SESSION['user_id']) 
-      && isset($_GET['cid']) 
-      && $OJ_MONITOR 
+<?php if (isset($_SESSION['user_id'])
+      && isset($_GET['cid'])
+      && $OJ_MONITOR
       && !HAS_PRI("enter_admin_page")): ?>
 <!-- contest monitor bar BEGIN -->
 
-<?php 
+<?php
     $cid = $_GET['cid'];
     $user_id = $_SESSION['user_id'];
 ?>
@@ -125,26 +125,26 @@ setInterval(update, 1000);
 <script>
 $(document).ready(function(){
     monitor();
-    setInterval(monitor, 60000); 
+    setInterval(monitor, 60000);
 });
 
 function monitor() {
     $.ajax({
-        type: "POST",  
-        url: '/OJ/ajax/contest_discuss/monitor.php', 
+        type: "POST",
+        url: '/OJ/ajax/contest_discuss/monitor.php',
         data: {
             cid : <?php echo $cid; ?>,
             user_id : <?php echo "'".$user_id."'"; ?>
         },
-        context: this, 
-        success: function(data){ 
+        context: this,
+        success: function(data){
             var json = JSON.parse(data);
             if (json.result) {
-                AMUI.dialog.alert({ 
-                    title: "提示", 
-                    content: json.msg,    
+                AMUI.dialog.alert({
+                    title: "提示",
+                    content: json.msg,
                     onConfirm: function() {
-                        
+
                     }
                 });
             }
@@ -177,7 +177,7 @@ function monitor() {
         displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
         processEscapes: true
     },
-    "HTML-CSS": { 
+    "HTML-CSS": {
         availableFonts: ["TeX"]
     }
 });
