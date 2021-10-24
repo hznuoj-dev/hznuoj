@@ -34,4 +34,8 @@ chown -R ${APACHEUSER} ${UPLOAD}
 
 # change apache server root to /var/www/web
 sed -i -e 's/\/var\/www\/html/\/var\/www\/web/g' /etc/apache2/sites-available/000-default.conf
+
+# forbid directory access
+sed -i -e 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/apache2/apache2.conf
+
 /etc/init.d/apache2 restart
