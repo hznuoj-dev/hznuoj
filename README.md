@@ -1,6 +1,6 @@
 # HZNUOJ
 
-**HZNUOJ 是基于 [HUSTOJ](https://github.com/zhblue/hustoj) 改造而来的，遵循GPL协议开源**
+**HZNUOJ 是基于 [HUSTOJ](https://github.com/zhblue/hustoj) 改造而来的，遵循 GPL 协议开源**
 
 ## 部署指南
 
