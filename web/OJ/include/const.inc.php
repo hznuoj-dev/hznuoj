@@ -32,28 +32,31 @@
   $jresult=Array($MSG_PD,$MSG_PR,$MSG_CI,$MSG_RJ,$MSG_AC,$MSG_PE,$MSG_WA,$MSG_TLE,$MSG_MLE,$MSG_OLE,$MSG_RE,$MSG_CE,$MSG_CO,$MSG_TR);
   $judge_color=Array("gray","gray","orange","orange","green","red","red","red","red","red","red","navy ","navy");
   $language_name=Array(
-      "C(gcc)",          //0
-      "C++(g++)",        //1
-      "Pascal(fpc)",     //2
-      "Java(javac)",     //3
-      "Ruby",            //4
-      "Bash",            //5
-      "Python2",         //6
-      "PHP",             //7
-      "Perl",            //8
-      "C#(gmcs)",        //9
-      "Obj-C(gcc)",      //10
-      "FreeBasic(fbc)",  //11
-      "Scheme(guile)",   //12
-      "C(clang)",        //13
-      "C++(clang++)",    //14
-      "Lua(luac)",       //15
-      "JavaScript(nodejs)",//16
-      "Go",              //17
-      "Python3"          //18
+      "C11(GCC 11.1.0)",             //0
+      "C++11(GCC 11.1.0)",           //1
+      "Pascal(FPC 3.0.4)",           //2
+      "Java(OpenJDK 11.0.11)",       //3
+      "Ruby",                        //4
+      "Bash",                        //5
+      "Python(2.7.18)",              //6
+      "PHP(8.0.11)",                 //7
+      "Perl",                        //8
+      "C#(Mono-mcs)",                //9
+      "Obj-C(gcc)",                  //10
+      "FreeBasic(fbc)",              //11
+      "Scheme(guile)",               //12
+      "C11(Clang 11.1.0)",           //13
+      "C++11(Clang 11.1.0)",         //14
+      "Lua(luac)",                   //15
+      "JavaScript(nodejs)",          //16
+      "Go(1.17)",                    //17
+      "Python(3.9.7)",               //18
+			"C++14(GCC 11.1.0)",           //19
+			"C++17(GCC 11.1.0)",           //20
+			"C++20(GCC 11.1.0)"            //21
   );
-  $language_order = [0,1,13,14,2,3,4,5,6,18,7,8,9,10,11,12,15,16,17];
-  $language_ext=Array( "c", "cc", "pas", "java", "rb", "sh", "py", "php","pl", "cs","m","bas","scm","c","cc","lua","js", "go", "py");
+  $language_order = [0,1,19,20,21,13,14,17,6,18,3,2,7,5,4,8,9,10,11,12,15,16];
+  $language_ext=Array( "c", "cc", "pas", "java", "rb", "sh", "py", "php","pl", "cs","m","bas","scm","c","cc","lua","js", "go", "py", "cc", "cc", "cc");
   function PID($id) {
     $id++;
     $res = "";
