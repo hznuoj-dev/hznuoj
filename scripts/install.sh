@@ -37,5 +37,3 @@ sed -i -e 's/\/var\/www\/html/\/var\/www\/web/g' /etc/apache2/sites-available/00
 
 # forbid directory access
 sed -i -e 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/apache2/apache2.conf
-
-/etc/init.d/apache2 restart
