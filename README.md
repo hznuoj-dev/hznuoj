@@ -21,7 +21,7 @@ docker build -t hznuoj:latest -f docker/Dockerfile ./
 ### 启动容器
 
 ```bash
-docker run -it --rm -p 8001:80 -d \
+docker run -it --rm -p 80:80 -d \
 --name=hznuoj \
 -v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
 -v /var/hznuoj/upload:/var/www/web/OJ/upload \
@@ -29,11 +29,11 @@ docker run -it --rm -p 8001:80 -d \
 hznuoj:latest
 ```
 
-其中 `-p 8001:80` 表示把容器的 80 端口映射到宿主机的 8001 端口，可自行修改，可以直接改成 http 默认的 80 端口以省去网址里的端口号。
+其中 `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改。
 
 `--rm` 表示运行一次就删除容器，如果你想长期运行，当虚拟机用，需要去掉。
 
-然后访问 localhost:8001 即可。
+然后访问 localhost:80 即可。
 
 ### 进入容器
 
