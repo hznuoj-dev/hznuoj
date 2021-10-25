@@ -26,7 +26,7 @@ docker run -it --restart=always -d \
 --name=hznuoj \
 -v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
 -v /var/hznuoj/upload:/var/www/web/OJ/upload \
--v /var/hznuoj-judge/data:/var/hznuoj/data \
+-v /var/hznuoj/data:/var/hznuoj/data \
 hznuoj:latest
 ```
 
