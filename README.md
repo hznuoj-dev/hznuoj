@@ -21,7 +21,8 @@ docker build -t hznuoj:latest -f docker/Dockerfile ./
 ### 启动容器
 
 ```bash
-docker run -it --rm -p 80:80 -d \
+docker run -it --restart=always -d \
+-p 80:80 \
 --name=hznuoj \
 -v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
 -v /var/hznuoj/upload:/var/www/web/OJ/upload \
@@ -29,9 +30,9 @@ docker run -it --rm -p 80:80 -d \
 hznuoj:latest
 ```
 
-其中 `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改。
-
-`--rm` 表示运行一次就删除容器，如果你想长期运行，当虚拟机用，需要去掉。
+- `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改。
+- `--name=hznuoj` 表示指定容器的名字为 `hznuoj`。
+- `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂在到容器内的 `/var/www/web/OJ/include/static.php`。
 
 然后访问 localhost:80 即可。
 
