@@ -24,7 +24,7 @@
 </footer>
 
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="/OJ/plugins/jquery/jquery-3.1.1.min.js"></script>
+<script src="/OJ/plugins/jquery/jquery-3.5.1.min.js"></script>
 <script src="/OJ/plugins/AmazeUI/js/amazeui.min.js"></script>
 <script type="text/javascript" src="/OJ/plugins/AmazeUI/js/amazeui.dialog.min.js"></script>
 <!--<![endif]-->

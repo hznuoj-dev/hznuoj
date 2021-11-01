@@ -3,6 +3,14 @@ require_once('./include/db_info.inc.php');
 require_once('./include/my_func.inc.php');
 require_once('./include/setlang.php');
 require_once './include/const.inc.php';
+
+function fileter_str( $str ) {
+    $str = addslashes(trim($str));
+    $str = preg_replace("/<(.*?)>/","",$str);
+    $str = str_replace("_x000D_","",$str);
+    return $str;
+}
+
 if (isset($_GET['cid'])){
 
     if (isset($_SESSION['contest_id']) && $_SESSION['contest_id']!=$_GET['cid']) {
@@ -73,7 +81,8 @@ if (isset($_GET['cid'])){
 
     
     $user_id = $mysqli->real_escape_string($_SESSION['user_id']);
-    $contest_id = $mysqli->real_escape_string($_GET['cid']);
+    // $contest_id = $mysqli->real_escape_string($_GET['cid']);
+    $contest_id = fileter_str($_GET['cid']);
     $sql = "select code,in_date,status from printer_code where user_id = '$user_id' and contest_id = '$contest_id'";
     $result = $mysqli->query($sql);
     $printed_codes = [];
