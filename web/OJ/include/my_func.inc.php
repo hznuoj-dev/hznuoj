@@ -352,4 +352,12 @@ function get_group($uid){
     $sql="SELECT rightstr FROM privilege WHERE user_id='$uid'";
     return ($mysqli->query($sql)->fetch_array()[0]);
 }
+
+function fileter_str( $str ) {
+    $str = addslashes(trim($str));
+    $str = preg_replace("/<(.*?)>/","",$str);
+    $str = str_replace("_x000D_","",$str);
+    return $str;
+}
+
 ?>

@@ -4,13 +4,6 @@ require_once('./include/my_func.inc.php');
 require_once('./include/setlang.php');
 require_once './include/const.inc.php';
 
-function fileter_str( $str ) {
-    $str = addslashes(trim($str));
-    $str = preg_replace("/<(.*?)>/","",$str);
-    $str = str_replace("_x000D_","",$str);
-    return $str;
-}
-
 if (isset($_GET['cid'])){
     if (isset($_SESSION['contest_id']) && $_SESSION['contest_id']!=$_GET['cid']) {
         $view_errors = "<font style='color:red;text-decoration:underline;'>You can only enter the correspond contest!</font>";
