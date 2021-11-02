@@ -81,7 +81,6 @@ if (isset($_GET['cid'])){
     $cntSql = "SELECT COUNT(*) AS sum FROM `solution` WHERE contest_id is NULL ";
 }
 $start_first = true;
-
 // check the problem arg
 $problem_id="";
 if (isset($_GET['problem_id'])&&$_GET['problem_id']!=""){
