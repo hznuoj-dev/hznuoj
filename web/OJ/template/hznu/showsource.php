@@ -92,6 +92,8 @@ if($cid) {
     </div>
 HTML;
 }
+$copy_source = htmlentities($view_source);
+echo "<button type = \"button\" class=\"sample-copy-btn am-btn am-radius am-btn-link am-btn-xs\" data-clipboard-text = \"{$copy_source}\"style = \"height:20px;margin-left:30px;margin-top:-4px;padding-top:2px;padding-left: 8px;padding-right: 8px;\">复制代码</button>";
 echo <<<HTML
 </div>
 <hr>
@@ -130,6 +132,19 @@ echo "</code></pre>";
         user-select: none;
     }
 </style>
+
+<script src="/OJ/plugins/clipboard/dist/clipboard.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var clipboard = new ClipboardJS('.sample-copy-btn');
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+        });
+        clipboard.on('error', function(e) {
+        });
+    });
+</script>   
+
 <script>
     hljs.initHighlightingOnLoad();
     hljs.initLineNumbersOnLoad();
