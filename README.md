@@ -1,5 +1,7 @@
 # HZNUOJ
 
+[![Build](https://github.com/hznuoj-dev/hznuoj/actions/workflows/build.yml/badge.svg)](https://github.com/hznuoj-dev/hznuoj/actions/workflows/build.yml)
+
 **HZNUOJ 是基于 [HUSTOJ](https://github.com/zhblue/hustoj) 改造而来的，遵循 GPL 协议开源**
 
 ## 部署指南
