@@ -11,6 +11,17 @@ UPLOAD=${WEBBASE}/web/OJ/upload
 DATA=/var/hznuoj/data
 STATIC_PHP=${WEBBASE}/web/OJ/include/static.php
 
+# Install dependencies
+apt-get clean
+apt-get update
+apt-get dist-upgrade -y
+apt-get install -y gnupg ca-certificates wget
+
+# Key: PHP repo
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4F4EA0AAE5267A6C
+
+echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main" >/etc/apt/sources.list.d/php.list
+
 deps="apache2 php7.0 libapache2-mod-php7.0 php7.0-mysql php7.0-mbstring php7.0-gd php7.0-cli php-xml"
 
 apt-get update
