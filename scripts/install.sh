@@ -11,7 +11,8 @@ UPLOAD=${WEBBASE}/web/OJ/upload
 DATA=/var/hznuoj/data
 STATIC_PHP=${WEBBASE}/web/OJ/include/static.php
 
-deps="php7.0 apache2 libapache2-mod-php7.0 php7.0-mysql php7.0-mbstring php7.0-gd php7.0-cli php-xml"
+deps="apache2 php7.0 libapache2-mod-php7.0 php7.0-mysql php7.0-mbstring php7.0-gd php7.0-cli php-xml"
+
 apt-get update
 # shellcheck disable=SC2086
 apt-get -y install ${deps}
