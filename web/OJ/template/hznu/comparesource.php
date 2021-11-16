@@ -9,7 +9,7 @@
   **/
 ?>
 
-<?php 
+<?php
   $title="Compare Source Code";
 ?>
 
@@ -30,7 +30,8 @@
     </div><!--end main-->
   </div><!--end wrapper-->
   <!-- Requires jQuery -->
-  <script language="javascript" type="text/javascript" src="plugins/jquery/jquery-1.9.0.min.js"></script>
+  <!-- <script language="javascript" type="text/javascript" src="plugins/jquery/jquery-1.9.0.min.js"></script> -->
+  <script language="javascript" type="text/javascript" src="/OJ/plugins/jquery/jquery-3.5.1.min.js"></script>
   <!-- Requires CodeMirror 2.16 -->
   <script type="text/javascript" src="plugins/mergely/codemirror.js"></script>
   <link type="text/css" rel="stylesheet" href="plugins/mergely/codemirror.css" />

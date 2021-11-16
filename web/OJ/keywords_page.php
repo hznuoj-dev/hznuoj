@@ -1,9 +1,10 @@
 <?php $title="Key_words"; ?>
 <?php
 
-require_once "template/hznu/header.php"; 
+require_once "template/hznu/header.php";
 ?>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
+<!-- <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"> -->
+<script src="/OJ/plugins/jquery/jquery-3.5.1.min.js"></script>
 </script>
 <style>
     .box{
@@ -16,7 +17,7 @@ require_once "template/hznu/header.php";
       font-size: xx-large;
     }
     .class-name-en{
-      
+
     }
     .class-title{
       padding-bottom: 15px;
@@ -63,7 +64,7 @@ require_once "template/hznu/header.php";
         border: 1px solid #eee;
         padding: 30px 50px;
         /* margin: 25px 0 15px 0; */
-        box-shadow: 2px 2px 10px 0 #ccc;    
+        box-shadow: 2px 2px 10px 0 #ccc;
     }
     li{
         line-height: 300%;
@@ -132,7 +133,7 @@ require_once "template/hznu/header.php";
         </div>
         <br>
         <div class="class-name-explain">
-           <p>整理关键词、数据类型、数据结构，通过一定的评分标准来实现评级</p>   
+           <p>整理关键词、数据类型、数据结构，通过一定的评分标准来实现评级</p>
         </div>
       </div>
     </div>
@@ -172,7 +173,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>输出格式</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>char</p>
@@ -183,7 +184,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%c</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>short</p>
@@ -194,7 +195,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%d</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>int</p>
@@ -205,7 +206,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%d</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>double</p>
@@ -216,7 +217,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%lf/%f</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>float</p>
@@ -227,7 +228,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%f</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>long</p>
@@ -238,7 +239,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%ld</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>long long</p>
@@ -249,7 +250,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%lld</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>long double</p>
@@ -260,7 +261,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%Lf</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>unsiged int</p>
@@ -271,7 +272,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%u</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>unsiged long</p>
@@ -282,7 +283,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%lu</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>unsiged long long</p>
@@ -293,7 +294,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%llu</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>enum</p>
@@ -304,7 +305,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>无</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>字符串类型</p>
@@ -315,7 +316,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%s</p>
                      </td>
-                  </tr> 
+                  </tr>
                    <tr>
                      <td colspan="5">
                         <p>指针类型</p>
@@ -326,7 +327,7 @@ require_once "template/hznu/header.php";
                      <td colspan="5">
                         <p>%p</p>
                      </td>
-                  </tr> 
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -388,7 +389,7 @@ require_once "template/hznu/header.php";
                            ctx.fillRect(0,0,200,50);
                         </script>
                         </td>
-                     </tr> 
+                     </tr>
                      <tr>
                         <td colspan="5">
                            <p>pupil</p>
@@ -405,7 +406,7 @@ require_once "template/hznu/header.php";
                            ctx.fillRect(0,0,200,50);
                         </script>
                         </td>
-                     </tr> 
+                     </tr>
                      <tr>
                         <td colspan="5">
                            <p>expert</p>
@@ -422,7 +423,7 @@ require_once "template/hznu/header.php";
                            ctx.fillRect(0,0,200,50);
                         </script>
                         </td>
-                     </tr> 
+                     </tr>
                      <tr>
                         <td colspan="5">
                            <p>candidate master</p>
@@ -439,7 +440,7 @@ require_once "template/hznu/header.php";
                            ctx.fillRect(0,0,200,50);
                         </script>
                         </td>
-                     </tr> 
+                     </tr>
                      <tr>
                         <td colspan="5">
                            <p>master</p>
@@ -456,7 +457,7 @@ require_once "template/hznu/header.php";
                            ctx.fillRect(0,0,200,50);
                         </script>
                         </td>
-                     </tr> 
+                     </tr>
                   </tbody>
                   </table>
             </div>
@@ -477,26 +478,26 @@ require_once "template/hznu/header.php";
                 <li><a class="scroll_dataStructure">程序结构</a></li>
                 <li><a class="scroll_scoringCriteria">评分标准</a></li>
                 <!-- <li><a class="scroll_top">返回顶部</li> -->
-              </ol> 
+              </ol>
             </div>
           </div>
            <?php $user=$_SESSION['user_id'];if($user==TRUE)include_once "keywords_search.php"?>
            <br>
           </div>
       </div>
-      
+
       </div>
     </div>
   </div><!-- container -->
-  <script type="text/javascript"> 
-      jQuery(document).ready(function($){ 
-      // $('.scroll_top').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);}); 
-      $('.scroll_keywords').click(function(){$('html,body').animate({scrollTop:$('.keyWords').offset().top-60}, 800);}); 
-      $('.scroll_types').click(function(){$('html,body').animate({scrollTop:$('.types').offset().top-60}, 800);}); 
-      $('.scroll_dataStructure').click(function(){$('html,body').animate({scrollTop:$('.dataStructure').offset().top-60}, 800);}); 
-      $('.scroll_scoringCriteria').click(function(){$('html,body').animate({scrollTop:$('.scoringCriteria').offset().top-60}, 800);}); 
-      }); 
-      
-  </script> 
+  <script type="text/javascript">
+      jQuery(document).ready(function($){
+      // $('.scroll_top').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);});
+      $('.scroll_keywords').click(function(){$('html,body').animate({scrollTop:$('.keyWords').offset().top-60}, 800);});
+      $('.scroll_types').click(function(){$('html,body').animate({scrollTop:$('.types').offset().top-60}, 800);});
+      $('.scroll_dataStructure').click(function(){$('html,body').animate({scrollTop:$('.dataStructure').offset().top-60}, 800);});
+      $('.scroll_scoringCriteria').click(function(){$('html,body').animate({scrollTop:$('.scoringCriteria').offset().top-60}, 800);});
+      });
+
+  </script>
 
 <?php require_once "template/hznu/footer.php" ?>
