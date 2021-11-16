@@ -2,6 +2,11 @@
 name: Build
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'version'
+        required: true
+        default: 'latest'
 
 jobs:
   build:
@@ -44,4 +49,4 @@ jobs:
           file: ./docker/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: hznuoj/hznuoj:latest
+          tags: hznuoj/hznuoj:${{ github.event.inputs.version }}
