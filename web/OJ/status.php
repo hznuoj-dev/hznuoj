@@ -21,6 +21,12 @@ require_once("./include/my_func.inc.php");
 if(isset($OJ_LANG)) require_once("./lang/$OJ_LANG.php");
 require_once("./include/const.inc.php");
 
+if (!isset($_SESSION['user_id'])){
+    $view_errors= "<a href=loginpage.php style='color:red;text-decoration:underline;'>$MSG_Login</a>";
+    require("template/".$OJ_TEMPLATE."/error.php");
+    exit(0);
+}
+
 if ($OJ_TEMPLATE == "hznu")
 $judge_color=Array( "am-badge am-badge-secondary am-text-sm", // Pending
 "am-badge am-badge-secondary am-text-sm", // Pending & Rejudging
