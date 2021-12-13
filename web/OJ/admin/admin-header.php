@@ -105,6 +105,7 @@ sss;
           if(HAS_PRI("generate_team")){
             $html_li .= "<li><a href='/OJ/admin/team_generate.php'>Team Generator</a></li>";
             $html_li .= "<li><a href='/OJ/admin/team_import.php'>Team Import</a></li>";
+            $html_li .= "<li><a href='/OJ/admin/team_import_bypassword.php'>Team Import(By Password)</a></li>";
           }
             
           if($html_li!=""){
