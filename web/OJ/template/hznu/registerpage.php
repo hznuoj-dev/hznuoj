@@ -11,6 +11,11 @@
 
 <?php $title="Register";?>
 <?php
+  require_once($_SERVER['DOCUMENT_ROOT']."/OJ/include/static.php");
+  if (!$OJ_REGISTER) {
+      $view_errors = "The page is temporarily closed!";
+      return require_once("error.php");
+  }
   include "header.php";
 ?>
 <div class="am-g">
