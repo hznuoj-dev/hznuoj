@@ -142,7 +142,6 @@ else $_SESSION['tag'] = "N";
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">Login <span class="am-icon-caret-down"></span></a>
                     <ul class="am-dropdown-content">
                     <li><a href="/OJ/loginpage.php"><span class="am-icon-user"></span> Login</a></li>
-                    <li><a href="/OJ/registerpage.php"><span class="am-icon-pencil"></span> Register</a></li>
 HTML;
                     if ($show_tag) echo "<li><a href='/OJ/changeTag.php'><span class='am-icon-toggle-on'></span> Hide Tag</a></li>";
                     else echo "<li><a href='/OJ/changeTag.php'><span class='am-icon-toggle-off'></span> Show Tag</a></li>";
