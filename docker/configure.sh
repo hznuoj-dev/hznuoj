@@ -32,4 +32,4 @@ sed -ri -e "s/^upload_max_filesize.*/upload_max_filesize = 512M/" \
     -e "s/^memory_limit.*/memory_limit = 2G/" \
     -e "s/^max_file_uploads.*/max_file_uploads = 200/" \
     -e "s#^;date\.timezone.*#date.timezone = ${CONTAINER_TIMEZONE}#" \
-    "$php_folder/fpm/php.ini"
+    "$php_folder/apache2/php.ini"
