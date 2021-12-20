@@ -10,6 +10,8 @@ if [ -z "$*" ]; then
             fi
         fi
     done
+
+    exec /bin/bash
 else
     exec "$@"
 fi
