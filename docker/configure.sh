@@ -1,5 +1,13 @@
 #! /bin/bash
 
+WEBBASE=/var/www
+APACHEUSER=www-data
+UPLOAD=${WEBBASE}/web/OJ/upload
+DATA=/var/hznuoj/data
+
+chown -R ${APACHEUSER} ${DATA}
+chown -R ${APACHEUSER} ${UPLOAD}
+
 for script in /scripts/bin/*; do
     if [ -f "$script" ]; then
         chmod 755 "$script"

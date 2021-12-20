@@ -4,7 +4,8 @@ USER root
 WORKDIR /root/
 COPY ./ ./hznuoj
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive \
+    CONTAINER_TIMEZONE=Asia/Shanghai
 
 # change apt-source to aliyun
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
@@ -23,4 +24,4 @@ EXPOSE 80
 HEALTHCHECK --interval=10s --timeout=10s --start-period=30s --retries=3 CMD [ "/scripts/bin/healthcheck" ]
 
 ENTRYPOINT ["/root/docker_entry.sh"]
-CMD ["/bin/bash"]
+CMD [""]
