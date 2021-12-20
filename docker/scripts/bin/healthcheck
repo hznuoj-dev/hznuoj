@@ -14,7 +14,7 @@ for service in "${SERVICES[@]}"; do
 done
 
 BASEURL="http://localhost/OJ"
-if curl --silent --fail "$BASEURL/api" >/dev/null; then
+if curl --silent --fail "$BASEURL/" >/dev/null; then
     printf "http ok"
 else
     printf "http error"
