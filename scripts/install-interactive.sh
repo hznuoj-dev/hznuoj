@@ -12,13 +12,13 @@ DBUSER=root
 DBPASS=root
 
 printf "Input Database(MySQL) Username:"
-read tmp
+read -r tmp
 if test -n "$tmp"
 then
     DBUSER="$tmp"
 fi
 printf "Input Database(MySQL) Password:"
-read tmp
+read -r tmp
 if test -n "$tmp"
 then
     DBPASS="$tmp"
@@ -49,7 +49,7 @@ sudo  /usr/sbin/useradd -m -u 1536 judge
 
 
 #compile and install the core
-cd hustoj-read-only/core/
+cd hustoj-read-only/core/ || exit 1
 sudo ./make.sh
 cd ../..
 #install web and db
@@ -75,12 +75,12 @@ sudo chmod 775 /home/judge /home/judge/data /home/judge/etc /home/judge/run?
 #update database account
 SED_CMD="s/OJ_USER_NAME=root/OJ_USER_NAME=$DBUSER/g"
 SED_CMD2="s/OJ_PASSWORD=root/OJ_PASSWORD=$DBPASS/g"
-sed $SED_CMD judge.conf|sed $SED_CMD2 >/home/judge/etc/judge.conf
+sed "$SED_CMD" judge.conf|sed "$SED_CMD2" >/home/judge/etc/judge.conf
 
 SED_CMD="s/DB_USER=\\\"root\\\"/DB_USER=\\\"$DBUSER\\\"/g"
 SED_CMD2="s/DB_PASS=\\\"root\\\"/DB_PASS=\\\"$DBPASS\\\"/g"
 
-sed $SED_CMD hustoj-read-only/web/include/db_info.inc.php|sed $SED_CMD2 >$WEBBASE/JudgeOnline/include/db_info.inc.php
+sed "$SED_CMD" hustoj-read-only/web/include/db_info.inc.php|sed "$SED_CMD2" >$WEBBASE/JudgeOnline/include/db_info.inc.php
 
 
 #boot up judged
