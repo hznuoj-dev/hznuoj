@@ -51,7 +51,9 @@ cd ../..
 sudo cp -R hustoj-read-only/web $WEBBASE/JudgeOnline
 sudo chmod -R 771 $WEBBASE/JudgeOnline
 sudo chown -R $APACHEUSER $WEBBASE/JudgeOnline
-sudo mysql -h localhost -u$DBUSER -p$DBPASS <db.sql
+
+# shellcheck disable=SC2024
+sudo mysql -h localhost -u"$DBUSER" -p"$DBPASS" <db.sql
 
 #create work dir set default conf
 sudo mkdir /home/judge
