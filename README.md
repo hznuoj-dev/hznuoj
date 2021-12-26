@@ -34,9 +34,9 @@ hznuoj:latest
 
 - `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改。
 - `--name=hznuoj` 表示指定容器的名字为 `hznuoj`。
-- `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂在到容器内的 `/var/www/web/OJ/include/static.php`。
+- `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂载到容器内的 `/var/www/web/OJ/include/static.php`。
 
-然后访问 localhost:80 即可。
+然后访问 `localhost:80` 即可。
 
 ### 进入容器
 
@@ -55,7 +55,7 @@ docker exec -it hznuoj bash
 * 更华丽的界面
 * 更灵活的权限管理
 * 支持多组样例
-* 有封装好的Docker镜像，一键部署
+* 有封装好的 Docker 镜像，一键部署
 
 ## 界面截图
 
