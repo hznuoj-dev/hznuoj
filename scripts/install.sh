@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 set -e -x
 
 # shellcheck disable=SC2034
@@ -15,7 +15,7 @@ STATIC_PHP=${WEBBASE}/web/OJ/include/static.php
 apt-get clean
 apt-get update
 apt-get dist-upgrade -y
-apt-get install -y gnupg ca-certificates wget
+apt-get install -y gnupg ca-certificates wget curl
 
 # Key: PHP repo
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4F4EA0AAE5267A6C
