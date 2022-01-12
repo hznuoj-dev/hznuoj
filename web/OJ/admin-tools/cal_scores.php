@@ -1,5 +1,5 @@
 <?php
-return;
+//return;
 ?>
 <!DOCTYPE html>
 <html>

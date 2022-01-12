@@ -3,7 +3,7 @@
 ?>
 
 <?php
-	return;
+//	return;
 ?>
 
 <!DOCTYPE html>
