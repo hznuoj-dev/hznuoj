@@ -43,6 +43,7 @@
         </select>
         <td colspan="5">
             <input type="submit" value="Search" onclick="searchTo()" class="bt_search">
+            <input type="submit" value="Gather" onclick="MoveTo()" class="bt_move">
             <div id="show_result" class="show_result"> 
                 <?php 
                 echo "<p>".$search_name."<p>"; 

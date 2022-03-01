@@ -1,98 +1,145 @@
-<?php 
-    // echo $user_id;   
+<?php  
     if(!isset($user_id)){
-        /////////////////////////Template
         require("template/".$OJ_TEMPLATE."/loginpage.php");
-        /////////////////////////Common foot
         exit(0);
     }
 ?>
 <?php
-    // ini_set('display_errors', 'On');
-    // ini_set('display_startup_errors', 'On');
-    // error_reporting(E_ALL);
     $cache_time=10; 
     $OJ_CACHE_SHARE=false;
-    // check user
     $user=$_SESSION['user_id'];
     if (!is_valid_user_name($user)){
         echo "No such User!";
         exit(0);
     }
     $user_mysql=$mysqli->real_escape_string($user);
-    //显示用户id
-    // echo "user_mysql:";
-    // echo $user_mysql;
-    //寻找AC代码
-    // $sql="SELECT  solution_id FROM `solution` WHERE `user_id`='$user_mysql' AND result=4";
-    // $result=$mysqli->query($sql);
-    // while($row=$result->fetch_object()){
-    //     $solutionid=$row->solution_id;
-    //     $sql2="SELECT * FROM `source_code` WHERE solution_id='$solutionid'";
-    //     $result2=$mysqli->query($sql2);
-    //     $row2=$result2->fetch_object();
-    //     $source_code=$row2->source;
-    //     // echo $source_code;
-    //     // print_r($row2->source);
-    //     $result2->free();
-    //     // 显示提取的原代码
-    //     echo "<br>solution_id:";
-    //     echo $solutionid;
-    //     echo "<br>";
-    //     echo "<pre style='background-color: transparent;'><code style='background-color: transparent;'>";
-    //     echo htmlentities(str_replace("\r\n","\n",$source_code),ENT_QUOTES,"utf-8");
-    //     echo "</code></pre>";
-    // }
 ?>
 <?php
     require_once "template/hznu/header.php";
-    $keywords=array("int","char","return","struct","typedef",
+    $my_keywords=array("","int","char","return","struct","typedef",
     "void","switch","if","else","break","continue","goto","do",
     "while","for","sizeof","\\n","\\\\","\'","\?","short",
     "double","float","long","long long","long double","unsigned int","unsigned long","unsigned long long",
     "enum");
+    $keywords_len = count($my_keywords);
+    $GLOBALS['keywords_num'] = array();
+    $GLOBALS['vis'] = array();
+    for ($i=0;$i<$keywords_len;$i++) {
+        array_push($GLOBALS['keywords_num'], 0);
+        array_push($GLOBALS['vis'], 0);
+    }
+    
+    class AcAutomation {
+        private $root;
+
+        public function __construct($keywords = array()) {
+            $this->root = $this->createNode();
+            $idx = 0;
+            foreach ($keywords as $keyword) {
+                $this->addKeyword($keyword, $idx);
+                $idx++;
+            }
+            $this->buildFailIndex();
+        }
+
+        private function createNode($value = "") {
+            $node = new stdClass();
+            $node->value = $value;
+            $node->next  = array();
+            $node->fail  = NULL;
+            $node->len   = 0; // Last index of the string in the trie
+            return $node;
+        }
+
+        private function addKeyword($keyword, $idx) {
+            $keyword = trim($keyword);
+            if (!$keyword) {
+                return;
+            }
+            $cur = $this->root;
+            $matches = unpack('N*',iconv('UTF-8', 'UCS-4', strtolower($keyword)));
+            for ($i = 1; isset($matches[$i]); $i++) {
+                $v = $matches[$i];
+                if (!isset($cur->next[$v])) {
+                    $node = $this->createNode($v);
+                    $cur->next[$v] = $node;
+                }
+                if (!isset($matches[$i+1])) {
+                    $cur->next[$v]->len = $idx;
+                }
+                $cur = $cur->next[$v];
+            }
+        }
+
+        private function buildFailIndex() {
+            $queue = array();
+            foreach ($this->root->next as $node) {
+                $node->fail = $this->root;
+                $queue[] = $node;
+            }
+            while ($queue) {
+                $node = array_shift($queue);
+                foreach ($node->next as $child_node) {
+                    $val = $child_node->value;
+                    $p = $node->fail;
+                    while ($p != NULL) {
+                        if (isset($p->next[$val])) {
+                            $child_node->fail = $p->next[$val];
+                            break;
+                        }
+                        $p = $p->fail;
+                    }
+                    if ($p === NULL) {
+                        $child_node->fail = $this->root;
+                    }
+                    $queue[] = $child_node;
+                }
+            }
+        }
+
+        public function search($content) {
+            $p = $this->root;
+            $matches = unpack('N*',iconv('UTF-8', 'UCS-4', strtolower($content)));
+            for ($i = 1; isset($matches[$i]); $i++) {
+                $val = $matches[$i];
+                while (!isset($p->next[$val]) && $p != $this->root) {
+                    $p = $p->fail;
+                }
+                $p = isset($p->next[$val]) ? $p->next[$val] : $this->root;
+                $temp = $p;
+                while ($temp != $this->root) {
+                    if ($temp->len) {
+                        if ($GLOBALS['vis'][$temp->len] == 0) {
+                            $GLOBALS['keywords_num'][$temp->len]++;
+                            $GLOBALS['vis'][$temp->len] = 1;
+                        }
+                    }
+                    $temp = $temp->fail;
+                }
+            }
+        }
+    }
+
     ini_set('display_errors', 'On');
     ini_set('display_startup_errors', 'On');
     error_reporting(E_ALL);
     $cache_time=10; 
     $OJ_CACHE_SHARE=false;
-    function search($string)
-    {
-        global $user_mysql,$mysqli; 
-        $selectcnt=0;
-        //寻找AC代码
-        $sql="SELECT  solution_id FROM `solution` WHERE `user_id`='$user_mysql' AND result=4";
-        $result=$mysqli->query($sql);
-        while($row=$result->fetch_object()){
-            $solutionid=$row->solution_id;
-            $sql2="SELECT * FROM `source_code` WHERE solution_id='$solutionid'";
-            $result2=$mysqli->query($sql2);
-            $row2=$result2->fetch_object();
-            $source_code=$row2->source;
-            // echo $source_code;
-            // print_r($row2->source);
-            $result2->free();
-            // 显示提取的原代码
-            // echo "<br>solution_id:";
-            // echo $solutionid;
-            // echo "<br>";
-            // echo "<pre style='background-color: transparent;'><code style='background-color: transparent;'>";
-            // echo htmlentities(str_replace("\r\n","\n",$source_code),ENT_QUOTES,"utf-8");
-            // echo "</code></pre>";
-            $pos=strrpos($source_code,$string);
-            if($pos!=false){
-                $selectcnt++;
-            }
-        }
-        //显示次数
-        // echo "<br>cnt:";
-        // echo $selectcnt;
-        $result->free();
-        return $selectcnt;
+
+    $ac = new AcAutomation($my_keywords);
+    global $user_mysql, $mysqli;
+    $sql_solution_id="SELECT  solution_id FROM `solution` WHERE `user_id`='$user_mysql' AND result=4";
+    $result_solution_id=$mysqli->query($sql_solution_id);
+
+    while($row=$result_solution_id->fetch_object()) {
+        $solutionid=$row->solution_id;
+        $sql_source_code="SELECT * FROM `source_code` WHERE solution_id='$solutionid'";
+        $result_source_code=$mysqli->query($sql_source_code);
+        $source_code=$result_source_code->fetch_object()->source;
+        for ($i=0;$i<$keywords_len;$i++) $GLOBALS['vis'][$i] = 0;
+        $ac->search($source_code);
     }
-    // function test(){
-    //     echo "hello world!";
-    // }
+
     function color_font($color){
        return "#000";
     }
@@ -112,9 +159,6 @@
         else if($selectcnt<=300)$color="#BA55D3";
         else if($selectcnt>300)$color="#FF0000";
         $rever_color=color_font($color);
-        // $res1=hex2rgb($color);
-        // echo $res1;
-        // echo $rever_color;
         if($selectcnt==0)echo "<div style='background:#fff;color:#000'>".$search_name."</div>";
         else echo "<div style='background:".$color.";color:".$rever_color."'>".$search_name."</div>";
     }
@@ -285,19 +329,18 @@
             echo "</td>";
         }
         echo "</tr>";
-        $sum=count($keywords);  
-        for($i=0;$i<$sum;){
+        for($i=1;$i<$keywords_len;){
             echo "<tr>";
             for($j=1;$j<=5;$j++){
                 echo "<td colspan='3'>";
-                echo "<p>".$keywords[$i]."</p>";
+                echo "<p>".$my_keywords[$i]."</p>";
                 echo "</td>";
                 echo "<td colspan='7'>";
-                result(search($keywords[$i++]));
+                result($GLOBALS['keywords_num'][$i++]);
                 echo "</td>";
-                if($i==$sum)break;
+                if($i==$keywords_len)break;
             }
-            if($i==$sum)break;
+            if($i==$keywords_len)break;
             echo "</tr>";
         }
         echo "</tbody>";
@@ -306,18 +349,6 @@
         echo "</div>";
         echo "</div>";
         ?>
-        <!-- <table width="841" class="detail-table">
-            <tbody>
-                <tr>
-                <td colspan="5">
-                    <p>熟练度</p>
-                </td>
-                <td colspan="5">
-                    <p>颜色</p>
-                </td>
-                </tr>
-            </tbody>
-        </table> -->
     </div>
 </div> <!-- /container -->
 <?php require_once "template/hznu/footer.php" ?>
@@ -343,6 +374,4 @@
     hljs.initLineNumbersOnLoad();
 </script>
 <!-- highlight.js END-->
-
-
 

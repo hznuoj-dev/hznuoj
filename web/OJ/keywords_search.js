@@ -41,3 +41,6 @@ function searchTo(){
         }
     });//Ajax结束
 };
+function MoveTo(){
+   window.location.href="keywords_sum.php";
+};

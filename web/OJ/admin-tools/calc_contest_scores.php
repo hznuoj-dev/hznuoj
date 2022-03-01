@@ -1,9 +1,9 @@
 <?php
-$TEAM_MODE = true;
+//$TEAM_MODE = true;
 ?>
 
 <?php
-//return;
+return;
 ?>
 <!DOCTYPE html>
 <html>
