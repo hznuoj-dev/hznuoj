@@ -2,7 +2,6 @@
 *.o
 *.exe
 .idea
-.vscode
 
 .DS_Store
 *.swp
