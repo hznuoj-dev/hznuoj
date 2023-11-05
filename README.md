@@ -1,6 +1,6 @@
 # HZNUOJ
 
-[![Build](https://github.com/hznuoj-dev/hznuoj/actions/workflows/build.yml/badge.svg)](https://github.com/hznuoj-dev/hznuoj/actions/workflows/build.yml)
+[![GitHub release][gh-release-badge]][gh-release]
 
 **HZNUOJ 是基于 [HUSTOJ](https://github.com/zhblue/hustoj) 改造而来的，遵循 GPL 协议开源**
 
@@ -88,3 +88,6 @@ docker exec -it hznuoj bash
 细分的权限分配
 
 ![privilege](images/privilege.jpg)
+
+[gh-release-badge]: https://img.shields.io/github/release/hznuoj-dev/hznuoj.svg
+[gh-release]: https://GitHub.com/hznuoj-dev/hznuoj/releases/
