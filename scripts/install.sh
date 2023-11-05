@@ -33,7 +33,7 @@ cp -a "${TOP_DIR}"/../web ${WEBBASE}/
 
 for dir in ${UPLOAD} ${DATA}; do
     if [[ ! -d "${dir}" ]]; then
-        mkdir -p ${dir}
+        mkdir -p "${dir}"
     fi
 done
 
