@@ -7,12 +7,13 @@
 <?php
 
   static  $DB_HOST="127.0.0.1";
-  static  $DB_VJHOST="127.0.0.1";
   static  $DB_NAME="jol";
-  static  $DB_VJNAME="vhoj";
   static  $DB_USER="root";
-  static  $DB_VJUSER="root";
   static  $DB_PASS="root";
+
+  static  $DB_VJHOST="127.0.0.1";
+  static  $DB_VJNAME="vhoj";
+  static  $DB_VJUSER="root";
   static  $DB_VJPASS="root";
 
   $OJ_HOME=dirname(dirname(__FILE__));//:OJ/
