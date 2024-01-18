@@ -20,21 +20,33 @@ docker build -t hznuoj:latest -f docker/Dockerfile ./
 
 完成后 `docker image ls`，若有看到 hznuoj 的镜像即为成功。
 
+如果不想 build，也可以直接拉取已经编译好的镜像
+
+```bash
+docker pull hznuoj/hznuoj:latest
+```
+
+其中，`latest` 表示 tag，可以指定 tag，比如 `0.0.3`
+
 ### 启动容器
 
 ```bash
-docker run -it --restart=always -d \
--p 80:80 \
---name=hznuoj \
--v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
--v /var/hznuoj/upload:/var/www/web/OJ/upload \
--v /var/hznuoj/data:/var/hznuoj/data \
-hznuoj:latest
+docker run \
+    -d -it \
+    --name=hznuoj \
+    --restart=always \
+    -p 80:80 \
+    -v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
+    -v /var/hznuoj/upload:/var/www/web/OJ/upload \
+    -v /var/hznuoj/data:/var/hznuoj/data \
+    hznuoj:latest
 ```
 
-- `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改。
-- `--name=hznuoj` 表示指定容器的名字为 `hznuoj`。
-- `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂载到容器内的 `/var/www/web/OJ/include/static.php`。
+- `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改
+- `--name=hznuoj` 表示指定容器的名字为 `hznuoj`
+- `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂载到容器内的 `/var/www/web/OJ/include/static.php`
+- `upload` 目录是用户上传的文件内容，比如题面里面的图片
+- `data` 目录是题目数据的目录
 
 然后访问 `localhost:80` 即可。
 
