@@ -4,7 +4,7 @@
    * by D_Star @2016.08.22
   **/
 ?>
-<?php  
+<?php
 
   static  $DB_HOST="127.0.0.1";
   static  $DB_VJHOST="127.0.0.1";
@@ -13,7 +13,7 @@
   static  $DB_USER="root";
   static  $DB_VJUSER="root";
   static  $DB_PASS="root";
-  static  $DB_VJPASS="root"; 
+  static  $DB_VJPASS="root";
 
   $OJ_HOME=dirname(dirname(__FILE__));//:OJ/
   static  $OJ_NAME="HZNUOJ";
@@ -40,7 +40,7 @@
   static  $OJ_SHOW_DIFF=false;
   static  $OJ_TEST_RUN = true;
   static $OJ_OPENID_PWD = '8a367fe87b1e406ea8e94d7d508dcf01';
-  
+
   static $OJ_FORBIDDEN = false;  //比赛中选用，是否禁止其它无关页面的访问
   static $OJ_MONITOR = false; //比赛中选用，是否监听广播
 
