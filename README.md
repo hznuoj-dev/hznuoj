@@ -44,9 +44,15 @@ docker run \
 
 - `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改
 - `--name=hznuoj` 表示指定容器的名字为 `hznuoj`
-- `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂载到容器内的 `/var/www/web/OJ/include/static.php`
-- `upload` 目录是用户上传的文件内容，比如题面里面的图片
-- `data` 目录是题目数据的目录
+- 路径挂载：
+  - 因为有些文件或者目录是在容器运行过程中可能会有变动，所以我们需要把它们放在外部，然后 mount 到容器里面，不然的话，容器一重启，容器里面的文件都会恢复成初始状态
+  - `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂载到容器内的 `/var/www/web/OJ/include/static.php`
+    - 本 repo 下有一个 [`static.example.php`](./web/OJ/include/static.example.php)，应该只需要改一下 DB 相关的变量，然后把文件 mount 到容器中，就可以用了
+    - 需要注意的是，宿主机的部分是可以改动的
+      - 比如，如果把 `static.php` 放在 `/opt` 路径下，那么可以写成 `-v /opt/static.php:/var/www/web/OJ/include/static.php`
+    - 容器内的路径不要变动，而且也没有变动的必要
+  - `upload` 目录是用户上传的文件内容，比如题面里面的图片
+  - `data` 目录是题目数据的目录
 
 然后访问 `localhost:80` 即可。
 
