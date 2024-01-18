@@ -51,7 +51,7 @@ docker run \
 
 然后可以使用本 repo 里面的 [SQL](./scripts/db.sql) 文件来创建库和表。
 
-然后启动 HZNUOJ Web 实例
+然后启动 hznuoj Web 实例
 
 ```bash
 docker run \
