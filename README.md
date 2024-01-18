@@ -20,21 +20,62 @@ docker build -t hznuoj:latest -f docker/Dockerfile ./
 
 完成后 `docker image ls`，若有看到 hznuoj 的镜像即为成功。
 
-### 启动容器
+如果不想 build，也可以直接拉取已经编译好的镜像
 
 ```bash
-docker run -it --restart=always -d \
--p 80:80 \
---name=hznuoj \
--v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
--v /var/hznuoj/upload:/var/www/web/OJ/upload \
--v /var/hznuoj/data:/var/hznuoj/data \
-hznuoj:latest
+docker pull hznuoj/hznuoj:latest
 ```
 
-- `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改。
-- `--name=hznuoj` 表示指定容器的名字为 `hznuoj`。
-- `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂载到容器内的 `/var/www/web/OJ/include/static.php`。
+其中，`latest` 表示 tag，可以指定 tag，比如 `0.0.3`
+
+### 启动容器
+
+#### DB
+
+首先需要启动一个 DB，用 MySQL 或者 MariaDB 都可以，这里以 MySQL 5.7 为例：
+
+```bash
+docker run \
+    -d \
+    --restart=always \
+    --name="mysql" \
+    --hostname="mysql" \
+    -e MYSQL_ROOT_PASSWORD=root \
+    -e TZ=Asia/Shanghai \
+    -p 3306:3306 \
+    -v /var/docker-data/mysql-5.7/data:/var/lib/mysql \
+    mysql:5.7 \
+    --character-set-server=utf8mb4 \
+    --collation-server=utf8mb4_unicode_ci
+```
+
+然后可以使用本 repo 里面的 [SQL](./scripts/db.sql) 文件来创建库和表。
+
+#### hznuoj Web
+
+```bash
+docker run \
+    -d -it \
+    --name=hznuoj \
+    --restart=always \
+    -p 80:80 \
+    -v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
+    -v /var/hznuoj/upload:/var/www/web/OJ/upload \
+    -v /var/hznuoj/data:/var/hznuoj/data \
+    hznuoj:latest
+```
+
+- `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改
+- `--name=hznuoj` 表示指定容器的名字为 `hznuoj`
+- 路径挂载：
+  - 因为有些文件或者目录是在容器运行过程中可能会有变动，所以我们需要把它们放在外部，然后 mount 到容器里面，不然的话，容器一重启，容器里面的文件都会恢复成初始状态
+  - `-v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php` 表示将宿主机上的 `/var/hznuoj/static.php` 文件挂载到容器内的 `/var/www/web/OJ/include/static.php`
+    - 本 repo 下有一个 [`static.example.php`](./web/OJ/include/static.example.php)，应该只需要改一下 DB 相关的变量，然后把文件 mount 到容器中，就可以用了
+    - 需要注意的是，宿主机的部分是可以改动的
+      - 比如，如果把 `static.php` 放在 `/opt` 路径下，那么可以写成 `-v /opt/static.php:/var/www/web/OJ/include/static.php`
+    - 容器内的路径不要变动，而且也没有变动的必要
+  - `upload` 目录是用户上传的文件内容，比如题面里面的图片
+  - `data` 目录是题目数据的目录
 
 然后访问 `localhost:80` 即可。
 
