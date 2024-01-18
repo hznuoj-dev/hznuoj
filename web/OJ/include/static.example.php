@@ -19,7 +19,7 @@
   $OJ_HOME=dirname(dirname(__FILE__));//:OJ/
   static  $OJ_NAME="HZNUOJ";
   static  $OJ_ADMIN="root@localhost";
-  static  $OJ_DATA = "/home/judge/data";
+  static  $OJ_DATA = "/var/hznuoj/data";
   static  $OJ_ONLINE=false;
   static  $OJ_LANG="en";
   static  $OJ_SIM=true;

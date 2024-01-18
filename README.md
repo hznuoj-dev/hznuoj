@@ -30,6 +30,10 @@ docker pull hznuoj/hznuoj:latest
 
 ### 启动容器
 
+#### MySQL
+
+首先需要启动一个 DB，用 MySQL 或者 MariaDB 都可以
+
 ```bash
 docker run \
     -d -it \
