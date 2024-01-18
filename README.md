@@ -32,7 +32,26 @@ docker pull hznuoj/hznuoj:latest
 
 #### MySQL
 
-首先需要启动一个 DB，用 MySQL 或者 MariaDB 都可以
+首先需要启动一个 DB，用 MySQL 或者 MariaDB 都可以，这里以 MySQL 5.7 为例：
+
+```bash
+docker run \
+    -d \
+    --restart=always \
+    --name="mysql" \
+    --hostname="mysql" \
+    -e MYSQL_ROOT_PASSWORD=root \
+    -e TZ=Asia/Shanghai \
+    -p 3306:3306 \
+    -v /var/docker-data/mysql-5.7/data:/var/lib/mysql \
+    mysql:5.7 \
+    --character-set-server=utf8mb4 \
+    --collation-server=utf8mb4_unicode_ci
+```
+
+然后可以使用本 repo 里面的 [SQL](./scripts/db.sql) 文件来创建库和表。
+
+然后启动 HZNUOJ Web 实例
 
 ```bash
 docker run \
