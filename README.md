@@ -6,8 +6,6 @@
 
 ## 部署指南
 
-### 使用 Docker（推荐）
-
 ### 构建镜像
 
 在仓库根目录下：
@@ -51,7 +49,7 @@ docker run \
 
 然后可以使用本 repo 里面的 [SQL](./scripts/db.sql) 文件来创建库和表。
 
-#### hznuoj Web
+#### Web
 
 ```bash
 docker run \
@@ -76,6 +74,7 @@ docker run \
     - 容器内的路径不要变动，而且也没有变动的必要
   - `upload` 目录是用户上传的文件内容，比如题面里面的图片
   - `data` 目录是题目数据的目录
+  - 如果是想开发的话，可以把 repo clone 下来之后，把 web 目录 mount 进去，容器里的路径应该是 `/var/www/web`，然后就可以在容器外部修改 web 目录下的文件，你的改动就可以在容器中的实例实时生效了
 
 然后访问 `localhost:80` 即可。
 
