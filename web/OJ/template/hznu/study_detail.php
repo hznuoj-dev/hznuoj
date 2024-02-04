@@ -10,7 +10,9 @@ if (!is_valid_user_name($user)) {
   exit(0);
 }
 $studydata = array();
-$neednum = array();
+$studydata['tag1'] = 0; //此处修改
+$studydata['tag2'] = 0;
+$studydata['tag3'] = 0;
 
 //此处修改
 $sql = "SELECT pt.tag, COUNT(DISTINCT s.problem_id) as count
