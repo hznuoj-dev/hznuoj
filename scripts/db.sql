@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.44, for Linux (x86_64)
 --
 -- Host: localhost    Database: jol
 -- ------------------------------------------------------
--- Server version	5.7.25-0ubuntu0.16.04.2
+-- Server version	5.7.44
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -15,35 +15,38 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `compileinfo`
---
+DROP DATABASE IF EXISTS jol;
+
 CREATE Database jol;
 use jol;
 
-DROP TABLE IF EXISTS `contest_discuss`;
-CREATE TABLE `contest_discuss` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(255) NOT NULL DEFAULT '',
-  `contest_id` int(11) NOT NULL,
-  `problem_id` int(11) DEFAULT NULL,
-  `content` text,
-  `reply` text,
-  `in_date` datetime DEFAULT NULL,
-  `reply_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+--
+-- Table structure for table `all_problem_tag`
+--
 
-DROP TABLE IF EXISTS `printer_code`;
-CREATE TABLE `printer_code` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` char(20) NOT NULL,
-  `contest_id` int(11) NOT NULL,
-  `code` text NOT NULL,
-  `in_date` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `all_problem_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `all_problem_tag` (
+  `idx` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`idx`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `all_problem_tag`
+--
+
+LOCK TABLES `all_problem_tag` WRITE;
+/*!40000 ALTER TABLE `all_problem_tag` DISABLE KEYS */;
+INSERT INTO `all_problem_tag` VALUES (1,'tag1'),(2,'tag2'),(3,'tag4'),(4,'tag5'),(5,'tag3'),(6,'tag6');
+/*!40000 ALTER TABLE `all_problem_tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `compileinfo`
+--
 
 DROP TABLE IF EXISTS `compileinfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -93,7 +96,7 @@ CREATE TABLE `contest` (
   PRIMARY KEY (`contest_id`),
   KEY `contest_id` (`contest_id`,`defunct`,`private`,`defunct_TA`,`open_source`) USING BTREE,
   KEY `running_contest` (`start_time`,`end_time`,`practice`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +105,37 @@ CREATE TABLE `contest` (
 
 LOCK TABLES `contest` WRITE;
 /*!40000 ALTER TABLE `contest` DISABLE KEYS */;
+INSERT INTO `contest` VALUES (1,'123','2024-01-29 21:00:00','2024-01-30 01:00:00','N','',0,0,'','N','N','N',NULL,1,0,0,0,0),(2,'111111','2024-01-30 19:00:00','2024-01-30 23:00:00','N','',0,0,'','N','N','N',NULL,1,0,0,0,0);
 /*!40000 ALTER TABLE `contest` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contest_discuss`
+--
+
+DROP TABLE IF EXISTS `contest_discuss`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `contest_discuss` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(255) NOT NULL DEFAULT '',
+  `contest_id` int(11) NOT NULL,
+  `problem_id` int(11) DEFAULT NULL,
+  `content` text,
+  `reply` text,
+  `in_date` datetime DEFAULT NULL,
+  `reply_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contest_discuss`
+--
+
+LOCK TABLES `contest_discuss` WRITE;
+/*!40000 ALTER TABLE `contest_discuss` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contest_discuss` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -118,7 +151,7 @@ CREATE TABLE `contest_excluded_user` (
   `user_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`index`),
   KEY `contest_id` (`contest_id`,`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,6 +160,7 @@ CREATE TABLE `contest_excluded_user` (
 
 LOCK TABLES `contest_excluded_user` WRITE;
 /*!40000 ALTER TABLE `contest_excluded_user` DISABLE KEYS */;
+INSERT INTO `contest_excluded_user` VALUES (1,1,''),(3,2,'');
 /*!40000 ALTER TABLE `contest_excluded_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +181,7 @@ CREATE TABLE `contest_problem` (
   PRIMARY KEY (`index`),
   KEY `contest_id` (`contest_id`) USING BTREE,
   KEY `problem_id` (`problem_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,6 +190,7 @@ CREATE TABLE `contest_problem` (
 
 LOCK TABLES `contest_problem` WRITE;
 /*!40000 ALTER TABLE `contest_problem` DISABLE KEYS */;
+INSERT INTO `contest_problem` VALUES (1,1000,2,'',0,0);
 /*!40000 ALTER TABLE `contest_problem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,6 +215,29 @@ CREATE TABLE `custominput` (
 LOCK TABLES `custominput` WRITE;
 /*!40000 ALTER TABLE `custominput` DISABLE KEYS */;
 /*!40000 ALTER TABLE `custominput` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dailydetails`
+--
+
+DROP TABLE IF EXISTS `dailydetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dailydetails` (
+  `start_time` date NOT NULL,
+  `end_time` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dailydetails`
+--
+
+LOCK TABLES `dailydetails` WRITE;
+/*!40000 ALTER TABLE `dailydetails` DISABLE KEYS */;
+INSERT INTO `dailydetails` VALUES ('2019-01-01','2019-06-01');
+/*!40000 ALTER TABLE `dailydetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -232,6 +290,31 @@ INSERT INTO `faqs` VALUES (1,'## 环境参数\r\n\r\n系统运行于[Ubuntu 14.0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `gpt_code`
+--
+
+DROP TABLE IF EXISTS `gpt_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gpt_code` (
+  `problem_id` int(11) NOT NULL,
+  `code` text,
+  `last_update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`problem_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gpt_code`
+--
+
+LOCK TABLES `gpt_code` WRITE;
+/*!40000 ALTER TABLE `gpt_code` DISABLE KEYS */;
+INSERT INTO `gpt_code` VALUES (1000,'123','2024-02-02 15:41:48'),(1006,'123456777','2024-02-02 13:18:26'),(1007,'123456','2024-01-31 17:39:57'),(1008,'123456','2024-01-30 16:21:08');
+/*!40000 ALTER TABLE `gpt_code` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `hit_log`
 --
 
@@ -247,7 +330,7 @@ CREATE TABLE `hit_log` (
   PRIMARY KEY (`index`),
   KEY `time` (`time`),
   KEY `ip` (`ip`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16969 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +357,7 @@ CREATE TABLE `loginlog` (
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`index`),
   KEY `user_time_index` (`user_id`,`time`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +366,6 @@ CREATE TABLE `loginlog` (
 
 LOCK TABLES `loginlog` WRITE;
 /*!40000 ALTER TABLE `loginlog` DISABLE KEYS */;
-INSERT INTO `loginlog` VALUES (1,'admin','No Saved','127.0.0.1','2019-03-12 17:29:20'),(2,'admin','No Saved','127.0.0.1','2019-03-12 17:29:39'),(3,'admin','No Saved','127.0.0.1','2019-03-12 17:33:27'),(4,'admin','No Saved','127.0.0.1','2019-03-12 17:38:04'),(5,'admin','No Saved','127.0.0.1','2019-03-12 17:39:13'),(6,'admin','No Saved','127.0.0.1','2019-03-13 15:32:27');
 /*!40000 ALTER TABLE `loginlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,6 +490,33 @@ LOCK TABLES `online` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `printer_code`
+--
+
+DROP TABLE IF EXISTS `printer_code`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `printer_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` char(20) NOT NULL,
+  `contest_id` int(11) NOT NULL,
+  `code` text NOT NULL,
+  `in_date` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `printer_code`
+--
+
+LOCK TABLES `printer_code` WRITE;
+/*!40000 ALTER TABLE `printer_code` DISABLE KEYS */;
+/*!40000 ALTER TABLE `printer_code` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `privilege`
 --
 
@@ -461,6 +570,9 @@ CREATE TABLE `privilege_distribution` (
   `see_compare` tinyint(4) DEFAULT NULL,
   `upload_files` tinyint(4) DEFAULT NULL,
   `watch_solution_video` tinyint(4) DEFAULT NULL,
+  `manage_gptcode` tinyint(4) DEFAULT NULL,
+  `manage_tag` tinyint(4) DEFAULT NULL,
+  `set_dailydetails` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`group_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -471,7 +583,7 @@ CREATE TABLE `privilege_distribution` (
 
 LOCK TABLES `privilege_distribution` WRITE;
 /*!40000 ALTER TABLE `privilege_distribution` DISABLE KEYS */;
-INSERT INTO `privilege_distribution` VALUES ('administrator',1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1),('exam_user',1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0),('hznu_viewer',1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0),('root',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),('source_browser',1,0,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0),('teacher',1,1,1,0,1,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1),('teacher_assistant',1,1,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,1,0);
+INSERT INTO `privilege_distribution` VALUES ('administrator',1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,0,0),('exam_user',1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0),('hznu_viewer',1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0),('root',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),('source_browser',1,0,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0),('teacher',1,1,1,0,1,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0),('teacher_assistant',1,1,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,1,0,0,0,0);
 /*!40000 ALTER TABLE `privilege_distribution` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,7 +647,7 @@ CREATE TABLE `problem` (
   UNIQUE KEY `problem_id` (`problem_id`) USING BTREE,
   KEY `spj` (`problemset`,`defunct`,`spj`,`problem_id`) USING BTREE,
   KEY `score` (`score`,`accepted`)
-) ENGINE=MyISAM AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -544,7 +656,7 @@ CREATE TABLE `problem` (
 
 LOCK TABLES `problem` WRITE;
 /*!40000 ALTER TABLE `problem` DISABLE KEYS */;
-INSERT INTO `problem` VALUES (1000,'A+B','1','1','1',NULL,NULL,'0','','','','2019-03-13 16:10:36',1,256,'Y',1,1,0,NULL,100.00,NULL,NULL,NULL,'default');
+INSERT INTO `problem` VALUES (1000,'A+B','1','1','1',NULL,NULL,'0','','','','2024-01-29 14:47:02',1,256,'Y',1,1,0,NULL,100.00,NULL,NULL,NULL,'default'),(1001,'A1','','','',NULL,NULL,'0','','','','2024-02-04 20:31:17',1,256,'Y',0,0,0,NULL,100.00,NULL,NULL,NULL,'default'),(1002,'A2','','','',NULL,NULL,'0','','','','2024-02-02 18:04:24',1,256,'Y',0,0,0,NULL,100.00,NULL,NULL,NULL,'default'),(1003,'A3','','','',NULL,NULL,'0','','','','2024-01-29 21:17:43',1,256,'Y',0,0,0,NULL,100.00,NULL,NULL,NULL,'default');
 /*!40000 ALTER TABLE `problem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -574,6 +686,31 @@ LOCK TABLES `problem_samples` WRITE;
 /*!40000 ALTER TABLE `problem_samples` DISABLE KEYS */;
 INSERT INTO `problem_samples` VALUES (1000,0,'1 2','3',0);
 /*!40000 ALTER TABLE `problem_samples` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `problem_tag`
+--
+
+DROP TABLE IF EXISTS `problem_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `problem_tag` (
+  `index` int(11) NOT NULL AUTO_INCREMENT,
+  `problem_id` int(10) unsigned zerofill NOT NULL,
+  `tag` varchar(100) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `problem_tag`
+--
+
+LOCK TABLES `problem_tag` WRITE;
+/*!40000 ALTER TABLE `problem_tag` DISABLE KEYS */;
+INSERT INTO `problem_tag` VALUES (45,0000001000,'tag1'),(46,0000001000,'tag2'),(47,0000001000,'tag3'),(48,0000001000,'tag4'),(51,0000001003,''),(52,0000001004,''),(53,0000001005,''),(54,0000001006,''),(55,0000001007,''),(57,0000001008,'tag10'),(59,0000001002,'tag2'),(60,0000001001,'tag2');
+/*!40000 ALTER TABLE `problem_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -827,7 +964,7 @@ DROP TABLE IF EXISTS `squid`;
 /*!50001 DROP VIEW IF EXISTS `squid`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `squid` AS SELECT 
+/*!50001 CREATE VIEW `squid` AS SELECT
  1 AS `user_id`,
  1 AS `password`,
  1 AS `solved`*/;
@@ -969,7 +1106,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('admin','','temp@temp.com',1,1,'N','::1','2019-03-12 16:34:09',1,NULL,1,'YQn1zuOVuWzSNcU5WwkMauvCGw00YzNl','2019-03-12 16:34:09','','admin','','其它','斗之气五段',100.00,'#b6b6b6',NULL,NULL,NULL,NULL,NULL,0,0,NULL);
+INSERT INTO `users` VALUES ('admin','','temp@temp.com',1,1,'N','::1','2019-03-12 16:34:09',1,NULL,1,'d4er+qiVZNXCikHfG0m35WtRNHNkNzRl','2019-03-12 16:34:09','','admin','','其它','斗之气五段',100.00,'#b6b6b6',NULL,NULL,NULL,NULL,NULL,0,0,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -997,7 +1134,7 @@ CREATE TABLE `users_cache` (
 
 LOCK TABLES `users_cache` WRITE;
 /*!40000 ALTER TABLE `users_cache` DISABLE KEYS */;
-INSERT INTO `users_cache` VALUES ('admin','',0000000001,0000000001,NULL,NULL);
+INSERT INTO `users_cache` VALUES ('','',0000000001,0000000001,NULL,NULL),('admin','',0000000001,0000000001,NULL,NULL);
 /*!40000 ALTER TABLE `users_cache` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1055,4 +1192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-13 17:03:43
+-- Dump completed on 2024-02-04 20:32:46

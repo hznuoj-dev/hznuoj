@@ -60,7 +60,7 @@ docker run \
     -v /var/hznuoj/static.php:/var/www/web/OJ/include/static.php \
     -v /var/hznuoj/upload:/var/www/web/OJ/upload \
     -v /var/hznuoj/data:/var/hznuoj/data \
-    hznuoj:latest
+    hznuoj/hznuoj:latest
 ```
 
 - `-p 80:80` 表示把容器的 80 端口映射到宿主机的 80 端口，可自行修改

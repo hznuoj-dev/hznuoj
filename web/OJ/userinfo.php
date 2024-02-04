@@ -294,6 +294,26 @@ $result->free();
 /* 获取HZNUOJ推荐题目的题目编号 end */
 
 
+//获取tag数据
+$sql = "SELECT pt.tag, COUNT(*) as num
+        FROM solution s
+        JOIN problem_tag pt ON s.problem_id = pt.problem_id
+        WHERE s.user_id = '$user_mysql' AND s.result = 4
+        GROUP BY pt.tag";
+
+$result = $mysqli->query($sql);
+
+$tagdata = array();
+if ($result->num_rows > 0) {
+    // 输出每行数据
+    while($row = $result->fetch_assoc()) {
+        $tagdata[] = array('tag' => $row["tag"], 'num' => $row["num"]);
+    }
+}
+
+$tagdata_json = json_encode($tagdata);
+$result->free();
+
 /////////////////////////Template
 require("template/".$OJ_TEMPLATE."/userinfo.php");
 /////////////////////////Common foot
