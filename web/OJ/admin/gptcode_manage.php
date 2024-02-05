@@ -31,7 +31,7 @@ if (!HAS_PRI("manage_gptcode")) {
 
         //get GPTcode replace '123'
 
-        $code = "No gpt now!";
+        $code = "No gpt now!";//接口//
       }
 
       if ($is_have) {
@@ -60,7 +60,7 @@ if (!HAS_PRI("manage_gptcode")) {
 
     //get GPT code
 
-    $str = "123456";
+    $str = "No gpt now!";//接口//
     $time = date('Y-m-d H:i:s');
 
     if ($res->num_rows) {

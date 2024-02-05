@@ -140,11 +140,11 @@ require_once("header.php");
           <button class="am-btn am-btn-secondary am-round" style="font-size: 25px" name="daliy_detail" , value=<?php echo $user_id ?>>点击查看每日做题详情</button>
         </form>
       </div>
-      <div class="am-u-sm-6">
+      <!-- <div class="am-u-sm-6">
         <form action="./template/hznu/study_detail.php" method="post">
           <button class="am-btn am-btn-secondary am-round" style="font-size: 25px" name="study_detail" , value=<?php echo $user_id ?>>点击查看学习里程碑</button>
         </form>
-      </div>
+      </div> -->
     </div>
   </div>
   <!-- userinfo中部分 end -->
