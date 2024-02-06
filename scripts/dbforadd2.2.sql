@@ -74,47 +74,58 @@ INSERT INTO `gpt_code` VALUES (1000,'No gpt now!','2024-02-02 15:41:48');
 /*!40000 ALTER TABLE `gpt_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `privilege_distribution`
---
-DROP TABLE IF EXISTS `privilege_distribution`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `privilege_distribution` (
-  `group_name` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `enter_admin_page` tinyint(4) DEFAULT NULL,
-  `edit_default_problem` tinyint(4) DEFAULT NULL,
-  `rejudge` tinyint(4) DEFAULT NULL,
-  `edit_news` tinyint(4) DEFAULT NULL,
-  `edit_contest` tinyint(4) DEFAULT NULL,
-  `download_ranklist` tinyint(4) DEFAULT NULL,
-  `generate_team` tinyint(4) DEFAULT NULL,
-  `edit_user_profile` tinyint(4) DEFAULT NULL,
-  `edit_privilege_group` tinyint(4) DEFAULT NULL,
-  `edit_privilege_distribution` tinyint(4) DEFAULT NULL,
-  `inner_function` tinyint(4) DEFAULT NULL,
-  `see_hidden_default_problem` tinyint(4) DEFAULT NULL,
-  `see_hidden_user_info` tinyint(4) DEFAULT NULL,
-  `see_wa_info_out_of_contest` tinyint(4) DEFAULT NULL,
-  `see_wa_info_in_contest` tinyint(4) DEFAULT NULL,
-  `see_source_out_of_contest` tinyint(4) DEFAULT NULL,
-  `see_source_in_contest` tinyint(4) DEFAULT NULL,
-  `see_compare` tinyint(4) DEFAULT NULL,
-  `upload_files` tinyint(4) DEFAULT NULL,
-  `watch_solution_video` tinyint(4) DEFAULT NULL,
-  `manage_gptcode` tinyint(4) DEFAULT NULL,
-  `manage_tag` tinyint(4) DEFAULT NULL,
-  `set_dailydetails` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`group_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-/*!40101 SET character_set_client = @saved_cs_client */;
---
--- Dumping data for table `privilege_distribution`
---
+-- privilege_distribution添加新的列
+ALTER TABLE `privilege_distribution`
+ADD COLUMN `manage_gptcode` tinyint(4) DEFAULT NULL,
+ADD COLUMN `manage_tag` tinyint(4) DEFAULT NULL,
+ADD COLUMN `set_dailydetails` tinyint(4) DEFAULT NULL;
 
+-- 更新数据
 LOCK TABLES `privilege_distribution` WRITE;
 /*!40000 ALTER TABLE `privilege_distribution` DISABLE KEYS */;
-INSERT INTO `privilege_distribution` VALUES ('administrator',1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1),('exam_user',1,0,1,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0),('hznu_viewer',1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0),('root',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),('source_browser',1,0,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0),('teacher',1,1,1,0,1,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1),('teacher_assistant',1,1,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1,0,1,0,0,0,0);
+
+UPDATE `privilege_distribution`
+SET `manage_gptcode` = 1,
+    `manage_tag` = 1,
+    `set_dailydetails` = 1
+WHERE `group_name` = 'administrator';
+
+UPDATE `privilege_distribution`
+SET `manage_gptcode` = 0,
+    `manage_tag` = 0,
+    `set_dailydetails` = 0
+WHERE `group_name` = 'exam_user';
+
+UPDATE `privilege_distribution`
+SET `manage_gptcode` = 0,
+    `manage_tag` = 0,
+    `set_dailydetails` = 0
+WHERE `group_name` = 'hznu_viewer';
+
+UPDATE `privilege_distribution`
+SET `manage_gptcode` = 1,
+    `manage_tag` = 1,
+    `set_dailydetails` = 1
+WHERE `group_name` = 'root';
+
+UPDATE `privilege_distribution`
+SET `manage_gptcode` = 0,
+    `manage_tag` = 0,
+    `set_dailydetails` = 0
+WHERE `group_name` = 'source_browser';
+
+UPDATE `privilege_distribution`
+SET `manage_gptcode` = 1,
+    `manage_tag` = 1,
+    `set_dailydetails` = 1
+WHERE `group_name` = 'teacher';
+
+UPDATE `privilege_distribution`
+SET `manage_gptcode` = 0,
+    `manage_tag` = 0,
+    `set_dailydetails` = 0
+WHERE `group_name` = 'teacher_assistant';
+
 /*!40000 ALTER TABLE `privilege_distribution` ENABLE KEYS */;
 UNLOCK TABLES;
 
