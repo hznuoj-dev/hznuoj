@@ -31,7 +31,7 @@ CREATE TABLE `all_problem_tag` (
   `idx` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`idx`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `all_problem_tag` (
 
 LOCK TABLES `all_problem_tag` WRITE;
 /*!40000 ALTER TABLE `all_problem_tag` DISABLE KEYS */;
-INSERT INTO `all_problem_tag` VALUES (1,'tag1'),(2,'tag2'),(3,'tag4'),(4,'tag5'),(5,'tag3'),(6,'tag6');
+INSERT INTO `all_problem_tag` VALUES (1,'tag1'),(2,'tag2'),(3,'tag3'),(4,'tag4'),(5,'tag5'),(6,'tag6');
 /*!40000 ALTER TABLE `all_problem_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `contest` (
   PRIMARY KEY (`contest_id`),
   KEY `contest_id` (`contest_id`,`defunct`,`private`,`defunct_TA`,`open_source`) USING BTREE,
   KEY `running_contest` (`start_time`,`end_time`,`practice`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `contest` (
 
 LOCK TABLES `contest` WRITE;
 /*!40000 ALTER TABLE `contest` DISABLE KEYS */;
-INSERT INTO `contest` VALUES (1,'123','2024-01-29 21:00:00','2024-01-30 01:00:00','N','',0,0,'','N','N','N',NULL,1,0,0,0,0),(2,'111111','2024-01-30 19:00:00','2024-01-30 23:00:00','N','',0,0,'','N','N','N',NULL,1,0,0,0,0);
+INSERT INTO `contest` VALUES (1,'A+Bcontest','2024-01-29 21:00:00','2024-01-30 01:00:00','N','',0,0,'','N','N','N',NULL,1,0,0,0,0);
 /*!40000 ALTER TABLE `contest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +151,7 @@ CREATE TABLE `contest_excluded_user` (
   `user_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`index`),
   KEY `contest_id` (`contest_id`,`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +160,7 @@ CREATE TABLE `contest_excluded_user` (
 
 LOCK TABLES `contest_excluded_user` WRITE;
 /*!40000 ALTER TABLE `contest_excluded_user` DISABLE KEYS */;
-INSERT INTO `contest_excluded_user` VALUES (1,1,''),(3,2,'');
+INSERT INTO `contest_excluded_user` VALUES (1,1,'');
 /*!40000 ALTER TABLE `contest_excluded_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +190,7 @@ CREATE TABLE `contest_problem` (
 
 LOCK TABLES `contest_problem` WRITE;
 /*!40000 ALTER TABLE `contest_problem` DISABLE KEYS */;
-INSERT INTO `contest_problem` VALUES (1,1000,2,'',0,0);
+INSERT INTO `contest_problem` VALUES (1,1000,1,'',0,0);
 /*!40000 ALTER TABLE `contest_problem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +236,7 @@ CREATE TABLE `dailydetails` (
 
 LOCK TABLES `dailydetails` WRITE;
 /*!40000 ALTER TABLE `dailydetails` DISABLE KEYS */;
-INSERT INTO `dailydetails` VALUES ('2019-01-01','2019-06-01');
+INSERT INTO `dailydetails` VALUES ('2023-09-01','2024-02-01');
 /*!40000 ALTER TABLE `dailydetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +301,7 @@ CREATE TABLE `gpt_code` (
   `code` text,
   `last_update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`problem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -310,7 +310,7 @@ CREATE TABLE `gpt_code` (
 
 LOCK TABLES `gpt_code` WRITE;
 /*!40000 ALTER TABLE `gpt_code` DISABLE KEYS */;
-INSERT INTO `gpt_code` VALUES (1000,'123','2024-02-02 15:41:48'),(1006,'123456777','2024-02-02 13:18:26'),(1007,'123456','2024-01-31 17:39:57'),(1008,'123456','2024-01-30 16:21:08');
+INSERT INTO `gpt_code` VALUES (1000,'123','2024-02-02 15:41:48');
 /*!40000 ALTER TABLE `gpt_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,7 +330,7 @@ CREATE TABLE `hit_log` (
   PRIMARY KEY (`index`),
   KEY `time` (`time`),
   KEY `ip` (`ip`)
-) ENGINE=InnoDB AUTO_INCREMENT=16969 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,7 +357,7 @@ CREATE TABLE `loginlog` (
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`index`),
   KEY `user_time_index` (`user_id`,`time`)
-) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -504,7 +504,7 @@ CREATE TABLE `printer_code` (
   `in_date` datetime DEFAULT NULL,
   `status` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -700,7 +700,7 @@ CREATE TABLE `problem_tag` (
   `problem_id` int(10) unsigned zerofill NOT NULL,
   `tag` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -709,7 +709,7 @@ CREATE TABLE `problem_tag` (
 
 LOCK TABLES `problem_tag` WRITE;
 /*!40000 ALTER TABLE `problem_tag` DISABLE KEYS */;
-INSERT INTO `problem_tag` VALUES (45,0000001000,'tag1'),(46,0000001000,'tag2'),(47,0000001000,'tag3'),(48,0000001000,'tag4'),(51,0000001003,''),(52,0000001004,''),(53,0000001005,''),(54,0000001006,''),(55,0000001007,''),(57,0000001008,'tag10'),(59,0000001002,'tag2'),(60,0000001001,'tag2');
+INSERT INTO `problem_tag` VALUES (1,0000001000,'tag1'),(2,0000001000,'tag2'),(3,0000001000,'tag3'),(4,0000001000,'tag4'),(5,0000001002,'tag2'),(6,0000001001,'tag2');
 /*!40000 ALTER TABLE `problem_tag` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -983,7 +983,7 @@ CREATE TABLE `tag` (
   `user_id` varchar(100) CHARACTER SET utf8 NOT NULL,
   `tag` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`index`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
