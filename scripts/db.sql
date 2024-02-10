@@ -26,12 +26,12 @@ use jol;
 
 DROP TABLE IF EXISTS `all_problem_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `all_problem_tag` (
   `idx` int(11) NOT NULL AUTO_INCREMENT,
-  `tag` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `tag` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   PRIMARY KEY (`idx`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +223,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `dailydetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dailydetails` (
   `start_time` date NOT NULL,
   `end_time` date NOT NULL
@@ -295,13 +295,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `gpt_code`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gpt_code` (
   `problem_id` int(11) NOT NULL,
   `code` text,
   `last_update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`problem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -694,13 +694,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `problem_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `problem_tag` (
   `index` int(11) NOT NULL AUTO_INCREMENT,
   `problem_id` int(10) unsigned zerofill NOT NULL,
-  `tag` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `tag` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`index`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
