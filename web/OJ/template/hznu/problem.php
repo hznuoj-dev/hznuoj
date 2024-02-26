@@ -119,14 +119,14 @@ if ($show_tag && !isset($_GET['cid'])) {
     <form id='tagForm' class='am-form am-form-inline' style="text-align:center" action=''>
         <div class="am-form-group">
             <?php
-            echo "<span><i class='am-icon-tag'></i> Tags: </span>";
-            for ($i=0; $i<count($tag); ++$i) {
-                if ($i == 0) echo "&nbsp;&nbsp;<span class='am-badge am-badge-danger'>".$tag[$i]."</span>";
-                else if ($i == 1) echo "&nbsp;&nbsp;<span class='am-badge am-badge-warning'>".$tag[$i]."</span>";
-                else if ($i == 2) echo "&nbsp;&nbsp;<span class='am-badge am-badge-primary'>".$tag[$i]."</span>";
-                else if ($i == 3) echo "&nbsp;&nbsp;<span class='am-badge am-badge-secondary'>".$tag[$i]."</span>";
-                else if ($i == 4) echo "&nbsp;&nbsp;<span class='am-badge am-badge-success'>".$tag[$i]."</span>";
-                else echo "&nbsp;&nbsp;<span class='am-badge am-badge-default'>".$tag[$i]."</span>";
+            echo "<span><i class='am-icon-tag'></i> Tags:</span>";
+            for ($i=0; $i<count($problem_tag); ++$i) {
+                if ($i == 0) echo "&nbsp;&nbsp;<span class='am-badge am-badge-danger am-round'>".$problem_tag[$i]."</span>";
+                else if ($i == 1) echo "&nbsp;&nbsp;<span class='am-badge am-badge-warning am-round'>".$problem_tag[$i]."</span>";
+                else if ($i == 2) echo "&nbsp;&nbsp;<span class='am-badge am-badge-primary am-round'>".$problem_tag[$i]."</span>";
+                else if ($i == 3) echo "&nbsp;&nbsp;<span class='am-badge am-badge-secondary am-round'>".$problem_tag[$i]."</span>";
+                else if ($i == 4) echo "&nbsp;&nbsp;<span class='am-badge am-badge-success am-round'>".$problem_tag[$i]."</span>";
+                else echo "&nbsp;&nbsp;<span class='am-badge am-badge-default am-round'>".$problem_tag[$i]."</span>";
             }
             ?>
         </div>
@@ -366,6 +366,21 @@ if (isset($_GET['cid'])) {
             *if you see this button, it means you've submited more than <?php echo $VIDEO_SUBMIT_TIME ?> times.
         </div>
     <?php endif ?>
+
+    <!-- gptcode start -->
+    <?php if ($isHaveGPTCode && !isset($_GET['cid'])) : ?>
+        <?php 
+        echo <<<HTML
+        <h2>GPT Hint</h2>
+        <pre><code>$GPTCode</code></pre>
+HTML;
+        ?>
+        <?php endif ?>
+
+    <!-- 添加一个具有一定高度的空白 div -->
+    <div style="height: 20px;"></div>
+    <!-- gptcode end -->
+
 
     <!-- 提交等按钮 start -->
     <div class="am-text-center">

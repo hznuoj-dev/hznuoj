@@ -148,7 +148,7 @@ HTML;
                 <div>
                   <div class="form-inline" style="height: 35px;">
                     <div style="float: left; padding-top: 6px;">
-                      Input <sapn class="label label-primary">$key</sapn>
+                      Input <span class="label label-primary">$key</span>
                     </div>
                     <div class="input-group input-group-sm" style="float: right;">
                       <div class="input-group-addon">Show after trying: </div>
@@ -158,7 +158,7 @@ HTML;
                   </div>
                   <div><textarea name="sample_input[]" class="form-control" id="" rows="4">$text_input</textarea></div>
                   <div style="margin-bottom: 13px; margin-top: 13px;">
-                    Output <sapn class="label label-primary">$key</sapn>
+                    Output <span class="label label-primary">$key</span>
                   </div>
                   <div><textarea name="sample_output[]" class="form-control" id="" rows="4">$text_output</textarea></div>
                   <hr/>
@@ -190,6 +190,80 @@ HTML;
           <label class="radio-inline"><input type="radio" name="spj" value="1" <?php if(!$add_problem_mod)echo $row->spj=="1"?"checked":""?>>Y</label>
         </div>
       </div>
+
+      <!-- tag -->
+      <style>
+          .tag {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+          }
+          .tag-items {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              list-style: none;
+              margin: 0;
+              padding: 0;
+          }
+          .tag-item {
+              background-color: #f8f9fa;
+              border: 1px solid #dee2e6;
+              border-radius: .25rem;
+              display: flex;
+              align-items: center;
+              margin: .5rem;
+              padding: .5rem;
+          }
+          .tag-item-del {
+              margin-left: .5rem;
+              color: #dc3545;
+              cursor: pointer;
+          }
+          .tag-input {
+              margin: .5rem;
+          }
+      </style>
+
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Tag</label>
+
+        <div class="col-sm-10">
+          <button id="showtag" class="btn btn-default btn-sm btn-block">Tag(s)</button>
+          <div id="tag" style="padding: 10px; border: 1px solid #ccc; margin-top: 10px;">
+            <div id="tag_list" style="margin-bottom: 10px;">
+              <ul class="tag-items">
+                  <?php
+                  if(!$add_problem_mod){
+                    $res = $mysqli->query("SELECT * FROM problem_tag Where problem_id=$pid");
+                    while ($row = $res->fetch_array()) {
+                      if($row['tag']!=''){
+                        echo '<li class="tag-item">';
+                        echo '<span>' . $row['tag'] . '</span><i class="tag-item-del">x</i>';
+                        echo '</li>';
+                      }
+                    }
+                  }
+                  ?>
+              </ul>
+            </div>
+            <input class="form-control" type="text" placeholder="标签" id="id_staff-display" list="list__staff" value="">
+            <datalist id="list__staff">
+                <?php
+                $res = $mysqli->query("SELECT * FROM all_problem_tag");
+                while ($row = $res->fetch_array()) {
+                    echo '<option value="' . $row['tag'] . '">' . $row['tag'] . '</option>';
+                }
+                ?>
+            </datalist>
+            <input type="hidden" name="tags" value="" id="id_tags"> <!-- 存储所有标签的隐藏字段 -->
+            <button class="btn btn-primary btn-sm btn-block" id="add-tag" style="margin-top: 10px;">添加</button>
+          </div>
+        </div>
+      </div> 
+      
+
+      
       <hr/>
       <div class="form-group">
         <label for="" class="col-sm-2 control-label">Author</label>
@@ -272,6 +346,7 @@ if(isset($_POST['problem_id'])){
     // var_dump($sample_inputs);
     // var_dump($sample_outputs);
     $hint=$_POST['hint'];
+    $tags = isset($_POST['tags']) ? explode(',', $_POST['tags']) : [];
     $xing_tmp = $_POST['xing'];
     $ming_tmp = $_POST['ming'];
     $xing = $ming = "";
@@ -358,6 +433,21 @@ SQL;
     $author=$mysqli->real_escape_string($author);
     $source=$mysqli->real_escape_string($source);
 //  $spj=($spj);
+
+    // 删除旧的标签
+    $stmt = $mysqli->prepare("DELETE FROM problem_tag WHERE problem_id = ?");
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
+
+    // 添加新的标签
+    $stmt = $mysqli->prepare("INSERT INTO problem_tag (problem_id, tag) VALUES (?, ?)");
+    foreach ($tags as $tag) {
+        $stmt->bind_param('is', $id, $tag);
+        $stmt->execute();
+    }
+
+
     if(isset($_POST['add_problem_mod'])){
         $_SESSION["p$id"]=true;
         echo "<a href=quixplorer/index.php?action=list&dir=$id&order=name&srt=yes>Add More Test Data</a>";
@@ -371,6 +461,8 @@ SQL;
         //echo $sql;
         echo "<a href='../problem.php?id=$id'>See The Problem!</a>";
     }
+    $stmt->close();
+    $mysqli->close();
 }
 ?>
 <?php require_once("admin-footer.php"); ?>
@@ -417,5 +509,50 @@ SQL;
         $("#samples_without_button>div:last").remove();
         sample_cnt--;
     })
+
+    $tag=$("#tag");
+    $("#showtag").on("click",function(event){
+        $tag.toggle(200);
+        event.preventDefault();
+    });
+    $("#tag").on("click",function(event){
+        event.preventDefault();
+    });
+
+    $(document).ready(function() {
+        // 添加标签
+        $('#add-tag').click(function(e) {
+          e.preventDefault();
+          var tag = $('#id_staff-display').val();
+          
+          // 检查标签是否已经存在
+          var exists = $('#tag_list .tag-item span').filter(function() {
+              return $(this).text() === tag;
+          }).length > 0;
+          
+          if (!exists) {
+              $('#tag_list .tag-items').append('<li class="tag-item"><span>' + tag + '</span><i class="tag-item-del">x</i></li>');
+              updateTagsInput();
+          }
+          
+          $('#id_staff-display').val('');
+        });
+
+        // 删除标签
+        $('#tag_list').on('click', '.tag-item-del', function() {
+            $(this).parent().remove();
+            updateTagsInput();
+        });
+
+        // 更新隐藏字段的值
+        function updateTagsInput() {
+            var tags = $('#tag_list .tag-item span').map(function() {
+                return $(this).text();
+            }).get().join(',');
+            $('#id_tags').val(tags);
+        }
+        
+        updateTagsInput();
+    });
 </script>
 <!-- samples edit scripts END-->

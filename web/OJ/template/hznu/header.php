@@ -15,7 +15,6 @@
 **/
 ?>
 
-
 <?php // 是否显示tag的判断
 require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php"; 
 if(!isset($mysqli)) exit(0);

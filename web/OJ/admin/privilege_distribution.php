@@ -1,4 +1,3 @@
-
 <?php
 require_once("admin-header.php");
 // if(!HAS_PRI("edit_privilege_distribution")){
@@ -233,6 +232,15 @@ if($_POST['data']){
               view the compare source page.
             </li>
           </ul>
+        </li>
+        <li>
+          manage_gptcode
+        </li>
+        <li>
+          manage_tag
+        </li>
+        <li>
+          set_dailydetails
         </li>
       </ul>
       </div><!--well-->

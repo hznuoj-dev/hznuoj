@@ -63,6 +63,12 @@
             $html_li .= "<li><a href='/OJ/admin/problem_edit.php?new_problem'>Add Problem</a></li>";
             $html_li .= "<li><a href='/OJ/admin/problem_list.php'>Problem List</a></li>";
           }
+          if(HAS_PRI("manage_gptcode")){
+            $html_li .= "<li><a href='/OJ/admin/gptcode_manage.php'>Update GPTcode</a></li>";
+          }
+          if(HAS_PRI("manage_tag")) {
+            $html_li .= "<li><a href='/OJ/admin/tag_manage.php'>Manage Tags</a></li>";
+          }
           if($html_li!=""){
             echo<<<sss
             <li class="dropdown">
@@ -137,6 +143,9 @@ sss;
             </li>
 sss;
           }
+
+          if(HAS_PRI("set_dailydetails")) echo "<li><a href='/OJ/admin/set_dailydetails.php'>Daily details</a></li>";
+
           $html_li="";
           $html_li .= "<li><a href='/OJ/admin/privilege_list.php'>Privilege List</a></li>";
           if(HAS_PRI("edit_privilege_group")){
