@@ -44,7 +44,7 @@ fi
 chown -R ${APACHEUSER} ${DATA}
 chown -R ${APACHEUSER} ${UPLOAD}
 
-cp ${WEBBASE}/web/OJ/include/static.php.example ${WEBBASE}/web/OJ/include/static.php
+cp ${WEBBASE}/web/OJ/include/static.example.php ${WEBBASE}/web/OJ/include/static.php
 
 # change apache server root to /var/www/web
 sed -i -e 's/\/var\/www\/html/\/var\/www\/web/g' /etc/apache2/sites-available/000-default.conf
