@@ -86,7 +86,7 @@ docker exec -it hznuoj bash
 
 ## 使用教程
 
-默认管理员账号为 admin/@Hznu666。
+默认管理员账号为 admin/123456。
 
 出题手册见 https://www.yuque.com/weilixinlianxin/zcf10d/yfk05w
 
