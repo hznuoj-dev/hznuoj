@@ -8,7 +8,8 @@ $sql = "SELECT p.problem_id, s.result
         FROM problem_tag pt
         JOIN problem p ON pt.problem_id = p.problem_id
         LEFT JOIN solution s ON p.problem_id = s.problem_id AND s.user_id = ?
-        WHERE pt.tag = ?";
+        WHERE pt.tag = ?
+        ORDER BY p.score, p.problem_id";
 
 $stmt = $mysqli->prepare($sql);
 
