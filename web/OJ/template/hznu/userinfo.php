@@ -34,6 +34,8 @@ require_once("header.php");
 
   .loading-btn:hover {
     color: white;
+    background: #bee9ff;
+    border-radius: 10px;
   }
 
   .loading-btn:before {
