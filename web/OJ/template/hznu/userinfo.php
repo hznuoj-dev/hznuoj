@@ -178,12 +178,12 @@ require_once("header.php");
     <div class="am-u-sm-12 am-text-center">
       <div class="am-u-sm-6">
         <form action="./template/hznu/daliy_detail.php" method="post">
-          <button class="loading-btn" name="daliy_detail" , value=<?php echo $user_id ?>>点击查看每日做题详情</button>
+          <button class="loading-btn" name="daliy_detail" , value=<?php echo $user ?>>点击查看每日做题详情</button>
         </form>
       </div>
       <div class="am-u-sm-6">
         <form action="./template/hznu/study_detail.php" method="post">
-          <button class="loading-btn" name="study_detail" , value=<?php echo $user_id ?>>点击查看学习里程碑</button>
+          <button class="loading-btn" name="study_detail" , value=<?php echo $user ?>>点击查看学习里程碑</button>
         </form>
       </div>
     </div>
