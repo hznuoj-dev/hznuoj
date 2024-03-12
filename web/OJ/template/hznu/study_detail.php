@@ -81,11 +81,6 @@ $pointposition = [
 ?>
 
 <style>
-  .am-modal-hd {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 </style>
 
 <div class="am-g" style="margin-top: 50px;">
@@ -94,17 +89,22 @@ $pointposition = [
   </div>
 </div>
 
-<div class="am-popup" style="font-size: 20px; height: 30%; border-radius: 20px" tabindex="-1" id="modal-study">
-  <div class="am-popup-inner">
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="modal-study">
+  <div class="am-modal-dialog" style="font-size: 20px; width:30%; border-radius: 20px" tabindex="-1" id="modal-study">
+
     <div class="am-modal-hd">Solved
       <a class="am-close am-close-spin" data-am-modal-close>&times;</a>
     </div>
+
     <div class="am-modal-bd" id="modal-solved-bd">
       <i class="am-icon-spinner am-icon-pulse"></i> Loading...
     </div>
+
     <div class="am-modal-hd">Recommended
       <a class="am-close am-close-spin" data-am-modal-close>&times;</a>
     </div>
+
     <div class="am-modal-bd" id="modal-recommend-bd">
       <i class="am-icon-spinner am-icon-pulse"></i> Loading...
     </div>
@@ -346,13 +346,23 @@ $pointposition = [
         var solvedLinks = data.solved.map(function(problemId, index) {
           return '<a href="/OJ/problem.php?id=' + problemId + '">' + problemId + '</a>';
         });
+        if (solvedLinks.length === 0) {
+          solvedLinks = ['No Problem Now!'];
+        }
         $('#modal-solved-bd').html(solvedLinks.join(' '));
 
         // 生成未解决问题的链接
         var unsolvedLinks = data.unsolved.map(function(problemId, index) {
           return '<a href="/OJ/problem.php?id=' + problemId + '">' + problemId + '</a>';
         });
+        if (unsolvedLinks.length === 0) {
+          unsolvedLinks = ['No Problem Now!'];
+        }
         $('#modal-recommend-bd').html(unsolvedLinks.join(' '));
+
+        // 更新弹窗标题
+        $('.am-modal-hd').eq(0).text('Solved (' + data.solved.length + ')');
+        $('.am-modal-hd').eq(1).text('Recommended (' + data.unsolved.length + ')');
 
         // 显示弹窗
         $('#modal-study').modal();
