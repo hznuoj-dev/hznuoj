@@ -26,7 +26,7 @@ jobs:
           fi
 
       - name: Create Tag
-        if: ${{ steps.check_version.outputs.tag }}
+        if: len(${{ steps.check_version.outputs.tag }}) > 0
         run: |
           git tag ${{ steps.check_version.outputs.tag }}
           git push origin ${{ steps.check_version.outputs.tag }}
