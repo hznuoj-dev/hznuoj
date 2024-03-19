@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-tags: true
+          fetch-tags: "true"
 
       - name: Check Version
         id: check_version
@@ -21,6 +21,7 @@ jobs:
           if [[ -f VERSION ]]; then
             version=$(cat VERSION)
             tags=$(git tag --list)
+            echo $tags
             if [[ ! "$tags" =~ (^|[[:space:]])"$version"($|[[:space:]]) ]]; then
               echo $version
               echo "::set-output name=tag::$version"
