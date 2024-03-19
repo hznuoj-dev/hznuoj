@@ -134,5 +134,5 @@ docker exec -it hznuoj bash
 
 ## 发布
 
-* 在 PR 中，修改 VERSION 中的版本号
+* 在 PR 中，修改 VERSION 中的版本号，版本号要满足 `vx.x.x` 的格式，如果能满足 [语义化版本](https://semver.org/lang/zh-CN/) 的话更好
 * 当 PR merge 到 master 的时候，如果 VERSION 里的版本号不存在于 git tag 中，那么会触发版本发布
