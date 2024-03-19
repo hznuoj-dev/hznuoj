@@ -131,3 +131,8 @@ docker exec -it hznuoj bash
 
 [gh-release-badge]: https://img.shields.io/github/release/hznuoj-dev/hznuoj.svg
 [gh-release]: https://GitHub.com/hznuoj-dev/hznuoj/releases/
+
+## 发布
+
+* 在 PR 中，修改 VERSION 中的版本号
+* 当 PR merge 到 master 的时候，如果 VERSION 里的版本号不存在于 git tag 中，那么会触发版本发布
