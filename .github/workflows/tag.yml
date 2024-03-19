@@ -12,21 +12,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-tags: true
+          fetch-depth: 0
 
       - name: Check Version
         id: check_version
+        shell: bash
         run: |
           if [[ -f VERSION ]]; then
             version=$(cat VERSION)
             tags=$(git tag --list)
+            echo $tags
             if [[ ! "$tags" =~ (^|[[:space:]])"$version"($|[[:space:]]) ]]; then
+              echo $version
               echo "::set-output name=tag::$version"
             fi
           fi
 
       - name: Create Tag
-        if: steps.check_version.outputs.tag
+        if: ${{ startsWith(steps.check_version.outputs.tag, 'v') }}
         run: |
           git tag ${{ steps.check_version.outputs.tag }}
           git push origin ${{ steps.check_version.outputs.tag }}
