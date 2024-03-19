@@ -16,6 +16,7 @@ jobs:
 
       - name: Check Version
         id: check_version
+        shell: bash
         run: |
           if [[ -f VERSION ]]; then
             version=$(cat VERSION)
