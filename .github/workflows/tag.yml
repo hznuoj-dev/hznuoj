@@ -26,7 +26,7 @@ jobs:
           fi
 
       - name: Create Tag
-        if: steps.check_version.outputs.tag
+        if: ${{ steps.check_version.outputs.tag }}
         run: |
           git tag ${{ steps.check_version.outputs.tag }}
           git push origin ${{ steps.check_version.outputs.tag }}
