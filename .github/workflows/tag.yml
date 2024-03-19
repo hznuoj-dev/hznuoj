@@ -21,6 +21,7 @@ jobs:
             version=$(cat VERSION)
             tags=$(git tag --list)
             if [[ ! "$tags" =~ (^|[[:space:]])"$version"($|[[:space:]]) ]]; then
+              echo $version
               echo "::set-output name=tag::$version"
             fi
           fi
