@@ -4,7 +4,7 @@ global $mysqli;
 $user = $_POST['user'];
 $tag = $_POST['tag'];
 
-$sql = "SELECT p.problem_id, s.result
+$sql = "SELECT p.problem_id, s.result, p.score
         FROM problem_tag pt
         JOIN problem p ON pt.problem_id = p.problem_id
         LEFT JOIN solution s ON p.problem_id = s.problem_id AND s.user_id = ?
@@ -25,10 +25,14 @@ $data = array(
 );
 
 while ($row = $result->fetch_assoc()) {
+    $problem = array(
+        'id' => $row['problem_id'],
+        'score' => $row['score']
+    );
     if ($row['result'] == 4) {
-        $data['solved'][] = $row['problem_id'];
+        $data['solved'][] = $problem;
     } else {
-        $data['unsolved'][] = $row['problem_id'];
+        $data['unsolved'][] = $problem;
     }
 }
 

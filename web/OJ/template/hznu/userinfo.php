@@ -26,10 +26,10 @@ require_once("header.php");
     border-radius: 0;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 20px;
     padding: 15px 50px;
     position: relative;
     z-index: 1;
+    color: black;
   }
 
   .loading-btn:hover {
@@ -177,14 +177,14 @@ require_once("header.php");
   <div class="am-g" style="margin-top: 30px;">
     <div class="am-u-sm-12 am-text-center">
       <div class="am-u-sm-6">
-        <form action="./template/hznu/daliy_detail.php" method="post">
-          <button class="loading-btn" name="daliy_detail" , value=<?php echo $user ?>>点击查看每日做题详情</button>
-        </form>
+        <a href="./template/hznu/daliy_detail.php?user=<?php echo $user;?>">
+          <button class="loading-btn">点击查看每日做题详情</button>
+        </a>
       </div>
       <div class="am-u-sm-6">
-        <form action="./template/hznu/study_detail.php" method="post">
-          <button class="loading-btn" name="study_detail" , value=<?php echo $user ?>>点击查看学习里程碑</button>
-        </form>
+        <a href="./template/hznu/study_detail.php?user=<?php echo $user;?>">
+          <button class="loading-btn">点击查看学习里程碑</button>
+        </a>
       </div>
     </div>
   </div>
