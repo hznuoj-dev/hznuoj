@@ -11,13 +11,18 @@ if (isset($_POST['addtag'])) {
     // require_once("../include/check_post_key.php");
     $tag = $_POST['addtag'];
 
+    if ($tag == "") {
+        echo ("Tag empty!");
+        exit(1);
+    }
+
     $stmt = $mysqli->prepare("SELECT * FROM all_problem_tag WHERE tag = ?");
     $stmt->bind_param('s', $tag);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo ("Tag exists");
+        echo ("Tag exists!");
         exit(1);
     } else {
         $stmt = $mysqli->prepare("INSERT INTO all_problem_tag (tag) VALUES (?)");

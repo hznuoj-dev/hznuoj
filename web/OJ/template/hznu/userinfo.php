@@ -18,6 +18,47 @@ require_once("header.php");
   .first-col {
     width: 120px;
   }
+
+  .loading-btn {
+    font-size: 20px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 15px 50px;
+    position: relative;
+    z-index: 1;
+    color: black;
+  }
+
+  .loading-btn:hover {
+    color: white;
+    background: #bee9ff;
+    border-radius: 10px;
+  }
+
+  .loading-btn:before {
+    transition: all 0.8s cubic-bezier(0.7, -0.5, 0.25, 1.5);
+    content: '';
+    width: 2%;
+    height: 100%;
+    background: #3BB4F2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 10px;
+  }
+
+  .loading-btn span {
+    mix-blend-mode: darken;
+  }
+
+  .loading-btn:hover:before {
+    background: #3BB4F2;
+    width: 100%;
+  }
 </style>
 <div class="am-container" style="margin-top:60px;">
   <!-- userinfo上部分 start -->
@@ -111,7 +152,7 @@ require_once("header.php");
         </table>
         <?php if (HAS_PRI("edit_user_profile")) : ?>
           <div class="am-text-center">
-            <button class="am-btn am-btn-secondary">Submit</button>
+            <button class="am-btn am-btn-secondary am-radius">Submit</button>
           </div>
         <?php endif ?>
       </form>
@@ -136,15 +177,15 @@ require_once("header.php");
   <div class="am-g" style="margin-top: 30px;">
     <div class="am-u-sm-12 am-text-center">
       <div class="am-u-sm-6">
-        <form action="./template/hznu/daliy_detail.php" method="post">
-          <button class="am-btn am-btn-secondary am-round" style="font-size: 25px" name="daliy_detail" , value=<?php echo $user_id ?>>点击查看每日做题详情</button>
-        </form>
+        <a href="./template/hznu/daliy_detail.php?user=<?php echo $user;?>">
+          <button class="loading-btn">点击查看每日做题详情</button>
+        </a>
       </div>
-      <!-- <div class="am-u-sm-6">
-        <form action="./template/hznu/study_detail.php" method="post">
-          <button class="am-btn am-btn-secondary am-round" style="font-size: 25px" name="study_detail" , value=<?php echo $user_id ?>>点击查看学习里程碑</button>
-        </form>
-      </div> -->
+      <div class="am-u-sm-6">
+        <a href="./template/hznu/study_detail.php?user=<?php echo $user;?>">
+          <button class="loading-btn">点击查看学习里程碑</button>
+        </a>
+      </div>
     </div>
   </div>
   <!-- userinfo中部分 end -->

@@ -1106,7 +1106,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('admin','','temp@temp.com',1,1,'N','::1','2019-03-12 16:34:09',1,NULL,1,'d4er+qiVZNXCikHfG0m35WtRNHNkNzRl','2019-03-12 16:34:09','','admin','','其它','斗之气五段',100.00,'#b6b6b6',NULL,NULL,NULL,NULL,NULL,0,0,NULL);
+INSERT INTO `users` VALUES ('admin','','temp@temp.com',1,1,'N','::1','2019-03-12 16:34:09',1,NULL,1,'3h3WmOGmnb9jZpHcKBU3t+VpcJFhYjQx','2019-03-12 16:34:09','','admin','','其它','斗之气五段',100.00,'#b6b6b6',NULL,NULL,NULL,NULL,NULL,0,0,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 

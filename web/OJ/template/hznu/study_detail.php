@@ -1,25 +1,25 @@
 <?php
 require_once("header.php");
+
+require_once("study_detail_data.php");
 ?>
 
 <?php
-if ($_GET['user']) $user = $_GET['user'];
-else $user = $_POST['study_detail'];
+$user = $_GET['user'];
 if (!is_valid_user_name($user)) {
   echo "No such User!";
   exit(0);
 }
-$studydata = array();
-$studydata['tag1'] = 0; //此处修改
-$studydata['tag2'] = 0;
-$studydata['tag3'] = 0;
 
-//此处修改
+$studydata = array();
+$studydata = array_fill_keys($studytags, 0);
+//studydata['xx']=0;
+
 $sql = "SELECT pt.tag, COUNT(DISTINCT s.problem_id) as count
         FROM solution s
         JOIN problem_tag pt ON s.problem_id = pt.problem_id
-        WHERE s.user_id = '$user' AND s.result = 4 AND pt.tag IN ('tag1', 'tag2', 'tag3')
-        GROUP BY pt.tag";
+        WHERE s.user_id = '$user' AND s.result = 4 AND pt.tag IN ('" . implode("', '", $studytags) . "')
+        GROUP BY pt.tag;";
 $result = $mysqli->query($sql);
 
 while ($row = $result->fetch_assoc()) {
@@ -28,34 +28,90 @@ while ($row = $result->fetch_assoc()) {
 
 $result->free();
 
+
+///////////////////////////////////////////////////////////////////////////////cs
+// if($user == "admin")
+//   foreach ($studytags as $tag)
+//     $studydata[$tag] = 1;
+
+///////////////////////////////////////////////////////////////////////////////cs
+
+//此处修改层次颜色
+$color = ['#cccccc', '#d0f0c0', '#aadf8f', '#85c96e'];
+
 $neednum = array();
-$neednum['tag1'] = 1; //此处修改
-$neednum['tag2'] = 5;
-$neednum['tag3'] = 5;
+$neednum = array_fill_keys($studytags, [0, 1, 2, 4]);
+//neednum['xx'] = [0, 1, 2, 4];
+
+
+foreach ($studytags3 as $tag) {
+  $studydata[$tagfa[$tag]] = 0;
+  $neednum[$tagfa[$tag]] = [0, 0, 0, 0];
+}
+foreach ($studytags2 as $tag) {
+  $studydata[$tagfa[$tag]] = 0;
+  $neednum[$tagfa[$tag]] = [0, 0, 0, 0];
+}
+
+foreach ($studytags3 as $tag) {
+  $studydata[$tagfa[$tag]] += $studydata[$tag];
+  $counts = $neednum[$tag];
+  for ($i = 0; $i < count($counts); $i++) {
+    $neednum[$tagfa[$tag]][$i] += $counts[$i];
+  }
+}
+foreach ($studytags2 as $tag) {
+  $studydata[$tagfa[$tag]] += $studydata[$tag];
+  $counts = $neednum[$tag];
+  for ($i = 0; $i < count($counts); $i++) {
+    $neednum[$tagfa[$tag]][$i] += $counts[$i];
+  }
+}
+
+
+$nowcolor = array();
+
+foreach ($studytags as $tag) {
+  for ($i = 3; $i >= 0; $i--) {
+    if ($studydata[$tag] >= $neednum[$tag][$i]) {
+      $nowcolor[$tag] = $color[$i];
+      break;
+    }
+  }
+}
+
 ?>
 
-<div class="am-g" style="margin-top: 50px;">
-  <div class="am-u-sm-8" style="display: flex; justify-content: center;">
-    <div id="main" style="width: 80%;height:500px;"></div>
-  </div>
-  <div class="am-u-sm-4">
-    <div style="margin-bottom: 10px;">知识点推荐题目（点击知识点获取）：</div>
-    <div class="am-panel am-panel-default">
-      <div class="am-panel-hd"><b>Solved:</b></div>
-      <div class="am-panel-bd">
-        <p></p>
-      </div>
-    </div>
-    <div class="am-panel am-panel-default">
-      <div class="am-panel-hd"><b>Recommended:</b></div>
-      <div class="am-panel-bd">
-        <p></p>
-      </div>
-    </div>
+<style>
+</style>
+
+<div class="am-g" style="margin-top: 0px;">
+  <div class="am-u-sm-12" style="justify-content: center;">
+    <div id="main" style="width: 3100px;height: 700px;"></div>
   </div>
 </div>
 
 
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="modal-study">
+  <div class="am-modal-dialog" style="font-size: 20px; width:30%; border-radius: 20px" tabindex="-1" id="modal-study">
+
+    <div class="am-modal-hd">Solved
+      <a class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+
+    <div class="am-modal-bd" id="modal-solved-bd">
+      <i class="am-icon-spinner am-icon-pulse"></i> Loading...
+    </div>
+
+    <div class="am-modal-hd">Recommended
+      <a class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+
+    <div class="am-modal-bd" id="modal-recommend-bd">
+      <i class="am-icon-spinner am-icon-pulse"></i> Loading...
+    </div>
+  </div>
+</div>
 
 <?php require_once("footer.php") ?>
 
@@ -65,14 +121,25 @@ $neednum['tag3'] = 5;
   var myChart = echarts.init(chartDom);
   var option;
 
-
   var studydata = <?php echo json_encode($studydata); ?>;
   var neednum = <?php echo json_encode($neednum); ?>;
 
-
   option = {
     title: {
-      text: '学习里程碑'
+      text: '学习里程碑',
+      left: "1%",
+      top: "5%",
+    },
+    legend: {
+      data: ["Newbie", "Learner", "Expert", "Master"],
+      selectedMode: false, //控制是否可以点击
+      left: "1%",
+      top: "15%",
+      width: "1%",
+      textStyle: {
+        color: "black",
+        fontSize: 16
+      }
     },
     tooltip: {
       formatter: function(params) {
@@ -83,90 +150,140 @@ $neednum['tag3'] = 5;
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
     series: [{
+      width: "90%",
       type: 'graph',
       layout: 'none',
-      symbolSize: 60,
-      roam: true,
+      symbol: "roundRect",
+      symbolSize: 70,
+      roam: false,
       label: {
         show: true,
-        fontSize: 18
+        fontSize: 12
       },
-      edgeSymbol: ['circle', 'arrow'],
-      edgeSymbolSize: [0, 10],
+      edgeSymbolSize: [0, 14],
       edgeLabel: {
         fontSize: 30
       },
-      data: [{
-          name: 'tag1', //此处修改
-          x: 300,
-          y: 300,
-          itemStyle: {
-            color: '<?php echo $studydata['tag1'] < $neednum['tag1'] ? '#cccccc' : '#85c96e'; ?>'
-          }
-        },
-        {
-          name: 'tag2',
-          x: 500,
-          y: 300,
-          itemStyle: {
-            color: '<?php echo $studydata['tag2'] < $neednum['tag2'] ? '#cccccc' : '#85c96e'; ?>'
-          }
-        },
-        {
-          name: 'tag3',
-          x: 700,
-          y: 300,
-          itemStyle: {
-            color: '<?php echo $studydata['tag3'] < $neednum['tag3'] ? '#cccccc' : '#85c96e'; ?>'
-          }
+      categories: [{
+        name: 'Newbie',
+        itemStyle: {
+          color: '#cccccc',
         }
-      ],
-      links: [{
-          source: 'tag1', //此处修改
-          target: 'tag2'
-        },
-        {
-          source: 'tag2',
-          target: 'tag3'
+      }, {
+        name: 'Learner',
+        itemStyle: {
+          color: '#d0f0c0'
         }
+      }, {
+        name: 'Expert',
+        itemStyle: {
+          color: '#aadf8f'
+        }
+      }, {
+        name: 'Master',
+        itemStyle: {
+          color: '#85c96e'
+        }
+      }],
+      data: [
+        <?php
+        $count = 0;
+        foreach ($pointposition as $tag => $position) {
+          if ($count < 8) { //前八个方形
+            echo "{name: '" . $tag . "',x: " . $position['x'] . ",y: " . $position['y'] .
+              ",itemStyle: {color:'" . $nowcolor[$tag] . "' }},";
+          } else {
+            echo "{name: '" . $tag . "',x: " . $position['x'] . ",y: " . $position['y'] .
+              ", symbol:'circle', symbolSize: 70, itemStyle: {color:'" . $nowcolor[$tag] . "'}},";
+          }
+          $count++;
+        }
+        foreach ($breakpoint as $tag => $position) {
+          echo "{name: '" . $tag . "',x: " . $position['x'] . ",y: " . $position['y'] .
+            ", symbol:'circle', symbolSize: 0, tooltip: { show: false }, label: {show: false}},";
+        }
+        ?>
       ],
+      links: links,
       lineStyle: {
         opacity: 0.9,
-        width: 2,
-        curveness: 0
+        width: 3,
+        curveness: 0,
+        color: '#996633'
       }
-    }]
+    }, ]
   };
 
   option && myChart.setOption(option);
 
   myChart.on('click', function(params) {
-    // 获取被点击的标签
-    var tag = params.data.name;
 
-    // 发送 AJAX 请求
-    $.ajax({
-      url: 'getstudyproblems.php',
-      type: 'POST',
-      data: {
-        user: '<?php echo $user; ?>',
-        tag: tag
-      },
-      success: function(response) {
-        var data = JSON.parse(response);
+    if (params.dataType === 'node' && params.data.name[0] != 'b') {
+      // 获取被点击的标签
+      var tag = params.data.name;
 
-        // 生成已解决问题的链接
-        var solvedLinks = data.solved.map(function(problemId) {
-          return '<a href="/OJ/problem.php?id=' + problemId + '">' + problemId + '</a>';
-        });
-        $('.am-panel-bd').eq(0).html(solvedLinks.join(' '));
+      // 发送 AJAX 请求
+      $.ajax({
+        url: 'getstudyproblems.php',
+        type: 'POST',
+        data: {
+          user: '<?php echo $user; ?>',
+          tag: tag
+        },
+        success: function(response) {
+          var data = JSON.parse(response);
 
-        // 生成未解决问题的链接
-        var unsolvedLinks = data.unsolved.map(function(problemId) {
-          return '<a href="/OJ/problem.php?id=' + problemId + '">' + problemId + '</a>';
-        });
-        $('.am-panel-bd').eq(1).html(unsolvedLinks.join(' '));
-      }
-    });
+          // 生成已解决问题的链接
+          var solvedLinks = data.solved.map(function(problem, index) {
+            var score = problem.score;
+            var colorClass;
+            if (score <= 20) colorClass = 'am-badge-success';
+            else if (score <= 40) colorClass = 'am-badge-secondary';
+            else if (score <= 60) colorClass = 'am-badge-primary';
+            else if (score <= 80) colorClass = 'am-badge-warning';
+            else colorClass = 'am-badge-danger';
+            return '<span class="am-badge ' + colorClass + ' am-round">' +
+              '<a href="/OJ/problem.php?id=' + problem.id + '" style="color: white;">' + problem.id + '</a></span>';
+          });
+          if (solvedLinks.length === 0) {
+            solvedLinks = ['No Problem Now!'];
+          }
+          $('#modal-solved-bd').html(solvedLinks.join(' '));
+
+          // 生成未解决问题的链接
+          var unsolvedLinks = data.unsolved.map(function(problem, index) {
+            var score = problem.score;
+            var colorClass;
+            if (score <= 20) colorClass = 'am-badge-success';
+            else if (score <= 40) colorClass = 'am-badge-secondary';
+            else if (score <= 60) colorClass = 'am-badge-primary';
+            else if (score <= 80) colorClass = 'am-badge-warning';
+            else colorClass = 'am-badge-danger';
+
+            /////////////////////////////////cs
+            // if (index <= 2) colorClass = 'am-badge-success';
+            // else if (index <= 4) colorClass = 'am-badge-secondary';
+            // else if (index <= 6) colorClass = 'am-badge-primary';
+            // else if (index <= 8) colorClass = 'am-badge-warning';
+            // else colorClass = 'am-badge-danger';
+            //////////////////////////////////cs
+
+            return '<span class="am-badge ' + colorClass + ' am-round">' +
+              '<a href="/OJ/problem.php?id=' + problem.id + '" style="color: white;">' + problem.id + '</a></span>';
+          });
+          if (unsolvedLinks.length === 0) {
+            unsolvedLinks = ['No Problem Now!'];
+          }
+          $('#modal-recommend-bd').html(unsolvedLinks.join(' '));
+
+          // 更新弹窗标题
+          $('.am-modal-hd').eq(0).text('Solved (' + data.solved.length + ')');
+          $('.am-modal-hd').eq(1).text('Recommended (' + data.unsolved.length + ')');
+
+          // 显示弹窗
+          $('#modal-study').modal();
+        }
+      });
+    }
   });
 </script>
