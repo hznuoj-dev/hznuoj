@@ -20,7 +20,7 @@ require_once('./include/db_info.inc.php');
 
 <style>
   .bg{
-    background-image: url(image/ojINDEX.jpg);
+    background-image: url(/OJ/image/ojINDEX_v.jpg);
     background-repeat: no-repeat;
     background-position: center 0px;
   }
@@ -36,7 +36,7 @@ require_once('./include/db_info.inc.php');
   <div class="am-g ill" style="height: 20px;">
     <center><div class="link" style="cursor: pointer; height: 20px; width: 100px;"></div></center>
   </div>
-  <div class="am-g ill" style="height: 30px;"></div> 
+  <div class="am-g ill" style="height: 30px;"></div>
   <div class='am-g'>
     <!-- 公告模块 start -->
     <div class="am-u-md-8">
@@ -44,7 +44,7 @@ require_once('./include/db_info.inc.php');
         <div class="am-panel-hd" class="am-panel-title">News</div>
         <div class="am-panel-collapse am-collapse am-in">
           <div class="am-panel-bd">
-            <div class="am-panel-group" id="accordion">  
+            <div class="am-panel-group" id="accordion">
                 <?php
                 $n = count($news_title);
                 if ($n) { // 有公告的话
@@ -62,8 +62,8 @@ require_once('./include/db_info.inc.php');
                       <div id="news-$nid" class="am-panel-collapse am-collapse">
                         <div class="am-panel-bd">
                         </div>
-                      </div>    
-                    </div>  
+                      </div>
+                    </div>
 HTML;
                     }
                 }
@@ -74,8 +74,8 @@ HTML;
       </div>
     </div>
     <!-- 公告模块 end -->
-    
-    
+
+
     <!--Submission Statics START-->
     <div class="am-u-md-4">
         <?php
@@ -123,23 +123,23 @@ $series_ac_data="";
 $series_hits_data="";
 $xAxis_data="";
 for($i=$tot_days-1 ; $i>=0 ; --$i){
-    
-    
+
+
     $sql="SELECT count(1) FROM solution WHERE in_date<=date_add(date(NOW()), interval -$i+1 day) AND in_date>date_add(date(NOW()), interval -$i day) AND result != 4";
     $res=$mysqli->query($sql);
     $cnt=$res->fetch_array()[0];
     $series_not_ac_data.="$cnt,";
-    
+
     $sql="SELECT count(1) FROM solution WHERE in_date<=date_add(date(NOW()), interval -$i+1 day) AND in_date>date_add(date(NOW()), interval -$i day) AND result = 4";
     $res=$mysqli->query($sql);
     $cnt=$res->fetch_array()[0];
     $series_ac_data.="$cnt,";
-    
+
     $sql="SELECT count(1) FROM hit_log WHERE time<=date_add(date(NOW()), interval -$i+1 day) AND time>date_add(date(NOW()), interval -$i day)";
     $res=$mysqli->query($sql);
     $cnt=$res->fetch_array()[0];
     $series_hits_data.="$cnt,";
-    
+
     if($i==0)$xAxis_data.="'today',";
     else if($i==1) $xAxis_data.="'yesterday',";
     else $xAxis_data.="'".(-$i+1)." days',";

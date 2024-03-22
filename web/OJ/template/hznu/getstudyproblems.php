@@ -4,11 +4,12 @@ global $mysqli;
 $user = $_POST['user'];
 $tag = $_POST['tag'];
 
-$sql = "SELECT p.problem_id, s.result
+$sql = "SELECT p.problem_id, s.result, p.score
         FROM problem_tag pt
         JOIN problem p ON pt.problem_id = p.problem_id
         LEFT JOIN solution s ON p.problem_id = s.problem_id AND s.user_id = ?
-        WHERE pt.tag = ?";
+        WHERE pt.tag = ?
+        ORDER BY p.score, p.problem_id";
 
 $stmt = $mysqli->prepare($sql);
 
@@ -24,12 +25,33 @@ $data = array(
 );
 
 while ($row = $result->fetch_assoc()) {
+    $problem = array(
+        'id' => $row['problem_id'],
+        'score' => $row['score']
+    );
     if ($row['result'] == 4) {
-        $data['solved'][] = $row['problem_id'];
+        $data['solved'][] = $problem;
     } else {
-        $data['unsolved'][] = $row['problem_id'];
+        $data['unsolved'][] = $problem;
     }
 }
+
+function array_unique_by_key(&$array, $key) {
+    $tmp = [];
+    $result = [];
+
+    foreach ($array as $value) {
+        if (!in_array($value[$key], $tmp)) {
+            array_push($tmp, $value[$key]);
+            array_push($result, $value);
+        }
+    }
+
+    $array = $result;
+}
+
+array_unique_by_key($data['solved'], 'id');
+array_unique_by_key($data['unsolved'], 'id');
 
 $result->free();
 

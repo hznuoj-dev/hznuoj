@@ -28,7 +28,7 @@ if(!$add_problem_mod){
             require_once("error.php");
             exit(0);
         }
-        
+
         $sql="SELECT input, output, show_after FROM problem_samples WHERE problem_id='$pid' ORDER BY sample_id";
         $res=$mysqli->query($sql);
         $samples=array();
@@ -89,7 +89,7 @@ HTML;
                       echo "</oition>";
                   }
               }
-              
+
               ?>
           </select>
         </div>
@@ -171,7 +171,7 @@ HTML;
             <button id="remove_sample" class="btn btn-danger btn-sm btn-block">Remove the last sample</button>
             <button id="add_sample" class="btn btn-primary btn-sm btn-block">Add a sapmple</button>
           </div>
-        
+
         </div>
       </div>
       <div class="form-group">
@@ -229,7 +229,7 @@ HTML;
         <label for="" class="col-sm-2 control-label">Tag</label>
 
         <div class="col-sm-10">
-          <button id="showtag" class="btn btn-default btn-sm btn-block">Tag(s)</button>
+          <button id="showtag" class="btn btn-default btn-sm btn-block">Tag(s) 请从已有tag中选择</button>
           <div id="tag" style="padding: 10px; border: 1px solid #ccc; margin-top: 10px;">
             <div id="tag_list" style="margin-bottom: 10px;">
               <ul class="tag-items">
@@ -260,10 +260,10 @@ HTML;
             <button class="btn btn-primary btn-sm btn-block" id="add-tag" style="margin-top: 10px;">添加</button>
           </div>
         </div>
-      </div> 
-      
+      </div>
 
-      
+
+
       <hr/>
       <div class="form-group">
         <label for="" class="col-sm-2 control-label">Author</label>
@@ -374,7 +374,7 @@ if(isset($_POST['problem_id'])){
         $path=$OJ_DATA."/$id/sample".$i.".in";
         if(file_exists($path)) $success=unlink($path);
         //echo "<pre>remove $path:$success</pre>";
-        
+
         $path=$OJ_DATA."/$id/sample".$i.".out";
         if(file_exists($path)) $success=unlink($path);
         //echo "<pre>remove $path:$success</pre>";
@@ -382,7 +382,7 @@ if(isset($_POST['problem_id'])){
     if(isset($_POST['add_problem_mod'])){
         $id=addproblem($problemset, $title, $time_limit, $memory_limit, $description, $input, $output, $hint, $author, $source, $spj, $OJ_DATA );
         mkdir($OJ_DATA."/$id");
-    } 
+    }
     $sql="DELETE FROM problem_samples WHERE problem_id=$id";
     $mysqli->query($sql);
     if($sample_inputs){
@@ -390,19 +390,19 @@ if(isset($_POST['problem_id'])){
             $sample_input=preg_replace("/(\r\n)/","\n",$sample_input);
             $sample_output=preg_replace("/(\r\n)/","\n",$sample_outputs[$key]);
             if($sample_input=="" && $sample_output=="")continue;
-            
+
             //don't auto generate sample files if is SPJ
             if(!$spj) {
                 $fp=fopen($OJ_DATA."/$id/sample".$key.".in","w");
                 fputs($fp,$sample_input);
                 fclose($fp);
                 //echo "<pre>create: ".$OJ_DATA."/$id/sample".$key.".in"."</pre>";
-    
+
                 $fp=fopen($OJ_DATA."/$id/sample".$key.".out","w");
                 fputs($fp,preg_replace("/(\r\n)/","\n",$sample_output));
                 fclose($fp);
             }
-            
+
             $sample_input=$mysqli->real_escape_string($sample_input);
             $sample_output=$mysqli->real_escape_string($sample_output);
             $sql=<<<SQL
@@ -440,13 +440,20 @@ SQL;
     $stmt->execute();
     $stmt->close();
 
-    // 添加新的标签
-    $stmt = $mysqli->prepare("INSERT INTO problem_tag (problem_id, tag) VALUES (?, ?)");
-    foreach ($tags as $tag) {
-        $stmt->bind_param('is', $id, $tag);
-        $stmt->execute();
-    }
+    // 添加新的标签，不属于已有tag的不添加
+    $stmt_check = $mysqli->prepare("SELECT * FROM all_problem_tag WHERE tag = ?");
+    $stmt_insert = $mysqli->prepare("INSERT INTO problem_tag (problem_id, tag) VALUES (?, ?)");
 
+    foreach ($tags as $tag) {
+        $stmt_check->bind_param('s', $tag);
+        $stmt_check->execute();
+        $result = $stmt_check->get_result();
+
+        if ($result->num_rows > 0) {
+            $stmt_insert->bind_param('is', $id, $tag);
+            $stmt_insert->execute();
+        }
+    }
 
     if(isset($_POST['add_problem_mod'])){
         $_SESSION["p$id"]=true;
@@ -524,17 +531,17 @@ SQL;
         $('#add-tag').click(function(e) {
           e.preventDefault();
           var tag = $('#id_staff-display').val();
-          
+
           // 检查标签是否已经存在
           var exists = $('#tag_list .tag-item span').filter(function() {
               return $(this).text() === tag;
           }).length > 0;
-          
-          if (!exists) {
-              $('#tag_list .tag-items').append('<li class="tag-item"><span>' + tag + '</span><i class="tag-item-del">x</i></li>');
-              updateTagsInput();
+
+          if (!exists && tag != "") {
+            $('#tag_list .tag-items').append('<li class="tag-item"><span>' + tag + '</span><i class="tag-item-del">x</i></li>');
+            updateTagsInput();
           }
-          
+
           $('#id_staff-display').val('');
         });
 
@@ -551,7 +558,7 @@ SQL;
             }).get().join(',');
             $('#id_tags').val(tags);
         }
-        
+
         updateTagsInput();
     });
 </script>
