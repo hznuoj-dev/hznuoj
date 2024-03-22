@@ -20,7 +20,7 @@ require_once('./include/db_info.inc.php');
 
 <style>
   .bg{
-    background-image: url(/OJ/image/ojINDEX_2.6.jpg);
+    background-image: url(/OJ/image/ojINDEX_v.jpg);
     background-repeat: no-repeat;
     background-position: center 0px;
   }
