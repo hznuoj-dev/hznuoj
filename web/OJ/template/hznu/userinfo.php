@@ -177,12 +177,12 @@ require_once("header.php");
   <div class="am-g" style="margin-top: 30px;">
     <div class="am-u-sm-12 am-text-center">
       <div class="am-u-sm-6">
-        <a href="./template/hznu/daliy_detail.php?user=<?php echo $user;?>">
+        <a href="./daliy_detail.php?user=<?php echo $user;?>">
           <button class="loading-btn">点击查看每日做题详情</button>
         </a>
       </div>
       <div class="am-u-sm-6">
-        <a href="./template/hznu/study_detail.php?user=<?php echo $user;?>">
+        <a href="./study_detail.php?user=<?php echo $user;?>">
           <button class="loading-btn">点击查看学习里程碑</button>
         </a>
       </div>

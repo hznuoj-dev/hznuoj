@@ -36,6 +36,23 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
+function array_unique_by_key(&$array, $key) {
+    $tmp = [];
+    $result = [];
+
+    foreach ($array as $value) {
+        if (!in_array($value[$key], $tmp)) {
+            array_push($tmp, $value[$key]);
+            array_push($result, $value);
+        }
+    }
+
+    $array = $result;
+}
+
+array_unique_by_key($data['solved'], 'id');
+array_unique_by_key($data['unsolved'], 'id');
+
 $result->free();
 
 $mysqli->close();
