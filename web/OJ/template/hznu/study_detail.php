@@ -106,7 +106,12 @@ require_once("footer.php");
       roam: false,
       label: {
         show: true,
-        fontSize: 10
+        fontSize: 10,
+        // color: '#ffffff',
+        // textBorderType: "solid",
+        // textBorderWidth: 0.5,
+        // textBorderColor: "#A9D18E",
+        // textBorderDashOffset:10
       },
       edgeSymbolSize: [0, 10],
       edgeLabel: {
@@ -115,22 +120,22 @@ require_once("footer.php");
       categories: [{
         name: 'Newbie',
         itemStyle: {
-          color: '<?php echo $pointcolor[0]; ?>',
+          color: '<?php echo $pointcolor[0][0]; ?>',
         }
       }, {
         name: 'Learner',
         itemStyle: {
-          color: '<?php echo $pointcolor[1]; ?>',
+          color: '<?php echo $pointcolor[0][1]; ?>',
         }
       }, {
         name: 'Expert',
         itemStyle: {
-          color: '<?php echo $pointcolor[2]; ?>',
+          color: '<?php echo $pointcolor[0][2]; ?>',
         }
       }, {
         name: 'Master',
         itemStyle: {
-          color: '<?php echo $pointcolor[3]; ?>',
+          color: '<?php echo $pointcolor[0][3]; ?>',
         }
       }],
       data: updatedData,
@@ -139,7 +144,7 @@ require_once("footer.php");
         opacity: 0.9,
         width: 2,
         curveness: 0.1,
-        color: '#ffbc61'
+        color: '#bdcec8'
       }
     }, ]
   };
@@ -217,4 +222,5 @@ require_once("footer.php");
       });
     }
   });
+  window.addEventListener('resize', myChart.resize);
 </script>

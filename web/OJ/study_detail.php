@@ -37,7 +37,6 @@ $result->free();
 ///////////////////////////////////////////////////////////////////////////////cs
 
 //此处修改层次颜色
-$pointcolor = ['#e5e5e5', '#d0f0c0', '#aadf8f', '#85c96e'];
 
 $neednum = array();
 $neednum = array_fill_keys($studytags, [0, 1, 2, 4]);
@@ -72,14 +71,21 @@ foreach ($studytags2 as $tag) {
 $nowcolor = array();
 
 foreach ($studytags as $tag) {
+  $ancestor = $tag;
+  while (isset($tagfa[$ancestor])) {
+    $ancestor = $tagfa[$ancestor];
+  }
+
+  //找到祖先节点
+  $index = array_search($ancestor, $studytags1);
+
   for ($i = 3; $i >= 0; $i--) {
     if ($studydata[$tag] >= $neednum[$tag][$i]) {
-      $nowcolor[$tag] = $pointcolor[$i];
+      $nowcolor[$tag] = $pointcolor[$index][$i];
       break;
     }
   }
 }
-
 
 /////////////////////////Template
 require("template/" . $OJ_TEMPLATE . "/study_detail.php");
