@@ -1,5 +1,6 @@
 <?php
 
+//所有的tag
 $studytags = [
   'HelloWorld!', '基础数据类型', '运算符', '控制结构', '函数', '指针', '结构体', '数组',
 
@@ -9,12 +10,14 @@ $studytags = [
   '顺序结构', '选择结构', '循环结构', '科学计算', '单分支', '多分支', '多重循环', '迭代', '枚举'
 ];
 
+//图例
+$categoriesdata = ["新手", "入门", "熟练", "精通"];
 
-//三级tag
+//一级tag
 $studytags1 = [
   'HelloWorld!', '基础数据类型', '运算符', '控制结构', '函数', '指针', '结构体', '数组'
 ];
-$pointcolor =[
+$pointcolor = [
   ['#e5e5e5', '#C5E0B4', '#A9D18E', '#548235'],
   ['#e5e5e5', '#BDD7EE', '#9DC3E6', '#2E75B6'],
   ['#e5e5e5', '#F8CBAD', '#F4B183', '#C55A11'],
@@ -25,19 +28,24 @@ $pointcolor =[
   ['#e5e5e5', '#cdb7a4', '#CAA789', '#cd9463'],
 ];
 
+//二级tag
 $studytags2 = [
   '基础输入输出', '转义字符', '整型', '浮点型', '字符型', '算术运算', '逻辑运算', '二进制运算',
   '函数指针', '指针数组', '指针基础', '结构体数组', '结构体基础', '递归函数', '内置函数', '自定义函数', '函数基础',
   '一维数组', '字符串', '二维数组', '顺序结构', '选择结构', '循环结构',
 ];
+
+//三级tag
 $studytags3 = [
   '找最值', '排序', '二分', '科学计算', '单分支', '多分支', '多重循环', '迭代', '枚举'
 ];
 
+//非叶子节点
 $fatarray = [
   'HelloWorld!', '基础数据类型', '运算符', '控制结构', '函数', '指针', '结构体', '数组', '一维数组', '顺序结构', '选择结构', '循环结构',
 ];
 
+//父亲数组
 $tagfa['找最值'] = '一维数组';
 $tagfa['排序'] = '一维数组';
 $tagfa['二分'] = '一维数组';
@@ -72,7 +80,7 @@ $tagfa['一维数组'] = '数组';
 $tagfa['字符串'] = '数组';
 $tagfa['二维数组'] = '数组';
 
-
+//里程碑的点
 $pointposition = [
   'HelloWorld!' => ['x' => 200, 'y' => 480],
   '基础数据类型' => ['x' => 403, 'y' => 430],
@@ -125,312 +133,95 @@ $pointposition = [
   '枚举' => ['x' => 600, 'y' => 855],
 ];
 
-?>
-
-
-<script>
-  // var buscolor = '#F59A23';
-  var fatarray = [
-    'HelloWorld!', '基础数据类型', '运算符', '控制结构', '函数', '指针', '结构体', '数组', '一维数组', '顺序结构', '选择结构', '循环结构',
-  ];
-
-  var links = [{ ///////////hello
-      source: 'HelloWorld!',
-      target: '基础输入输出',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: 'HelloWorld!',
-      target: '转义字符',
-      tooltip: {
-        show: false
-      }
-    }, ///////////基础数据类型
-    {
-      source: '基础数据类型',
-      target: '整型',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '基础数据类型',
-      target: '字符型',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '基础数据类型',
-      target: '浮点型',
-      tooltip: {
-        show: false
-      }
-    }, ///////////运算符
-    {
-      source: '运算符',
-      target: '二进制运算',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '运算符',
-      target: '算术运算',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '运算符',
-      target: '逻辑运算',
-      tooltip: {
-        show: false
-      }
-    }, ///////////指针
-    {
-      source: '指针',
-      target: '指针基础',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '指针',
-      target: '指针数组',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '指针',
-      target: '函数指针',
-      tooltip: {
-        show: false
-      }
-    }, ///////////结构体
-    {
-      source: '结构体',
-      target: '结构体基础',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '结构体',
-      target: '结构体数组',
-      tooltip: {
-        show: false
-      }
-    }, ///////////数组
-    {
-      source: '数组',
-      target: '一维数组',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '数组',
-      target: '字符串',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '数组',
-      target: '二维数组',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '一维数组',
-      target: '找最值',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '一维数组',
-      target: '排序',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '一维数组',
-      target: '二分',
-      tooltip: {
-        show: false
-      }
-    }, ///////////函数
-    {
-      source: '函数',
-      target: '函数基础',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '函数',
-      target: '自定义函数',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '函数',
-      target: '内置函数',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '函数',
-      target: '递归函数',
-      tooltip: {
-        show: false
-      }
-    }, ///////////控制结构
-    {
-      source: '控制结构',
-      target: '顺序结构',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '控制结构',
-      target: '选择结构',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '控制结构',
-      target: '循环结构',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '顺序结构',
-      target: '科学计算',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '选择结构',
-      target: '单分支',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '选择结构',
-      target: '多分支',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '循环结构',
-      target: '多重循环',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '循环结构',
-      target: '迭代',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '循环结构',
-      target: '枚举',
-      tooltip: {
-        show: false
-      }
-    },
-    ///////////////////////
-
-    {
-      source: '基础数据类型',
-      target: '运算符',
-      tooltip: {
-        show: false
-      },
-    },
-    {
-      source: '基础数据类型',
-      target: '指针',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '基础数据类型',
-      target: '结构体',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '基础数据类型',
-      target: '数组',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: 'HelloWorld!',
-      target: '控制结构',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: 'HelloWorld!',
-      target: '基础数据类型',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '控制结构',
-      target: '数组',
-      tooltip: {
-        show: false
-      }
-    },
-    {
-      source: '控制结构',
-      target: '函数',
-      tooltip: {
-        show: false
-      }
-    },
-  ];
-  var additionalProperties = {
-    lineStyle: {
-      opacity: 0.9,
-      width: 2.5,
-      curveness: 0.1,
-      color: '#5d716a'
-    },
-    symbol: ['circle', 'arrow']
-  };
-
-  // 从后向前遍历数组，添加属性
-  for (var i = links.length - 1; i >= links.length - 8; i--) {
-    if (links[i]) {
-      Object.assign(links[i], additionalProperties);
-    }
+//里程碑的边
+$links = [
+  ["source" => "HelloWorld!", "target" => "基础输入输出"],
+  ["source" => "HelloWorld!", "target" => "转义字符"],
+  ["source" => "基础数据类型", "target" => "整型"],
+  ["source" => "基础数据类型", "target" => "字符型"],
+  ["source" => "基础数据类型", "target" => "浮点型"],
+  ["source" => "运算符", "target" => "二进制运算"],
+  ["source" => "运算符", "target" => "算术运算"],
+  ["source" => "运算符", "target" => "逻辑运算"],
+  ["source" => "指针", "target" => "指针基础"],
+  ["source" => "指针", "target" => "指针数组"],
+  ["source" => "指针", "target" => "函数指针"],
+  ["source" => "结构体", "target" => "结构体基础"],
+  ["source" => "结构体", "target" => "结构体数组"],
+  ["source" => "数组", "target" => "一维数组"],
+  ["source" => "数组", "target" => "字符串"],
+  ["source" => "数组", "target" => "二维数组"],
+  ["source" => "一维数组", "target" => "找最值"],
+  ["source" => "一维数组", "target" => "排序"],
+  ["source" => "一维数组", "target" => "二分"],
+  ["source" => "函数", "target" => "函数基础"],
+  ["source" => "函数", "target" => "自定义函数"],
+  ["source" => "函数", "target" => "内置函数"],
+  ["source" => "函数", "target" => "递归函数"],
+  ["source" => "控制结构", "target" => "顺序结构"],
+  ["source" => "控制结构", "target" => "选择结构"],
+  ["source" => "控制结构", "target" => "循环结构"],
+  ["source" => "顺序结构", "target" => "科学计算"],
+  ["source" => "选择结构", "target" => "单分支"],
+  ["source" => "选择结构", "target" => "多分支"],
+  ["source" => "循环结构", "target" => "多重循环"],
+  ["source" => "循环结构", "target" => "迭代"],
+  ["source" => "循环结构", "target" => "枚举"],
+  ["source" => "基础数据类型", "target" => "运算符"],
+  ["source" => "基础数据类型", "target" => "指针"],
+  ["source" => "基础数据类型", "target" => "结构体"],
+  ["source" => "基础数据类型", "target" => "数组"],
+  ["source" => "HelloWorld!", "target" => "控制结构"],
+  ["source" => "HelloWorld!", "target" => "基础数据类型"],
+  ["source" => "控制结构", "target" => "数组"],
+  ["source" => "控制结构", "target" => "函数"],
+];
+for ($i = 0; $i < count($links); $i++) {
+  $links[$i]["tooltip"] = ["show" => false];
+}
+$additionalProperties = [
+  "lineStyle" => [
+    "opacity" => 0.9,
+    "width" => 2.5,
+    "curveness" => 0.1,
+    "color" => '#5d716a'
+  ],
+  "symbol" => ['circle', 'arrow']
+];
+//根节点之间的箭头
+for ($i = count($links) - 1; $i >= count($links) - 8; $i--) {
+  if (isset($links[$i])) {
+    $links[$i] = array_merge($links[$i], $additionalProperties);
   }
-</script>
+}
+
+//能力值的点
+$abilitypointposition = [
+  '能力一' => ['x' => 0, 'y' => 100],
+  '能力二' => ['x' => 100, 'y' => 100],
+  '能力三' => ['x' => 200, 'y' => 100],
+  '能力四' => ['x' => 300, 'y' => 100],
+  '能力五' => ['x' => 400, 'y' => 100],
+  '能力六' => ['x' => 500, 'y' => 100],
+  '能力七' => ['x' => 600, 'y' => 100],
+  '能力八' => ['x' => 700, 'y' => 100],
+];
+
+//能力值的边
+$abilities = array_keys($abilitypointposition);
+$abilitylinks = [];
+for ($i = 0; $i < count($abilities) - 1; $i++) {
+  $link = [
+    'source' => $abilities[$i],
+    'target' => $abilities[$i + 1],
+    'tooltip' => ['show' => false],
+    'symbol' => ['circle', 'arrow'],
+    'lineStyle' => [  // 添加这行
+      'opacity' => 0.9,
+      'width' => 2,
+      'curveness' => 0,
+      'color' => '#bdcec8'
+    ]
+  ];
+  $abilitylinks[] = $link;
+}
