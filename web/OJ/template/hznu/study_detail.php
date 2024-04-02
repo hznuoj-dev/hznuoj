@@ -57,6 +57,8 @@ require_once("footer.php");
   var neednum = <?php echo json_encode($neednum); ?>;
   var links = <?php echo json_encode($links) ?>;
   var abilitylinks = <?php echo json_encode($abilitylinks); ?>;
+  var abilitypoint = <?php echo json_encode($abilitypoint); ?>;
+  var okabilitynum = <?php echo json_encode($okabilitynum); ?>;
 
   var studywayDom = document.getElementById('study-way');
   var studyChart = echarts.init(studywayDom);
@@ -72,7 +74,7 @@ require_once("footer.php");
     $relativeX = $position['x'] / $maxX;
     $relativeY = $position['y'] / $maxY;
     echo "updatedData.push({name: '" . $tag . "', x: " . $relativeX . " * width, y: " . $relativeY .
-      " * height, symbol:'circle', symbolSize: 50, itemStyle: {color:'" . $nowcolor[$tag] . "'}});";
+      " * height, symbol:'circle', symbolSize: 50, itemStyle: {color:'" . $studycolor[$tag] . "'}});";
   }
   ?>
 
@@ -100,7 +102,7 @@ require_once("footer.php");
     tooltip: {
       formatter: function(params) {
         return '标签：' + params.data.name + '<br/>已完成：' +
-          studydata[params.data.name] + '<br/>目标：' + neednum[params.data.name];
+          studydata[params.data.name] + '<br/>阶段目标：' + neednum[params.data.name];
       }
     },
     animationDurationUpdate: 1500,
@@ -158,9 +160,9 @@ require_once("footer.php");
   var abilityChart = echarts.init(abilitywayDom);
   updatedData = [];
   <?php
-  foreach ($abilitypointposition as $tag => $position) {
-    echo "updatedData.push({name: '" . $tag . "', x: " . $position['x'] . " * width, y: " . $position['y'] .
-      " * height, symbol:'circle', symbolSize: 50, itemStyle: {color:'" . $pointcolor[0][0] . "'}});"; /////////颜色
+  foreach ($abilitypoint as $tag => $position) {
+    echo "updatedData.push({name: '" . $tag . "', x: " . $position['x'] . ", y: " . $position['y'] . "
+      , itemStyle: {color:'" . $abilitycolor[$tag] . "'}});"; /////////颜色
   }
   echo "updatedData.push({name: '', x: 0, y: 0, symbol:'circle', symbolSize: 0});"; /////////颜色
   ?>
@@ -168,23 +170,13 @@ require_once("footer.php");
     title: {
       text: '学习能力路线',
       left: "1%",
-      top: "5%",
-    },
-    legend: {
-      data: ["新手", "入门", "熟练", "精通"],
-      selectedMode: false, //控制是否可以点击
-      left: "1%",
-      top: "25%",
-      textStyle: {
-        color: "black",
-        fontSize: 16
-      }
+      top: "10%",
     },
     tooltip: {
-      // formatter: function(params) {
-      //   return '能力值：' + params.data.name + '<br/>已完成：' +
-      //     studydata[params.data.name] + '<br/>目标：' + neednum[params.data.name];
-      // }
+      formatter: function(params) {
+        return '能力：' + params.data.name + '<br/>已完成：' +
+          okabilitynum[params.data.name] + '<br/>目标：' + abilitypoint[params.data.name].need;
+      }
     },
     animationDurationUpdate: 1500,
     animationEasingUpdate: 'quinticInOut',
@@ -192,8 +184,8 @@ require_once("footer.php");
       width: "90%",
       type: 'graph',
       layout: 'none',
-      symbol: "roundRect",
-      symbolSize: 50,
+      symbol: "diamond",
+      symbolSize: 80,
       roam: false,
       label: {
         show: true,
@@ -203,13 +195,6 @@ require_once("footer.php");
       edgeLabel: {
         fontSize: 30
       },
-      categories: [
-        <?php
-        foreach ($categoriesdata as $key => $value) {
-          echo "{name: '$value', itemStyle: {color: '{$pointcolor[0][$key]}' }}, ";
-        }
-        ?>
-      ],
       data: updatedData,
       links: abilitylinks,
     }, ]
@@ -223,7 +208,7 @@ require_once("footer.php");
       if (fatarray.includes(params.data.name)) {
         //收起或展开节点
       } else {
-        getProblem(params);
+
       }
     }
   });
