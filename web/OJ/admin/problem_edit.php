@@ -229,7 +229,7 @@ HTML;
         <label for="" class="col-sm-2 control-label">Tag</label>
 
         <div class="col-sm-10">
-          <button id="showtag" class="btn btn-default btn-sm btn-block">Tag(s)</button>
+          <button id="showtag" class="btn btn-default btn-sm btn-block">Tag(s) 请从已有tag中选择</button>
           <div id="tag" style="padding: 10px; border: 1px solid #ccc; margin-top: 10px;">
             <div id="tag_list" style="margin-bottom: 10px;">
               <ul class="tag-items">
@@ -440,13 +440,20 @@ SQL;
     $stmt->execute();
     $stmt->close();
 
-    // 添加新的标签
-    $stmt = $mysqli->prepare("INSERT INTO problem_tag (problem_id, tag) VALUES (?, ?)");
-    foreach ($tags as $tag) {
-        $stmt->bind_param('is', $id, $tag);
-        $stmt->execute();
-    }
+    // 添加新的标签，不属于已有tag的不添加
+    $stmt_check = $mysqli->prepare("SELECT * FROM all_problem_tag WHERE tag = ?");
+    $stmt_insert = $mysqli->prepare("INSERT INTO problem_tag (problem_id, tag) VALUES (?, ?)");
 
+    foreach ($tags as $tag) {
+        $stmt_check->bind_param('s', $tag);
+        $stmt_check->execute();
+        $result = $stmt_check->get_result();
+
+        if ($result->num_rows > 0) {
+            $stmt_insert->bind_param('is', $id, $tag);
+            $stmt_insert->execute();
+        }
+    }
 
     if(isset($_POST['add_problem_mod'])){
         $_SESSION["p$id"]=true;
