@@ -3,11 +3,74 @@
 require_once("header.php");
 ?>
 
-<div class="am-g" style='margin-top:40px; display: flex; justify-content: center;'>
-  <div class='am-u-md-12' style='display: flex; justify-content: center;'>
-    <div id='chart_daliy_detail' style='height:980px;width:1000px;'></div>
+<?php
+if (!HAS_PRI("set_dailydetails")) {
+?>
+  <div class="am-g" style='margin-top:40px; display: flex; justify-content: center;'>
+    <div class='am-u-md-12' style='display: flex; justify-content: center;'>
+      <div id='chart_daliy_detail' style='height:980px;width:1000px;'></div>
+    </div>
   </div>
-</div>
+<?php
+} else {
+?>
+  <div class="am-avg-md-1" style="width: 90%; margin:5vh auto">
+    <form class="am-form am-form-inline" action='userinfo.php'>
+      <input type="hidden" name="csrf_token" value="f31605cce38e27bcb4e8a76188e92b3b">
+      <div class='am-form-group'>
+        <select data-am-selected="{searchBox: 1, maxHeight: 400}" id='class' style='width:110px'>
+          <option value='all' <?php if (isset($_GET['class']) && $_GET['class'] == "" || !isset($_GET['class'])) echo "selected"; ?>>全部</option>
+          <?php
+          foreach ($classSet as $class) {
+            $selected = "";
+            $class = substr($class, 5);
+            if (isset($_GET['class']) && $_GET['class'] == $class) $selected = "selected";
+            echo "<option value='" . $class . "' " . $selected . ">" . $class . "</option>";
+          }
+          ?>
+
+        </select>
+        <script type="text/javascript">
+          var oSelect = document.getElementById("class");
+          oSelect.onchange = function() { //当选项改变时触发
+            var valOption = this.options[this.selectedIndex].value; //获取option的value
+            var url = window.location.search;
+            var cid = url.substr(url.indexOf('=') + 1, 4);
+            var url = window.location.pathname + "?class=" + valOption;
+            window.location.href = url;
+          }
+        </script>
+      </div>
+    </form>
+
+    <table class="am-table am-table-striped am-margin-top">
+      <thead>
+        <tr>
+          <th class='am-text-center' style='width:5%;'>Rank</th>
+          <th class='am-text-center' style='width:10%;'>User</th>
+          <th class='am-text-center' style='width:10%;'>Name</th>
+          <th class='am-text-center' style='width:5%;'>Solved</th>
+          <th class='am-text-center'>Daily</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        foreach ($view_rank as $row) {
+          echo "<tr>";
+          foreach ($row as $table_cell) {
+            echo "<td align='center'>";
+            echo $table_cell;
+            echo "</td>";
+          }
+          echo "</tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+  </div>
+<?php
+}
+?>
 
 <?php require_once("footer.php") ?>
 

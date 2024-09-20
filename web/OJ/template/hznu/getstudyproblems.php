@@ -36,7 +36,8 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-function array_unique_by_key(&$array, $key) {
+function array_unique_by_key(&$array, $key)
+{
     $tmp = [];
     $result = [];
 
@@ -52,6 +53,18 @@ function array_unique_by_key(&$array, $key) {
 
 array_unique_by_key($data['solved'], 'id');
 array_unique_by_key($data['unsolved'], 'id');
+
+// unsolved中可能有solved的题目，需要去重
+$data['unsolved'] = array_filter($data['unsolved'], function ($problem) use ($data) {
+    foreach ($data['solved'] as $solved) {
+        if ($problem['id'] == $solved['id']) {
+            return false;
+        }
+    }
+    return true;
+});
+
+$data['unsolved'] = array_values($data['unsolved']);
 
 $result->free();
 

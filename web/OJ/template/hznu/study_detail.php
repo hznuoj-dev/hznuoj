@@ -27,22 +27,11 @@ require_once("header.php");
 
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="modal-study">
   <div class="am-modal-dialog" style="font-size: 20px; width:30%; border-radius: 20px" tabindex="-1" id="modal-study">
-
-    <div class="am-modal-hd">Solved
-      <a class="am-close am-close-spin" data-am-modal-close>&times;</a>
-    </div>
-
-    <div class="am-modal-bd" id="modal-solved-bd">
-      <i class="am-icon-spinner am-icon-pulse"></i> Loading...
-    </div>
+    <div class="am-modal-hd">Solved</div>
+    <div class="am-modal-bd" id="modal-solved-bd"></div>
     <hr style="margin: 0px;">
-    <div class="am-modal-hd">Recommended
-      <a class="am-close am-close-spin" data-am-modal-close>&times;</a>
-    </div>
-
-    <div class="am-modal-bd" id="modal-recommend-bd">
-      <i class="am-icon-spinner am-icon-pulse"></i> Loading...
-    </div>
+    <div class="am-modal-hd">Recommended</div>
+    <div class="am-modal-bd" id="modal-recommend-bd"></div>
   </div>
 </div>
 
@@ -101,8 +90,7 @@ require_once("footer.php");
     },
     tooltip: {
       formatter: function(params) {
-        return '标签：' + params.data.name + '<br/>已完成：' +
-          studydata[params.data.name] + '<br/>阶段目标：' + neednum[params.data.name];
+        return `知识点：${params.data.name}<br/>已完成：${studydata[params.data.name]} 题<br/>阶段目标：${neednum[params.data.name]} 题`;
       }
     },
     animationDurationUpdate: 1500,
@@ -243,7 +231,7 @@ require_once("footer.php");
             '<a href="/OJ/problem.php?id=' + problem.id + '" style="color: white;">' + problem.id + '</a></span>';
         });
         if (solvedLinks.length === 0) {
-          solvedLinks = ['No Problem Now!'];
+          solvedLinks = ['<span style="font-size: 10px">No Problem Now!</span>'];
         }
         $('#modal-solved-bd').html(solvedLinks.join(' '));
 
@@ -261,7 +249,7 @@ require_once("footer.php");
             '<a href="/OJ/problem.php?id=' + problem.id + '" style="color: white;">' + problem.id + '</a></span>';
         });
         if (unsolvedLinks.length === 0) {
-          unsolvedLinks = ['No Problem Now!'];
+          unsolvedLinks = ['<span style="font-size: 16px; color:#bbbbbb">No Problem Now!</span>'];
         }
         $('#modal-recommend-bd').html(unsolvedLinks.join(' '));
 
