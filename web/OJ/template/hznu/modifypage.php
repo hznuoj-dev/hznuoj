@@ -25,9 +25,9 @@
     <div class="am-form-group">
       <label class="am-u-sm-2 am-u-sm-offset-2 am-form-label">Nick Name:</label>
       <div class="am-u-sm-8">
-        <input type="text" style="width:340px;" value="<?php echo htmlentities($row->nick)?>" name="nick">
+        <input type="text" style="width:340px;" value="<?php echo htmlentities($row->nick)?>" readonly name="nick">
       </div>
-    </div> 
+    </div>
     <div class="am-form-group">
       <label class="am-u-sm-2 am-u-sm-offset-2 am-form-label">
         <font color='red'><b>*</b></font>&nbsp;Old Password:
@@ -35,19 +35,19 @@
       <div class="am-u-sm-8">
         <input type="password" style="width:340px;" name="opassword">
       </div>
-    </div> 
+    </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-u-sm-offset-1 am-form-label">New Password:</label>
       <div class="am-u-sm-8">
         <input type="password" style="width:340px;" name="npassword">
       </div>
-    </div> 
+    </div>
     <div class="am-form-group">
       <label class="am-u-sm-3 am-u-sm-offset-1 am-form-label">Repeat Password:</label>
       <div class="am-u-sm-8">
         <input type="password" style="width:340px;" name="rptpassword">
       </div>
-    </div> 
+    </div>
     <div class="am-form-group">
       <label class="am-u-sm-2 am-u-sm-offset-2 am-form-label">School:</label>
       <div class="am-u-sm-8">
@@ -84,7 +84,7 @@
         <input type="text" style="width:340px;" value="<?php echo htmlentities($row->real_name)?>" name="real_name" disabled>
       </div>
     </div>
-  
+
     <div class="am-form-group">
       <label class="am-u-sm-2 am-u-sm-offset-2 am-form-label">
         <font color='red'><b>*</b></font>&nbsp;Show Tag:
