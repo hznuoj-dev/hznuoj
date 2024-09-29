@@ -1,3 +1,8 @@
+## Mac m1 下开发部署指南
+
+PS: 如果 DB 在本地 docker，需要修改为本机IP，而不是127.0.0.1
+
+```bash
 PROJECT_DIR="/Users/daizeyao/project"
 
 docker pull hznuoj/hznuoj:latest
@@ -26,3 +31,4 @@ docker run \
     biarms/mysql:5.7.30-linux-arm64v8 \
     --character-set-server=utf8mb4 \
     --collation-server=utf8mb4_unicode_ci
+```
