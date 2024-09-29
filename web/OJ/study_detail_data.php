@@ -11,7 +11,7 @@ $studytags = [
 ];
 
 //图例
-$categoriesdata = ["新手", "入门", "熟练", "精通"];
+$categoriesData = ["新手", "入门", "熟练", "精通"];
 
 //一级tag
 $studytags1 = [
@@ -198,21 +198,20 @@ for ($i = count($links) - 1; $i >= count($links) - 8; $i--) {
 //能力值的点
 //坐标，需要达成的题数、分数区间
 $abilitypoint = [
-  '能力一' => ['x' => 0, 'y' => 50, 'need' => 10, 'scorel' => 0, 'scorer' => 11],
-  '能力二' => ['x' => 100, 'y' => 50, 'need' => 10, 'scorel' => 11, 'scorer' => 20],
-  '能力三' => ['x' => 200, 'y' => 50, 'need' => 10, 'scorel' => 20, 'scorer' => 30],
-  '能力四' => ['x' => 300, 'y' => 50, 'need' => 10, 'scorel' => 30, 'scorer' => 40],
-  '能力五' => ['x' => 400, 'y' => 50, 'need' => 2, 'scorel' => 50, 'scorer' => 65],
-  '能力六' => ['x' => 500, 'y' => 50, 'need' => 2, 'scorel' => 65, 'scorer' => 80],
-  '能力七' => ['x' => 600, 'y' => 50, 'need' => 2, 'scorel' => 80, 'scorer' => 90],
-  '能力八' => ['x' => 700, 'y' => 50, 'need' => 2, 'scorel' => 90, 'scorer' => 100],
+  '能力一' => ['x' => 0, 'y' => 50, 'need' => 10, 'minScore' => 0, 'maxScore' => 10],
+  '能力二' => ['x' => 100, 'y' => 50, 'need' => 10, 'minScore' => 11, 'maxScore' => 20],
+  '能力三' => ['x' => 200, 'y' => 50, 'need' => 10, 'minScore' => 21, 'maxScore' => 30],
+  '能力四' => ['x' => 300, 'y' => 50, 'need' => 10, 'minScore' => 31, 'maxScore' => 40],
+  '能力五' => ['x' => 400, 'y' => 50, 'need' => 2, 'minScore' => 51, 'maxScore' => 65],
+  '能力六' => ['x' => 500, 'y' => 50, 'need' => 2, 'minScore' => 66, 'maxScore' => 80],
+  '能力七' => ['x' => 600, 'y' => 50, 'need' => 2, 'minScore' => 81, 'maxScore' => 100],
 ];
 
 //所有的能力值统计
 $abilities = array_keys($abilitypoint);
 
 //能力值的边
-$abilitylinks = [];
+$abilityLinks = [];
 for ($i = 0; $i < count($abilities) - 1; $i++) {
   $link = [
     'source' => $abilities[$i],
@@ -226,5 +225,5 @@ for ($i = 0; $i < count($abilities) - 1; $i++) {
       'color' => '#bdcec8'
     ]
   ];
-  $abilitylinks[] = $link;
+  $abilityLinks[] = $link;
 }

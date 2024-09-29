@@ -1,16 +1,21 @@
 <?php $title = "Study Detail"; ?>
 <?php
 require_once('./include/db_info.inc.php');
-
 require_once("study_detail_data.php");
 ?>
 
 <?php
 $user = $_GET['user'];
-if (!is_valid_user_name($user)) {
+
+$sql = "SELECT * FROM `users` WHERE `user_id` = '$user'";
+$result = $mysqli->query($sql);
+if ($result && $result->num_rows > 0 && isset($_SESSION['user_id'])) {
+  $udoc = $result->fetch_assoc();
+} else {
   echo "No such User!";
   exit(0);
 }
+define('USER_DETAIL', (!empty($udoc['real_name'])) ? $udoc['real_name'] : $udoc['user_id']);
 
 $studydata = array();
 $studydata = array_fill_keys($studytags, 0);
@@ -33,15 +38,11 @@ $result->free();
 // if($user == "admin")
 //   foreach ($studytags as $tag)
 //     $studydata[$tag] = 1;
-
 ///////////////////////////////////////////////////////////////////////////////cs
-
-
 
 $neednum = array();
 $neednum = array_fill_keys($studytags, [0, 1, 2, 4]);
 //neednum['xx'] = [0, 1, 2, 4];
-
 
 foreach ($studytags3 as $tag) {
   $studydata[$tagfa[$tag]] = 0;
@@ -117,21 +118,21 @@ foreach ($studytags as $tag) {
 //     WHERE s.user_id = '' AND s.result = 4 AND pt.tag IS NOT NULL) as p;
 
 $sql = "SELECT ";
-for ($i = 0; $i < 8; $i++) {
+for ($i = 0; $i < count($abilities); $i++) {
   $nowpoint = $abilitypoint[$abilities[$i]];
-  $sql .= "SUM(CASE WHEN p.score >= {$nowpoint['scorel']} AND p.score < {$nowpoint['scorer']} THEN 1 ELSE 0 END) as range{$i} ";
-  if ($i != 7) {
+  $sql .= "SUM(CASE WHEN p.score >= " . $nowpoint['minScore'] . " AND p.score <= " . $nowpoint['maxScore'] . " THEN 1 ELSE 0 END) as range{$i} ";
+  if ($i != (count($abilities) - 1)) {
     $sql .= ",";
   }
 }
+
+// 只有有 tag 的题目才统计
 $sql .= "FROM (
   SELECT DISTINCT s.problem_id, p.score FROM solution s
   INNER JOIN problem p ON s.problem_id = p.problem_id
   INNER JOIN problem_tag pt ON s.problem_id = pt.problem_id
   WHERE s.user_id = '$user' AND s.result = 4 AND pt.tag IS NOT NULL
   ) as p;";
-
-// Execute the SQL query
 $result = $mysqli->query($sql);
 
 $abilitycolor = array();
