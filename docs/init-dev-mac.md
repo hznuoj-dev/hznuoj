@@ -15,6 +15,7 @@ docker run \
     --name=hznuoj \
     --restart=always \
     -p 8877:80 \
+    -p 11434:11434 \
     -v /var/hznuoj/data:/var/hznuoj/data \
     -v "$PROJECT_DIR/hznuoj/web:/var/www/web" \
     hznuoj/hznuoj:latest
