@@ -122,10 +122,10 @@ HTML;
 <script type="text/javascript" src="/OJ/plugins/code-helper/index.js"></script>
 <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/atom-one-dark.min.css">
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        const chatBox = new FloatingChatBox();
-        chatBox.add();
-    });
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const chatBox = new FloatingChatBox();
+    //     chatBox.add();
+    // });
 </script>
 
 <!--get charts json START-->
