@@ -38,11 +38,12 @@ require_once('./include/setlang.php');
 
 $filter_sql = "";
 
-$order_by = "submit, reg_time";
+$order_by = "user_id, reg_time";
 if (isset($_GET['order_by'])) {
   $first_order_by = $_GET['order_by'];
-  if ($order_by == 'user_id') $order_by = $first_order_by . ", strength DESC, " . $order_by;
-  else $order_by = $first_order_by." DESC , " . $order_by;
+  if ($first_order_by !== 'user_id') {
+    $order_by = $first_order_by . " DESC , " . $order_by;
+  }
 }
 
 $page_size = 100;
@@ -168,7 +169,7 @@ foreach ($user_ids as $user_id) {
   $view_rank[$i][1] = "<div class='am-text-center'><a href='userinfo.php?user=" . $row['user_id'] . "'>" . $row['user_id'] . "</a>" . "</div>";
   $view_rank[$i][2] = "<div class='am-text-center'>" . htmlentities($row['real_name']) . "</div>";
   $view_rank[$i][3] = "<div class='am-text-center'><a href='status.php?user_id=" . $row['user_id'] . "&jresult=4'>" . $row['solved'] . "</a>" . "</div>";
-  $view_rank[$i][4] = "<div class='am-text-center' style='dispaly:flex;flex-warp:wrap;position:relative;'>";
+  $view_rank[$i][4] = "<div class='am-text-center' style='dispaly:flex;height:24px;flex-warp:wrap;position:relative;'>";
 
   $previous_month = null;
   foreach ($filtered_data as $record) {
@@ -176,7 +177,7 @@ foreach ($user_ids as $user_id) {
     if ($i == 0) {
       $current_month = date('Y-m', strtotime($record[0]));
       if ($current_month !== $previous_month) {
-        $view_rank[$i][4] .= "<span style='position:absolute;top:-32px;transform:translateX(-50%);'>$current_month</span>";
+        $view_rank[$i][4] .= "<span style='position:absolute;top:-32px;transform:translateX(-50%);white-space:nowrap;'>$current_month</span>";
         $previous_month = $current_month;
       }
     }

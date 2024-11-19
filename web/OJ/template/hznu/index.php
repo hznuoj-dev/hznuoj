@@ -114,6 +114,19 @@ HTML;
     submission_chart.showLoading();
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/incremental-dom@0.6.0/dist/incremental-dom-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/markdown-it-incremental-dom@2/dist/markdown-it-incremental-dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+<script type="text/javascript" src="/OJ/plugins/code-helper/index.js"></script>
+<link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/atom-one-dark.min.css">
+<script type="text/javascript">
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const chatBox = new FloatingChatBox();
+    //     chatBox.add();
+    // });
+</script>
 
 <!--get charts json START-->
 <?php
