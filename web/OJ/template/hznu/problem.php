@@ -16,7 +16,7 @@
 
 <?php
 
-if (isset($_GET['cid'])) require_once("contest_header.php"); 
+if (isset($_GET['cid'])) require_once("contest_header.php");
 else require_once("header.php");
 
 //比赛期间暂时关闭
@@ -346,10 +346,10 @@ HTML;
 }
 ?>
 
-<?php 
-if (isset($_GET['cid'])) {
-    $can_see_video = 0;
-}
+<?php
+// if (isset($_GET['cid'])) {
+//     $can_see_video = 0;
+// }
 ?>
 
 <?php if ($can_see_video || HAS_PRI("watch_solution_video")): ?>
@@ -359,27 +359,27 @@ if (isset($_GET['cid'])) {
             <input type="hidden" name="pid" value="<?php echo $real_id ?>" placeholder="">
             <button class="am-btn am-btn-success am-btn-lg">Click To Watch The Video</button>
         </form>
-        <?php else: ?>
-            <button disabled="1" class="am-btn am-btn-default am-btn-lg">No Solution Video</button>
-        <?php endif ?>
-        <div style="display: block; color: grey; padding-bottom: 20px;">
-            *if you see this button, it means you've submited more than <?php echo $VIDEO_SUBMIT_TIME ?> times.
-        </div>
+    <?php else: ?>
+        <button disabled="1" class="am-btn am-btn-default am-btn-lg">No Solution Video</button>
     <?php endif ?>
+    <div style="display: block; color: grey; padding-bottom: 20px;">
+        *if you see this button, it means you've submited more than <?php echo $VIDEO_SUBMIT_TIME ?> times.
+    </div>
+<?php endif ?>
 
-    <!-- gptcode start -->
-    <?php if ($isHaveGPTCode && !isset($_GET['cid'])) : ?>
-        <?php 
-        echo <<<HTML
-        <h2>GPT Hint</h2>
-        <pre><code>$GPTCode</code></pre>
+<!-- gptcode start -->
+<?php if ($isHaveGPTCode && !isset($_GET['cid'])) : ?>
+    <?php
+    echo <<<HTML
+    <h2>GPT Hint</h2>
+    <pre><code>$GPTCode</code></pre>
 HTML;
-        ?>
-        <?php endif ?>
+    ?>
+<?php endif ?>
 
-    <!-- 添加一个具有一定高度的空白 div -->
-    <div style="height: 20px;"></div>
-    <!-- gptcode end -->
+<!-- 添加一个具有一定高度的空白 div -->
+<div style="height: 20px;"></div>
+<!-- gptcode end -->
 
 
     <!-- 提交等按钮 start -->

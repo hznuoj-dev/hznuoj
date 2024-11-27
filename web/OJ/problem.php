@@ -23,11 +23,11 @@ require_once "./include/const.inc.php";
 
 if (isset($OJ_LANG)) require_once("./lang/$OJ_LANG.php");
 
+if(isset($_SESSION['user_id'])){
+    $uid = $mysqli->real_escape_string($_SESSION['user_id']);
+}
 /* 获取我的标签 start */
 // $my_tag;
-// if(isset($_SESSION['user_id'])){
-//     $uid = $mysqli->real_escape_string($_SESSION['user_id']);
-// }
 // if (isset($_SESSION['user_id']) && isset($_GET['id'])) {
 //     $id=intval($_GET['id']);
 //     $sql = "SELECT tag FROM tag WHERE user_id='$uid' AND problem_id='$id'";
@@ -70,15 +70,15 @@ if (isset($_GET['id'])) { // 如果是比赛外的题目
         $sql = "SELECT * FROM `problem` WHERE `problem_id`=$id";
     } else
         $sql = <<<SQL
-        SELECT 
-          * 
-        FROM 
+        SELECT
+          *
+        FROM
           problem
-        WHERE 
-          defunct='N' 
+        WHERE
+          defunct='N'
           AND problem_id=$id
           AND problem_id
-          NOT IN ( 
+          NOT IN (
             SELECT DISTINCT
               contest_problem.problem_id
             FROM
@@ -236,7 +236,7 @@ if (isset($_SESSION['user_id'])) {
 //get try times and determine if he can see the video END
 
 
-//get the gptCode STRAT 
+//get the gptCode STRAT
 $isHaveGPTCode = false;
 $GPTCode = NULL;
 $sql = "SELECT code FROM gpt_code WHERE problem_id='$real_id'";
@@ -286,4 +286,3 @@ require("template/" . $OJ_TEMPLATE . "/problem.php");
 if (file_exists('./include/cache_end.php'))
     require_once('./include/cache_end.php');
 ?>
-
