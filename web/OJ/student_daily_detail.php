@@ -21,7 +21,7 @@ if (
 ?>
 
 <?php
-
+// 可以set_dailydetails就可以看到这个页面
 if (!HAS_PRI("set_dailydetails")) {
   $view_errors = "<a href=loginpage.php style='color:red;text-decoration:underline;'>$MSG_Login</a>";
   require("template/" . $OJ_TEMPLATE . "/error.php");

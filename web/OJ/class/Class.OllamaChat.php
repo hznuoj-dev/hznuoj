@@ -26,7 +26,7 @@ class OllamaChat
     public function qa($params)
     {
 
-        $this->question = $params['question'];
+        $this->question = $params['system'] . $params['question'];
         $this->streamHandler = new StreamHandler([
             'qmd5' => md5($this->question . '' . time())
         ]);
@@ -53,30 +53,9 @@ class OllamaChat
         $this->ollamaApiCall($json, $headers);
     }
 
-    private function buildCurlCommand($json, $headers)
-    {
-        $command = "curl";
-
-        // 添加 URL
-        $command .= " '" . $this->api_url . "'";
-
-        // 添加请求头
-        foreach ($headers as $header) {
-            $command .= " -H '" . str_replace("'", "\'", $header) . "'";
-        }
-
-        // 添加 POST 数据
-        if ($json) {
-            $command .= " -d '" . str_replace("'", "\'", $json) . "'";
-        }
-
-        // 你可以继续添加其他 cURL 选项，如需要
-
-        return $command;
-    }
-
     private function ollamaApiCall($json, $headers)
-    { // 修改后的方法名
+    {
+        // 注意 curl 需要开启 php 拓展
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->api_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -89,9 +68,6 @@ class OllamaChat
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         curl_setopt($ch, CURLOPT_WRITEFUNCTION, [$this->streamHandler, 'callback']);
-
-        // $curlCommand = $this->buildCurlCommand($json, $headers);
-        // echo $curlCommand . PHP_EOL;
 
         $response = curl_exec($ch);
 

@@ -2,7 +2,6 @@
 
 class StreamHandler
 {
-
     private $data_buffer; //缓存，有可能一条data被切分成两部分了，无法解析json，所以需要把上一半缓存起来
     private $counter; //数据接收计数器
     private $qmd5; //问题md5
@@ -33,9 +32,9 @@ class StreamHandler
         $this->counter += 1;
         file_put_contents('./log/data.' . $this->qmd5 . '.log', $this->counter . '==' . $data . PHP_EOL . '--------------------' . PHP_EOL, FILE_APPEND);
 
-        echo $data;
+        // echo $data;
 
-        $result = json_decode($data, TRUE);
+        // $result = json_decode($data, TRUE);
 
         // if (is_array($result)) {
         //     $this->end('openai 请求错误：' . json_encode($result));
