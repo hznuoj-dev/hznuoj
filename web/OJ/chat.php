@@ -27,7 +27,16 @@ if ($_SERVER['HTTP_ACCEPT'] !== 'text/event-stream') {
     exit();
 }
 
-// TODO：查询是否禁用AI功能
+// 查询是否禁用AI功能
+$sql = "SELECT * FROM more_settings";
+$res = $mysqli->query($sql);
+$row = $res->fetch_assoc();
+$ai_module = $row['ai_model'];
+if ($ai_module == 0) {
+    echo "data: " . json_encode(["code" => "498", "error" => "AI module is disabled"]) . "\n\n";
+    flush();
+    exit();
+}
 
 // 查询当前用户是否正处于AI对话中
 
@@ -35,7 +44,7 @@ $currentTime = time();
 if (isset($_SESSION['last_chat_time'])) {
     $lastChatTime = $_SESSION['last_chat_time'];
     if (($currentTime - $lastChatTime) < 5) {
-        echo "data: " . json_encode(["code" => "498", "error" => "In Conversation now"]) . "\n\n";
+        echo "data: " . json_encode(["code" => "497", "error" => "In Conversation now"]) . "\n\n";
         flush();
         exit();
     }
@@ -63,7 +72,7 @@ $question = str_ireplace('{[$add$]}', '+', $question);
 // api 和 模型选择
 $chat = new OllamaChat(
     "http://$AI_HOST:11434/api/generate",
-    "$AI_MODEL"
+    rand(1, 100) <= 50 ? "$AI_MODEL1" : "$AI_MODEL2"
 );
 
 $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];

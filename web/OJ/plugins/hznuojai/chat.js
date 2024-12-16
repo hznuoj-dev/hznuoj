@@ -154,14 +154,14 @@ class ChatCore {
                 if (result.time && result.content) {
                     this.answerWords.push(result.content);
                     this.contentIdx += 1;
-                } else if (result.code === "499") {
+                } else if (["499", "498", "497"].includes(result.code)) {
                     console.error(result.error);
-                    this.patchMd(this.answers[this.qaIdx], '请登录后再使用 AI 功能');
-                    this.isStop = true;
-                    this.eventSource.close();
-                } else if (result.code === "498") {
-                    console.error(result.error);
-                    this.patchMd(this.answers[this.qaIdx], '请不要频繁发起对话');
+                    const messages = {
+                        "499": '请登录后再使用 AI 功能',
+                        "498": 'AI 服务正在维护中ing 请稍后再试',
+                        "497": '请不要频繁发起对话'
+                    };
+                    this.patchMd(this.answers[this.qaIdx], messages[result.code]);
                     this.isStop = true;
                     this.eventSource.close();
                 }

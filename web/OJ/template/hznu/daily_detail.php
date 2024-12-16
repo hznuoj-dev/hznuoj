@@ -4,7 +4,7 @@ require_once("header.php");
 ?>
 
 <?php
-if (HAS_PRI("set_dailydetails")) {
+if (HAS_PRI("set_more_settings")) {
   echo <<<HTML
   <a href='student_daily_detail.php?class=null' class='am-btn am-btn-secondary custom-link' style='margin: 20px 0 0 20px;'>
     查看班级学生每日详情

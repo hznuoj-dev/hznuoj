@@ -218,26 +218,27 @@ LOCK TABLES `custominput` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `dailydetails`
+-- Table structure for table `more_settings`
 --
 
-DROP TABLE IF EXISTS `dailydetails`;
+DROP TABLE IF EXISTS `more_settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dailydetails` (
+CREATE TABLE `more_settings` (
   `start_time` date NOT NULL,
-  `end_time` date NOT NULL
+  `end_time` date NOT NULL,
+  `ai_model` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dailydetails`
+-- Dumping data for table `more_settings`
 --
 
-LOCK TABLES `dailydetails` WRITE;
-/*!40000 ALTER TABLE `dailydetails` DISABLE KEYS */;
-INSERT INTO `dailydetails` VALUES ('2023-09-01','2024-02-01');
-/*!40000 ALTER TABLE `dailydetails` ENABLE KEYS */;
+LOCK TABLES `more_settings` WRITE;
+/*!40000 ALTER TABLE `more_settings` DISABLE KEYS */;
+INSERT INTO `more_settings` VALUES ('2023-09-01','2024-02-01', 0);
+/*!40000 ALTER TABLE `more_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -572,7 +573,7 @@ CREATE TABLE `privilege_distribution` (
   `watch_solution_video` tinyint(4) DEFAULT NULL,
   `manage_gptcode` tinyint(4) DEFAULT NULL,
   `manage_tag` tinyint(4) DEFAULT NULL,
-  `set_dailydetails` tinyint(4) DEFAULT NULL,
+  `set_more_settings` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`group_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
