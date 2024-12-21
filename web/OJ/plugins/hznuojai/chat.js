@@ -253,7 +253,7 @@ class ChatCore {
         this.lastLastWord = this.lastWord;
         this.lastWord = content;
 
-        let isBottom = ((this.msgDiv.scrollHeight - this.msgDiv.clientHeight) - this.msgDiv.scrollTop) < 50;
+        let isBottom = ((this.msgDiv.scrollHeight - this.msgDiv.clientHeight) - this.msgDiv.scrollTop) < 60;
         this.throttledScrollToBottom(isBottom);
 
         this.typingIdx += 1;

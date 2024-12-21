@@ -1,7 +1,7 @@
 <?php
 // echo "Test Chat API<br><br>" . PHP_EOL;
 // $endpoint = 'http://172.22.233.71:8081/OJ/chat.php';
-// $numberOfRequests = 20; // Number of concurrent requests
+// $numberOfRequests = 50; // Number of concurrent requests
 // $question = '写个C语言的累加程序';
 
 // $multiHandle = curl_multi_init();
@@ -20,7 +20,7 @@
 //         'Referer: http://172.22.233.71:8081/OJ/',
 //         'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0'
 //     ]);
-//     curl_setopt($curlHandles[$i], CURLOPT_COOKIE, 'PHPSESSID=v252sdchi5438pmte0gt8p2oi7');
+//     curl_setopt($curlHandles[$i], CURLOPT_COOKIE, 'PHPSESSID=dc9ja08djppauf1m5uvpcb73b5');
 //     curl_setopt($curlHandles[$i], CURLOPT_SSL_VERIFYPEER, false); // --insecure option
 //     curl_multi_add_handle($multiHandle, $curlHandles[$i]);
 // }

@@ -1,6 +1,7 @@
 <?php
+require_once './class/Class.StreamHandler.php';
 
-class OllamaChat
+class AICore
 {
     private $api_url = '';
     private $streamHandler;
@@ -8,11 +9,15 @@ class OllamaChat
     private $dfa = NULL;
     private $check_sensitive = TRUE;
     private $model = '';
+    private $api_type = '';
+    private $more_params = [];
 
-    public function __construct($url, $model)
+    public function __construct($params)
     {
-        $this->api_url = $url;
-        $this->model = $model;
+        $this->api_url = $params['url'];
+        $this->model = $params['model'];
+        $this->api_type = $params['type'];
+        $this->more_params = array_diff_key($params, array_flip(['url', 'model', 'type']));
     }
 
     public function set_dfa(&$dfa)
@@ -28,7 +33,8 @@ class OllamaChat
 
         $this->question = $params['system'] . $params['question'];
         $this->streamHandler = new StreamHandler([
-            'qmd5' => md5($this->question . '' . time())
+            'qmd5' => md5($this->question . '' . time()),
+            'api_type' => $this->api_type
         ]);
         if ($this->check_sensitive) {
             $this->streamHandler->set_dfa($this->dfa);
@@ -40,20 +46,30 @@ class OllamaChat
             return;
         }
 
-        // 根据Ollama API的要求构建请求正文
-        $json = json_encode([
-            'prompt' => $this->question,
-            'model' => $this->model,
-        ]);
+        // 构建请求 json
+        if ($this->api_type == 'generate') {
+            $json = json_encode(array_merge([
+                'model' => $this->model,
+                'prompt' => $this->question
+            ], $this->more_params));
+        } else if ($this->api_type == 'chat' || $this->api_type == 'vllm-chat') {
+            $json = json_encode(array_merge([
+                'model' => $this->model,
+                'messages' => [[
+                    "role" => "system",
+                    "content" => $this->question
+                ]],
+            ], $this->more_params));
+        }
 
         $headers = array(
             "Content-Type: application/json",
         );
 
-        $this->ollamaApiCall($json, $headers);
+        $this->openaiApiCall($json, $headers);
     }
 
-    private function ollamaApiCall($json, $headers)
+    private function openaiApiCall($json, $headers)
     {
         // 注意 curl 需要开启 php 拓展
         $ch = curl_init();
