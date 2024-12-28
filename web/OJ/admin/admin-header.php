@@ -17,7 +17,7 @@
 <body>
 
 
-<?php 
+<?php
   require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
   global $mysqli;
   if (!HAS_PRI('enter_admin_page')) {
@@ -113,7 +113,7 @@ sss;
             $html_li .= "<li><a href='/OJ/admin/team_import.php'>Team Import</a></li>";
             $html_li .= "<li><a href='/OJ/admin/team_import_bypassword.php'>Team Import(By Password)</a></li>";
           }
-            
+
           if($html_li!=""){
             echo<<<sss
             <li class="dropdown">
@@ -143,8 +143,6 @@ sss;
             </li>
 sss;
           }
-
-          if(HAS_PRI("set_dailydetails")) echo "<li><a href='/OJ/admin/set_dailydetails.php'>Daily details</a></li>";
 
           $html_li="";
           $html_li .= "<li><a href='/OJ/admin/privilege_list.php'>Privilege List</a></li>";
@@ -181,6 +179,9 @@ sss;
               </ul>
             </li>
 sss;
+          }
+          if(HAS_PRI("set_more_settings")) {
+            echo "<li><a href='/OJ/admin/more_settings.php'>More Settings</a></li>";
           }
         ?>
         </ul> <!-- nav navbar-nav -->

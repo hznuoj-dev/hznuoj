@@ -16,7 +16,7 @@
 ?>
 
 <?php // 是否显示tag的判断
-require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php"; 
+require_once $_SERVER['DOCUMENT_ROOT']."/OJ/include/db_info.inc.php";
 if(!isset($mysqli)) exit(0);
 $show_tag = true;
 if (isset($_SESSION['user_id']) && !isset($_SESSION['contest_id'])) {
@@ -40,7 +40,7 @@ else $_SESSION['tag'] = "N";
 <head lang="en">
     <meta charset="UTF-8">
     <title><?php if(isset($title))echo $OJ_NAME."--".$title?></title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <meta name="renderer" content="webkit">
@@ -81,7 +81,8 @@ else $_SESSION['tag'] = "N";
         white-space: nowrap;
         overflow: hidden;
     }
-</style>
+    </style>
+    <script type="text/javascript" src="/OJ/plugins/hznuojai/index.js"></script>
 </head>
 <body class='am-with-topbar-fixed-top bg'>
     <header class="am-topbar-inverse am-topbar-fixed-top">
@@ -165,7 +166,7 @@ HTML;
                         <li><a href="/OJ/modifypage.php"><span class="am-icon-eraser"></span> Modify Info</a></li>
                         <li><a href="/OJ/userinfo.php?user={$_SESSION['user_id']}"><span class="am-icon-info-circle"></span> User Info</a></li>
                         <!-- <li><a href="/OJ/mail.php"><span class="am-icon-comments"></span> Mail</a></li> -->
-                        <li><a href="/OJ/status.php?user_id=$user_session"><span class="am-icon-leaf"></span> Recent</a></li>                
+                        <li><a href="/OJ/status.php?user_id=$user_session"><span class="am-icon-leaf"></span> Recent</a></li>
 HTML;
                     }
                     if ($show_tag) echo "<li><a href='/OJ/changeTag.php'><span class='am-icon-toggle-on'></span> Hide Tag</a></li>";

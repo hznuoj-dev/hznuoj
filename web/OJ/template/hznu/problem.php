@@ -213,6 +213,7 @@ HTML;
 HTML;
             }
             ?>
+            <button type="button" id="ai-code-tips" class="am-btn am-btn-sm am-btn-secondary ">AI Code Tips</button>
         </div>
         <!-- 提交等按钮 end -->
 
@@ -464,7 +465,7 @@ HTML;
 </script>
 
 <!-- highlight.js START-->
-<link href="/OJ/plugins/highlight/styles/github-gist.css" rel="stylesheet">
+<!-- <link href="/OJ/plugins/highlight/styles/github-gist.css" rel="stylesheet"> -->
 <script src="/OJ/plugins/highlight/highlight.pack.js"></script>
 <script src="/OJ/plugins/highlight/highlightjs-line-numbers.min.js"></script>
 
@@ -510,3 +511,13 @@ pre.prettyprint{
     });
 </script>
 <!--auto folding code END-->
+
+<script type="text/javascript">
+    const chatbox = window.ChatBox;
+    chatbox.add();
+    $('#ai-code-tips').click(() => {
+        if(!chatbox || !chatbox.chatCore || !chatbox.chatCore.isStop) return;
+        chatbox.openAndChat(`<?php echo sss($row->description) . sss($row->input) . sss($row->output) ?>` + "请你使用C语言解决这道题目",
+            `<?php echo $row->title ?>`);
+    });
+</script>

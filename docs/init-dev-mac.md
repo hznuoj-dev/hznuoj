@@ -33,3 +33,18 @@ docker run \
     --character-set-server=utf8mb4 \
     --collation-server=utf8mb4_unicode_ci
 ```
+
+hznuoj docker php7.0配置curl
+```
+apt-get install curl libcurl4 libcurl4-openssl-dev php7.0-curl
+```
+
+ollama局域网配置
+
+```
+sudo vim /etc/systemd/system/ollama.service
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+sudo ufw allow 11434/tcp
+systemctl daemon-reload
+systemctl restart ollama
+```

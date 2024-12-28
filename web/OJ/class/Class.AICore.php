@@ -1,6 +1,7 @@
 <?php
+require_once './class/Class.StreamHandler.php';
 
-class OllamaChat
+class AICore
 {
     private $api_url = '';
     private $streamHandler;
@@ -8,11 +9,15 @@ class OllamaChat
     private $dfa = NULL;
     private $check_sensitive = TRUE;
     private $model = '';
+    private $api_type = '';
+    private $more_params = [];
 
-    public function __construct($url, $model)
+    public function __construct($params)
     {
-        $this->api_url = $url;
-        $this->model = $model;
+        $this->api_url = $params['url'];
+        $this->model = $params['model'];
+        $this->api_type = $params['type'];
+        $this->more_params = array_diff_key($params, array_flip(['url', 'model', 'type']));
     }
 
     public function set_dfa(&$dfa)
@@ -26,9 +31,10 @@ class OllamaChat
     public function qa($params)
     {
 
-        $this->question = $params['question'];
+        $this->question = $params['system'] . $params['question'];
         $this->streamHandler = new StreamHandler([
-            'qmd5' => md5($this->question . '' . time())
+            'qmd5' => md5($this->question . '' . time()),
+            'api_type' => $this->api_type
         ]);
         if ($this->check_sensitive) {
             $this->streamHandler->set_dfa($this->dfa);
@@ -40,43 +46,32 @@ class OllamaChat
             return;
         }
 
-        // 根据Ollama API的要求构建请求正文
-        $json = json_encode([
-            'prompt' => $this->question,
-            'model' => $this->model,
-        ]);
+        // 构建请求 json
+        if ($this->api_type == 'generate') {
+            $json = json_encode(array_merge([
+                'model' => $this->model,
+                'prompt' => $this->question
+            ], $this->more_params));
+        } else if ($this->api_type == 'chat' || $this->api_type == 'vllm-chat') {
+            $json = json_encode(array_merge([
+                'model' => $this->model,
+                'messages' => [[
+                    "role" => "system",
+                    "content" => $this->question
+                ]],
+            ], $this->more_params));
+        }
 
         $headers = array(
             "Content-Type: application/json",
         );
 
-        $this->ollamaApiCall($json, $headers);
+        $this->openaiApiCall($json, $headers);
     }
 
-    private function buildCurlCommand($json, $headers)
+    private function openaiApiCall($json, $headers)
     {
-        $command = "curl";
-
-        // 添加 URL
-        $command .= " '" . $this->api_url . "'";
-
-        // 添加请求头
-        foreach ($headers as $header) {
-            $command .= " -H '" . str_replace("'", "\'", $header) . "'";
-        }
-
-        // 添加 POST 数据
-        if ($json) {
-            $command .= " -d '" . str_replace("'", "\'", $json) . "'";
-        }
-
-        // 你可以继续添加其他 cURL 选项，如需要
-
-        return $command;
-    }
-
-    private function ollamaApiCall($json, $headers)
-    { // 修改后的方法名
+        // 注意 curl 需要开启 php 拓展
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->api_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -89,9 +84,6 @@ class OllamaChat
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         curl_setopt($ch, CURLOPT_WRITEFUNCTION, [$this->streamHandler, 'callback']);
-
-        // $curlCommand = $this->buildCurlCommand($json, $headers);
-        // echo $curlCommand . PHP_EOL;
 
         $response = curl_exec($ch);
 

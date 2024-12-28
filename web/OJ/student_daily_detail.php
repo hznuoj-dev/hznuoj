@@ -2,7 +2,7 @@
 <?php
 require_once('./include/db_info.inc.php');
 
-$sql = "SELECT * FROM dailydetails";
+$sql = "SELECT * FROM more_settings";
 $res = $mysqli->query($sql);
 $row = $res->fetch_assoc();
 $start_date_db = date("Y-m-d", strtotime($row['start_time']));
@@ -21,8 +21,8 @@ if (
 ?>
 
 <?php
-
-if (!HAS_PRI("set_dailydetails")) {
+// 可以set_more_settings就可以看到这个页面
+if (!HAS_PRI("set_more_settings")) {
   $view_errors = "<a href=loginpage.php style='color:red;text-decoration:underline;'>$MSG_Login</a>";
   require("template/" . $OJ_TEMPLATE . "/error.php");
   exit(0);

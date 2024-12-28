@@ -240,7 +240,7 @@ if($_POST['data']){
           manage_tag
         </li>
         <li>
-          set_dailydetails
+          set_more_settings
         </li>
       </ul>
       </div><!--well-->

@@ -68,9 +68,10 @@ if(isset($_GET['cid'])) {
         font-weight: normal;
     }
 </style>
+<script type="text/javascript" src="/OJ/plugins/hznuojai/index.js"></script>
 </head>
 <body style="padding-top: 51px;">
-    <?php 
+    <?php
     if(isset($_GET['cid']))
         $cid=intval($_GET['cid']);
     if (isset($_GET['pid']))
@@ -86,16 +87,16 @@ if(isset($_GET['cid'])) {
                 <ul class="am-nav am-nav-pills am-topbar-nav">
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="index.php"){echo "class='am-active'";} ?>><a class="am-icon-chevron-left" href="/OJ/contestset.php"> Back</a></li>
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contest.php"){echo "class='am-active'";} ?>><a href='./contest.php?cid=<?php echo $cid?>'>Overview</a></li>
-                    <?php 
+                    <?php
                         $status_url = "./status.php?cid=".$cid;
                         if (isset($_SESSION['user_id'])) {
                             $status_url .= "&user_id=".$_SESSION['user_id'];
                         }
                     ?>
                     <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="status.php"){echo "class='am-active'";} ?>><a href='<?php echo $status_url; ?>'>Status</a></li>
-                    <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contestrank.php"){echo "class='am-active'";} ?>><a href='./contestrank.php?cid=<?php echo $cid?>'>Standings</a></li> 
-                    <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contest_clarifications.php"){echo "class='am-active'";} ?>><a href='./contest_clarifications.php?cid=<?php echo $cid?>'>Clarifications</a></li>      
-                    <?php 
+                    <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contestrank.php"){echo "class='am-active'";} ?>><a href='./contestrank.php?cid=<?php echo $cid?>'>Standings</a></li>
+                    <li <?php if(basename($_SERVER['SCRIPT_NAME'])=="contest_clarifications.php"){echo "class='am-active'";} ?>><a href='./contest_clarifications.php?cid=<?php echo $cid?>'>Clarifications</a></li>
+                    <?php
                         if(HAS_PRI("contest_reply")) {
                             $active = basename($_SERVER['SCRIPT_NAME'])=="contest_clarifications_reply.php" ? "am-active" : "";
                             $url = "./contest_clarifications_reply.php?cid=".$cid;
@@ -201,7 +202,7 @@ BOT;
             </div>
         </div>
     <?php endif ?>
-    
+
     <?php if(HAS_PRI("edit_contest")) {
         echo <<<HTML
         <div align="center" style="margin-top: 5px;">

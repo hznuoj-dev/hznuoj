@@ -1,37 +1,60 @@
 <?php
 
-// 设置时区为东八区
+require_once('./include/cache_start.php');
+
 date_default_timezone_set('PRC');
-
-// 这行代码用于关闭输出缓冲。关闭后，脚本的输出将立即发送到浏览器，而不是等待缓冲区填满或脚本执行完毕。
 ini_set('output_buffering', 'off');
-
-// 这行代码禁用了 zlib 压缩。通常情况下，启用 zlib 压缩可以减小发送到浏览器的数据量，但对于服务器发送事件来说，实时性更重要，因此需要禁用压缩。
 ini_set('zlib.output_compression', false);
-
-// 这行代码使用循环来清空所有当前激活的输出缓冲区。ob_end_flush() 函数会刷新并关闭最内层的输出缓冲区，@ 符号用于抑制可能出现的错误或警告。
 while (@ob_end_flush()) {
 }
-
-// 这行代码设置 HTTP 响应的 Content-Type 为 text/event-stream，这是服务器发送事件（SSE）的 MIME 类型。
 header('Content-Type: text/event-stream');
-
-// 这行代码设置 HTTP 响应的 Cache-Control 为 no-cache，告诉浏览器不要缓存此响应。
 header('Cache-Control: no-cache');
-
-// 这行代码设置 HTTP 响应的自定义头部 X-Accel-Buffering 为 no，用于禁用某些代理或 Web 服务器（如 Nginx）的缓冲。
 header('X-Accel-Buffering: no');
 
+// 未登录禁止使用
+if (isset($_SESSION['user_id'])) {
+    $uid = $mysqli->real_escape_string($_SESSION['user_id']);
+} else {
+    echo "data: " . json_encode(["code" => "499", "error" => "No user"]) . "\n\n";
+    flush();
+    exit();
+}
+
+// 检查请求头，确保是通过 EventSource 发起的请求
+if ($_SERVER['HTTP_ACCEPT'] !== 'text/event-stream') {
+    header('HTTP/1.1 403 Forbidden');
+    echo "This endpoint can only be accessed via EventSource.";
+    exit();
+}
+
+// 查询是否禁用AI功能
+$sql = "SELECT * FROM more_settings";
+$res = $mysqli->query($sql);
+$row = $res->fetch_assoc();
+$ai_module = $row['ai_model'];
+if ($ai_module == 0) {
+    echo "data: " . json_encode(["code" => "498", "error" => "AI module is disabled"]) . "\n\n";
+    flush();
+    exit();
+}
+
+// 查询当前用户是否正处于AI对话中
+
+$currentTime = time();
+if (isset($_SESSION['last_chat_time'])) {
+    $lastChatTime = $_SESSION['last_chat_time'];
+    if (($currentTime - $lastChatTime) < 5) {
+        echo "data: " . json_encode(["code" => "497", "error" => "In Conversation now"]) . "\n\n";
+        flush();
+        exit();
+    }
+}
+$_SESSION['last_chat_time'] = $currentTime;
+
+
 require_once './include/static.php';
-
-// 引入敏感词检测类
 require './class/Class.DFA.php';
-
-// 引入流处理类
-require './class/Class.StreamHandler.php';
-
-// 引入调用 OpenAI 接口类
-require './class/Class.ChatGPT.php';
+require './class/Class.AICore.php';
 
 echo 'data: ' . json_encode(['time' => date('Y-m-d H:i:s'), 'content' => '']) . PHP_EOL . PHP_EOL;
 flush();
@@ -45,21 +68,34 @@ if (empty($question)) {
 }
 $question = str_ireplace('{[$add$]}', '+', $question);
 
-// api 和 模型选择
-$chat = new OllamaChat(
-    "http://$DB_HOST:11434/api/generate",
-    "$AI_MODEL"
-);
+// api 和 模型选择 和 交互模式
+// $chat = new AICore([
+//     "url" =>  "http://$AI_HOST:11434/api/chat",
+//     "model" => "$AI_MODEL1",
+//     "type" => "chat",
+//     "stream" => true
+// ]);
+$chat = new AICore([
+    // "url" => "http://$AI_HOST:". (rand(1, 100) <= 50 ? "8000" : "8001") ."/v1/chat/completions",
+    "url" => "http://$AI_HOST:8000/v1/chat/completions",
+    "model" => "$AI_MODEL_VLLM",
+    "type" => "vllm-chat",
+    "stream" => true
+]);
 
 $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 $dfa = new DFA([
-    'words_file' => "$DOCUMENT_ROOT/OJ/plugins/code-helper/dict.txt",
+    'words_file' => "$DOCUMENT_ROOT/OJ/plugins/hznuojai/dict.txt",
 ]);
 $chat->set_dfa($dfa);
 
-
 // 开始提问
 $chat->qa([
-    'system' => '你是HznuOnlineJudge的智能代码助手，只负责和代码相关的问题',
+    'system' => '你是杭州师范大学在线测评系统的智能代码助手，你负责且只负责回答代码相关的问题，并且使用中文回答，代码部分使用```包围，下面是问题：',
     'question' => $question,
 ]);
+
+unset($_SESSION['last_chat_time']);
+
+if (file_exists('./include/cache_end.php'))
+    require_once('./include/cache_end.php');

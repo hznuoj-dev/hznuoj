@@ -16,7 +16,7 @@
     Server Time: <span id='footerdate'><?php echo date('20y-m-d h:i:s',time()); ?></span>
 
     <!-- go to top btn START -->
-    <div class="amz-toolbar" id="go-top" style="display: none; position: fixed; bottom: 15px; right: 15px;">
+    <div class="amz-toolbar" id="go-top" style="display: none; position: fixed; bottom: 8vw; right: 2vw;">
         <a data-am-smooth-scroll href="#" title="回到顶部" class="am-icon-btn am-icon-arrow-up"></a>
     </div>
     <!-- go to top btn END -->

@@ -5,7 +5,7 @@ require_once('./include/db_info.inc.php');
 
 $current_year = date("Y");
 
-$sql = "SELECT * FROM dailydetails";
+$sql = "SELECT * FROM more_settings";
 $res = $mysqli->query($sql);
 $row = $res->fetch_assoc();
 
