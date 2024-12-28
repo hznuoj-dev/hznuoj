@@ -123,11 +123,11 @@ class FloatingChatBox {
 
     // 将组件添加到页面
     async add() {
-        await this.importFile('https://cdn.jsdelivr.net/npm/incremental-dom@0.6.0/dist/incremental-dom-min.js', 'script');
-        await this.importFile('https://cdn.jsdelivr.net/npm/markdown-it@8.4.2/dist/markdown-it.min.js', 'script');
-        await this.importFile('https://cdn.jsdelivr.net/npm/markdown-it-incremental-dom@2/dist/markdown-it-incremental-dom.min.js', 'script');
-        await this.importFile('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js', 'script');
-        await this.importFile('//unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/atom-one-dark.min.css', 'link');
+        await this.importFile('/OJ/plugins/hznuojai/dependencies/incremental-dom-min.js', 'script');
+        await this.importFile('/OJ/plugins/hznuojai/dependencies/markdown-it.min.js', 'script');
+        await this.importFile('/OJ/plugins/hznuojai/dependencies/markdown-it-incremental-dom.min.js', 'script');
+        await this.importFile('/OJ/plugins/highlight/highlight.pack.js', 'script');
+        await this.importFile('/OJ/plugins/hznuojai/dependencies/atom-one-dark.min.css', 'link');
         await this.importFile('/OJ/plugins/hznuojai/chat.js', 'script');
 
         document.body.appendChild(this.floatingBall);

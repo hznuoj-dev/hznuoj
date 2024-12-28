@@ -80,6 +80,7 @@ class ChatCore {
         this.chatButton.classList.add('am-icon-paper-plane');
         this.chatButton.classList.remove('am-icon-stop');
         this.chatButton.onclick = () => this.sendMessage(this.input.value);
+        this.input.focus();
     }
 
     adjustInputHeight() {
@@ -145,7 +146,7 @@ class ChatCore {
                 this.isStop = true;
                 this.eventSource.close();
             }, 20000);
-            console.log("连接已建立", JSON.stringify(event));
+            // console.log("连接已建立", JSON.stringify(event));
         });
 
         this.eventSource.addEventListener("message", (event) => {
@@ -177,12 +178,12 @@ class ChatCore {
         });
 
         this.eventSource.addEventListener("close", (event) => {
-            console.log("连接已关闭", JSON.stringify(event.data));
+            // console.log("连接已关闭", JSON.stringify(event.data));
             this.eventSource.close();
             this.contentEnd = true;
             clearTimeout(connectionTimeout);
             connectionTimeout = null;
-            console.log((new Date().getTime()), 'answer end');
+            // console.log((new Date().getTime()), 'answer end');
         });
     }
 
@@ -205,7 +206,7 @@ class ChatCore {
             this.eventSource = null;
             this.codeStart = false;
             this.swapToSend();
-            console.log((new Date().getTime()), 'typing end');
+            // console.log((new Date().getTime()), 'typing end');
             return;
         }
         if (this.contentIdx <= this.typingIdx || this.typing) {
@@ -247,6 +248,7 @@ class ChatCore {
 
         this.patchMd(this.answers[this.qaIdx], this.answerContent + (this.codeStart ? '\n\n```' : ''));
 
+        // TODO:除了代码段和行内代码，还有很多需要包裹的 比如加粗等需要处理
         if (content.indexOf('`') != -1 && (this.lastWord + content).indexOf('``') === -1) {
             this.inlineCodeStart = !this.inlineCodeStart;
         }

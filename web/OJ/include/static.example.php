@@ -16,6 +16,11 @@
   static  $DB_VJUSER="root";
   static  $DB_VJPASS="root";
 
+  static  $AI_HOST="127.0.0.1";
+  static  $AI_MODEL1="codellama:13b";
+  static  $AI_MODEL2="qwen2.5-coder";
+  static  $AI_MODEL_VLLM="HznuojAI";
+
   $OJ_HOME=dirname(dirname(__FILE__));//:OJ/
   static  $OJ_NAME="HZNUOJ";
   static  $OJ_ADMIN="root@localhost";

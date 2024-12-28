@@ -71,14 +71,14 @@ $question = str_ireplace('{[$add$]}', '+', $question);
 // api 和 模型选择 和 交互模式
 // $chat = new AICore([
 //     "url" =>  "http://$AI_HOST:11434/api/chat",
-//     "model" => rand(1, 100) <= 50 ? "$AI_MODEL1" : "$AI_MODEL1",
+//     "model" => "$AI_MODEL1",
 //     "type" => "chat",
 //     "stream" => true
 // ]);
 $chat = new AICore([
     // "url" => "http://$AI_HOST:". (rand(1, 100) <= 50 ? "8000" : "8001") ."/v1/chat/completions",
     "url" => "http://$AI_HOST:8000/v1/chat/completions",
-    "model" => "Qwen2.5-7B-Instruct",
+    "model" => "$AI_MODEL_VLLM",
     "type" => "vllm-chat",
     "stream" => true
 ]);

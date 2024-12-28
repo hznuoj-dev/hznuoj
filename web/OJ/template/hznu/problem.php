@@ -465,7 +465,7 @@ HTML;
 </script>
 
 <!-- highlight.js START-->
-<link href="/OJ/plugins/highlight/styles/github-gist.css" rel="stylesheet">
+<!-- <link href="/OJ/plugins/highlight/styles/github-gist.css" rel="stylesheet"> -->
 <script src="/OJ/plugins/highlight/highlight.pack.js"></script>
 <script src="/OJ/plugins/highlight/highlightjs-line-numbers.min.js"></script>
 

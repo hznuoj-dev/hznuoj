@@ -182,7 +182,8 @@ body {
 .useai-tips {
     font-size: 12px;
     color: #c3c6cb;
-    line-height: 20px;
+    line-height: 18px;
+    margin-left: 10px;
 }
 
 .input-area {
