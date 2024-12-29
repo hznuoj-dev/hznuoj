@@ -19,8 +19,8 @@ require_once('./include/db_info.inc.php');
 ?>
 
 <style>
-  .bg{
-    background-image: url(/OJ/image/ojINDEX_v.jpg);
+  .bg {
+    background-image: url(/OJ/image/ojINDEX_v.jpeg);
     background-repeat: no-repeat;
     background-position: center 0px;
   }
