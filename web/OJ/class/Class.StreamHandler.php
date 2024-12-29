@@ -68,7 +68,7 @@ class StreamHandler
         $this->counter += 1;
         file_put_contents('./log/data.' . $this->qmd5 . '.log', $this->counter . '==' . $data . PHP_EOL . '--------------------' . PHP_EOL, FILE_APPEND);
 
-        $result = json_decode($data, TRUE);
+        // $result = json_decode($data, TRUE);
         // echo $origin_data . PHP_EOL;
         // print_r($result);
 
@@ -104,7 +104,7 @@ class StreamHandler
             } else  if ($this->api_type == 'chat' || $this->api_type == 'vllm-chat') {
                 $content = $line_data['message']['content'] ?? NULL;
             }
-            if ($content) {
+            if ($content != NULL) {
                 $this->sensitive_check($content);
             }
             // echo 'content: ' . $content . PHP_EOL;

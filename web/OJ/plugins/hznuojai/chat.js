@@ -134,9 +134,6 @@ class ChatCore {
 
         let connectionTimeout = null;
 
-        // TODO: VLLM
-        // TODO: 两张显卡加载同一个大模型，并且负载均衡；如果行不通，就通过设置参数的形式跑两个不同的大模型并手动分配
-
         // 同一个客户端只能同时建立同一个 EventSource 连接
         this.eventSource.addEventListener("open", (event) => {
             clearTimeout(connectionTimeout);
