@@ -1,3 +1,8 @@
+
+// TODO: shift+enter 换行后无法复原
+// TODO: 移动端兼容
+// TODO: 仅AI reload功能
+
 class FloatingChatBox {
     constructor() {
         this.importFile('/OJ/plugins/hznuojai/index.css', 'link');
