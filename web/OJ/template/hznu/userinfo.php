@@ -17,6 +17,7 @@ require_once("header.php");
 <style type="text/css">
   .first-col {
     width: 120px;
+    white-space: nowrap;
   }
 
   .loading-btn {
@@ -59,6 +60,10 @@ require_once("header.php");
     background: #3BB4F2;
     width: 100%;
   }
+
+  .am-selected-status {
+    white-space: normal;
+  }
 </style>
 <div class="am-container" style="margin-top:60px;">
   <!-- userinfo上部分 start -->
@@ -67,7 +72,7 @@ require_once("header.php");
   <div class='am-g'>
     <!-- 左侧个人信息表格 start -->`
     <div class='am-u-md-4'>
-      <form action="modify.php" method="post">
+      <form action="modify_userinfo.php" method="post">
         <table class="am-table am-table-striped am-table-compact am-text-center">
           <tbody>
             <tr>
@@ -131,6 +136,17 @@ require_once("header.php");
                   </select>
                 </td>
               </tr>
+              <tr>
+                <td class="first-col" style="padding-top: 10px;">Course Team</td>
+                <td>
+                  <select name="course_team[]" multiple data-am-selected="{searchBox: 1, maxHeight: 400, btnWidth:'100%'}" style="width: 50px;">
+                    <?php foreach ($course_team_list as $team) : ?>
+                      <option value="<?php echo $team['team_id'] ?>"
+                        <?php if (in_array($team['team_name'], array_column($course_team, 'team_name'))) echo "selected"; ?>><?php echo $team['team_name'] ?></option>
+                    <?php endforeach ?>
+                  </select>
+                </td>
+              </tr>
             <?php elseif (HAS_PRI("see_hidden_user_info")) : ?>
               <tr>
                 <td colspan="2" class="am-danger">----The followings are admin only----</td>
@@ -146,6 +162,10 @@ require_once("header.php");
               <tr>
                 <td class="first-col">Class</td>
                 <td><?php echo htmlentities($class) ?></td>
+              </tr>
+              <tr>
+                <td class="first-col">Course Team</td>
+                <td><?php echo htmlentities($course_team) ?></td>
               </tr>
             <?php endif ?>
           </tbody>
@@ -177,12 +197,12 @@ require_once("header.php");
   <div class="am-g" style="margin-top: 30px;">
     <div class="am-u-sm-12 am-text-center">
       <div class="am-u-sm-6">
-        <a href="./daily_detail.php?user=<?php echo $user;?>">
+        <a href="./daily_detail.php?user=<?php echo $user; ?>">
           <button class="loading-btn">点击查看每日做题详情</button>
         </a>
       </div>
       <div class="am-u-sm-6">
-        <a href="./study_detail.php?user=<?php echo $user;?>">
+        <a href="./study_detail.php?user=<?php echo $user; ?>">
           <button class="loading-btn">点击查看学习里程碑</button>
         </a>
       </div>

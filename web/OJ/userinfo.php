@@ -48,20 +48,6 @@ $real_name = $row->real_name;
 $stu_id=$row->stu_id;
 $class = $row->class;
 if ($class=="null") $class = "其它";
-if ($class=="cs151") $class = "计算机151";
-if ($class=="cs152") $class = "计算机152";
-if ($class=="cs153") $class = "计算机153";
-if ($class=="cs154") $class = "计算机154";
-if ($class=="se151") $class = "软件工程151";
-if ($class=="se152") $class = "软件工程152";
-if ($class=="iot151") $class = "物联网151";
-if ($class=="cs141") $class = "计算机141";
-if ($class=="cs142") $class = "计算机142";
-if ($class=="cs143") $class = "计算机143";
-if ($class=="cs144") $class = "计算机144";
-if ($class=="se141") $class = "软件工程141";
-if ($class=="se142") $class = "软件工程142";
-if ($class=="iot141") $class = "物联网141";
 $result->free();
 
 // 获取解题数大于10的用户数量存入user_cnt_divisor
@@ -293,25 +279,23 @@ for ($i=0; $row=$result->fetch_array(); ++$i) {
 $result->free();
 /* 获取HZNUOJ推荐题目的题目编号 end */
 
-
-//获取tag数据
-$sql = "SELECT pt.tag, COUNT(*) as num
-        FROM solution s
-        JOIN problem_tag pt ON s.problem_id = pt.problem_id
-        WHERE s.user_id = '$user_mysql' AND s.result = 4
-        GROUP BY pt.tag";
-
+$sql = "SELECT DISTINCT * FROM course_team";
 $result = $mysqli->query($sql);
-
-$tagdata = array();
-if ($result->num_rows > 0) {
-    // 输出每行数据
-    while($row = $result->fetch_assoc()) {
-        $tagdata[] = array('tag' => $row["tag"], 'num' => $row["num"]);
-    }
+$course_team_list = array();
+while ($row = $result->fetch_array()) {
+    $course_team_list[] = array('team_name' => $row['term'] . '-' . $row['course_name'] . '-' . $row['teacher_name'] . '-' . $row['class_week_time'], 'team_id' => $row['team_id']);
 }
+$result->free();
 
-$tagdata_json = json_encode($tagdata);
+$course_team = array();
+$sql = "SELECT ct.* 
+    FROM course_team ct
+    JOIN course_team_relation ctr ON ct.team_id = ctr.team_id
+    WHERE ctr.user_id='$user_mysql'";
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_array()) {
+    $course_team[] = array('team_name' => $row['term'] . '-' . $row['course_name'] . '-' . $row['teacher_name'] . '-' . $row['class_week_time'], 'team_id' => $row['team_id']);
+}
 $result->free();
 
 /////////////////////////Template

@@ -14,7 +14,7 @@
 <div class="am-container">
   <h1 style="margin-top:40px; margin-bottom: 0px;">Modify Page</h1>
   <hr>
-  <form class="am-form am-form-horizontal" action="modify.php" method="post">
+  <form class="am-form am-form-horizontal" action="modify_userinfo.php" method="post">
     <div class="am-form-group">
       <label class="am-u-sm-2 am-u-sm-offset-2 am-form-label">User ID:</label>
       <div class="am-u-sm-8">

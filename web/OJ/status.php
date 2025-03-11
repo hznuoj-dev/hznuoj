@@ -284,7 +284,9 @@ if(isset($_SESSION['http_judge'])) {
     $view_status[$i][3].="<form class='http_judge_form form-inline'><input type=hidden name=sid value='".$row['solution_id']."'>";
     $view_status[$i][3].="</form>";
 }
-
+if (intval($row['result']) > 4)
+    $view_status[$i][3] .= "<button class='am-btn am-btn-primary am-round am-btn-xs ai-correction' data-am-popover='{content: \"使用AI纠错\", trigger: \"hover focus\"}' 
+                                style='height:20px; width:20px; padding: 0px; margin-left: 5px; vertical-align: text-bottom;'>?</button>";
 
 if ($flag){ 
     if ($row['result']>=4){

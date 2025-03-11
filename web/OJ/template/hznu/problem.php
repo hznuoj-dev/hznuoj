@@ -517,7 +517,8 @@ pre.prettyprint{
     chatbox.add();
     $('#ai-code-tips').click(() => {
         if(!chatbox || !chatbox.chatCore || !chatbox.chatCore.isStop) return;
-        chatbox.openAndChat(`<?php echo sss($row->description) . sss($row->input) . sss($row->output) ?>` + "请你使用C语言解决这道题目",
-            `<?php echo $row->title ?>`);
+        const problem_description = `<?php echo str_replace('`', '\`', sss($row->description) . sss($row->input) . sss($row->output)) ?>`;
+        const prompt = `${problem_description}请你使用C语言解决这道题目`;
+        chatbox.openAndChat(prompt, `<?php echo $row->title ?>`);
     });
 </script>

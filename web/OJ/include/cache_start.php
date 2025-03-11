@@ -1,6 +1,6 @@
 <?php
         //ini_set("display_errors","On");
-        require_once("./include/db_info.inc.php");
+        require_once(__DIR__ . "/db_info.inc.php");
         //cache head start
         if(!isset($cache_time)) $cache_time=10;
         $file="cache/cache_".$_SERVER["REQUEST_URI"].".html";

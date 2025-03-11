@@ -1,6 +1,8 @@
 
 <?php
 require_once('./include/db_info.inc.php');
+require_once('./include/cache_start.php');
+require_once('./include/classList.inc.php');
 
 $sql = "SELECT * FROM more_settings";
 $res = $mysqli->query($sql);
@@ -28,44 +30,67 @@ if (!HAS_PRI("set_more_settings")) {
   exit(0);
 }
 
+// 筛选所有课程组
+$sql = "SELECT DISTINCT * FROM course_team";
+$result = $mysqli->query($sql);
+$course_team_list = array();
+while ($row = $result->fetch_array()) {
+  $course_team_list[] = array('team_name' => $row['term'] . '-' . $row['course_name'] . '-' . $row['teacher_name'] . '-' . $row['class_week_time'], 'team_id' => $row['team_id']);
+}
+$result->free();
+
 // 教师页面数据
 
 $OJ_CACHE_SHARE = false;
 $cache_time = 30;
-require_once('./include/cache_start.php');
-require_once('./include/db_info.inc.php');
-require_once('./include/setlang.php');
 
 $filter_sql = "";
+$where_conditions = [];
 
 $order_by = "user_id, reg_time";
 if (isset($_GET['order_by'])) {
   $first_order_by = $_GET['order_by'];
   if ($first_order_by !== 'user_id') {
-    $order_by = $first_order_by . " DESC , " . $order_by;
+    $order_by = $first_order_by . " DESC, " . $order_by;
   }
 }
 
 $page_size = 100;
 $rank = 0;
 
-if (isset($_GET['class'])) {
-  $cls = $mysqli->real_escape_string($_GET['class']);
-  if ($_GET['class'] != "all")
-    $filter_sql = " WHERE class='" . $cls . "' ";
+// 筛选课程组(必选)
+if (isset($_GET['course_team'])) {
+  $team_id = intval($_GET['course_team']);
+  $filter_sql = "JOIN course_team_relation ctr ON users.user_id = ctr.user_id";
+  $where_conditions[] = "ctr.team_id = $team_id";
+} else {
+  $page_size = 0;
 }
 
-if (isset($OJ_LANG)) {
-  require_once("./lang/$OJ_LANG.php");
+// 筛选班级
+if (isset($_GET['class']) && $_GET['class'] !== 'all') {
+  $class = $mysqli->real_escape_string($_GET['class']);
+  $where_conditions[] = "class = '$class'";
 }
+
+// 合成WHERE子句
+$where_clause = !empty($where_conditions) ? "WHERE " . implode(" AND ", $where_conditions) : "";
 
 if ($rank < 0) $rank = 0;
 
-$sql = "SELECT * FROM users " . $filter_sql . " ORDER BY " . $order_by . " LIMIT " . strval($rank) . ",$page_size";
+// Use indexed columns in SELECT and add FORCE INDEX hint if needed
+$sql = "SELECT SQL_CALC_FOUND_ROWS users.user_id, users.real_name, users.solved, users.reg_time 
+        FROM users 
+        $filter_sql 
+        $where_clause 
+        ORDER BY $order_by 
+        LIMIT ?, ?";
 
-$result = $mysqli->query($sql) or die("Error! " . $mysqli->error);
-if ($result) $rows_cnt = $result->num_rows;
-else $rows_cnt = 0;
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("ii", $rank, $page_size);
+$stmt->execute();
+$result = $stmt->get_result();
+$rows_cnt = $result->num_rows;
 
 // 筛选当前所有用户每日的做题情况
 function filter_dates_by_range_for_users($user_ids, $start_date, $end_date, $mysqli)
@@ -188,30 +213,6 @@ foreach ($user_ids as $user_id) {
   $view_rank[$i][4] .= "</div>";
   $i++;
 }
-
-/* 获取所有班级 start */
-$sql_class = "SELECT DISTINCT(class) FROM users";
-$result_class = $mysqli->query($sql_class);
-$classSet = array();
-while ($row_class = $result_class->fetch_array()) {
-  $class = $row_class['class'];
-  //    echo $class."<br />";
-  if (!is_null($class) && $class != "" && $class != "null" && $class != "其它") {
-    $grade = "";
-    $strlen = strlen($class);
-    for ($i = 0; $i < $strlen; ++$i) {
-      if (is_numeric($class[$i])) {
-        $grade = $class[$i] . $class[$i + 1];
-        break;
-      }
-    }
-    $classSet[] = $grade . " - " . $class;
-    //echo $grade." - ".$class."<br />";
-  }
-}
-rsort($classSet);
-$result_class->free();
-/* 获取所有班级 end */
 
 $result->free();
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once('./include/cache_start.php');
+require_once('../include/cache_start.php');
 
 date_default_timezone_set('PRC');
 ini_set('output_buffering', 'off');
@@ -52,9 +52,9 @@ if (isset($_SESSION['last_chat_time'])) {
 $_SESSION['last_chat_time'] = $currentTime;
 
 
-require_once './include/static.php';
-require './class/Class.DFA.php';
-require './class/Class.AICore.php';
+require_once '../include/static.php';
+require '../class/Class.DFA.php';
+require '../class/Class.AICore.php';
 
 echo 'data: ' . json_encode(['time' => date('Y-m-d H:i:s'), 'content' => '']) . PHP_EOL . PHP_EOL;
 flush();
@@ -67,6 +67,11 @@ if (empty($question)) {
     exit();
 }
 $question = str_ireplace('{[$add$]}', '+', $question);
+
+$system_instruction = urldecode($_GET['sys'] ?? '');
+if (empty($system_instruction)) {
+    $system_instruction = "你是杭州师范大学在线测评系统智能代码助手，你负责解答C语言的相关问题";
+}
 
 // api 和 模型选择 和 交互模式
 // $chat = new AICore([
@@ -91,11 +96,12 @@ $chat->set_dfa($dfa);
 
 // 开始提问
 $chat->qa([
-    'system' => '你是杭州师范大学在线测评系统的智能代码助手，你负责且只负责回答代码相关的问题，并且使用中文回答，代码部分使用```包围，下面是问题：',
+    'system' => $system_instruction,
+    'tip' => '你是杭州师范大学在线测评系统智能代码助手，你负责且只负责回答学习、代码相关的问题，并且使用中文回答。格式使用标准markdown，代码部分使用`或者```包围，下面是问题：',
     'question' => $question,
 ]);
 
 unset($_SESSION['last_chat_time']);
 
-if (file_exists('./include/cache_end.php'))
-    require_once('./include/cache_end.php');
+if (file_exists('../include/cache_end.php'))
+    require_once('../include/cache_end.php');

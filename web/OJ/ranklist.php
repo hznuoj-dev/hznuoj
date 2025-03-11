@@ -12,6 +12,7 @@ $cache_time=30;
 require_once('./include/cache_start.php');
 require_once('./include/db_info.inc.php');
 require_once('./include/setlang.php');
+require_once('./include/classList.inc.php');
 // require_once('updateRank.php'); // 有此语句后每次点击ranklist会自动更新排名
 
 $view_title= $MSG_RANKLIST;
@@ -117,30 +118,6 @@ for ( $i=0;$i<$rows_cnt;$i++ ) {
     $view_rank[$i][10]= "<div class='am-text-center' style='width:110px;'><font color='".$row['color']."'>".$row['level']."</font></div>";
     $view_rank[$i][11]= "<div class='am-text-center'>".round($row['strength'])."</div>";
 }
-
-/* 获取所有班级 start */
-$sql_class = "SELECT DISTINCT(class) FROM users";
-$result_class = $mysqli->query($sql_class);
-$classSet = array();
-while ($row_class = $result_class->fetch_array()) {
-    $class = $row_class['class'];
-//    echo $class."<br />";
-    if (!is_null($class) && $class!="" && $class!="null" && $class!="其它") {
-        $grade = "";
-        $strlen = strlen($class);
-        for ($i=0; $i<$strlen; ++$i) {
-            if (is_numeric($class[$i])) {
-                $grade = $class[$i].$class[$i+1];
-                break;
-            }
-        }
-        $classSet[] = $grade." - ".$class;
-        //echo $grade." - ".$class."<br />";
-    }
-}
-rsort($classSet);
-$result_class->free();
-/* 获取所有班级 end */
 
 
 if(!$OJ_MEMCACHE)$result->free();

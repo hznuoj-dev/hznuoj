@@ -9,15 +9,23 @@ require_once("header.php");
 </style>
 <div class="am-avg-md-1" style="width: 90%; margin:5vh auto">
     <form class="am-form am-form-inline" action='student_daily_detail.php'>
-        <input type="hidden" name="csrf_token" value="f31605cce38e27bcb4e8a76188e92b3b">
         <div class='am-form-group' style="margin-right: 20px;">
-            <label for="class" style="margin-right: 10px;">班级:</label>
+            <label for="course_team" style="margin-right: 10px;">Course Team:</label>
+            <select data-am-selected="{searchBox: 1, maxHeight: 400}" id='course_team' name='course_team'>
+                <?php foreach ($course_team_list as $course_team) {
+                    $selected = "";
+                    if (isset($_GET['course_team']) && $_GET['course_team'] == $course_team['team_id']) $selected = "selected";
+                    echo "<option value='" . $course_team['team_id'] . "' " . $selected . ">" . $course_team['team_name'] . "</option>";
+                } ?>
+            </select>
+        </div>
+        <div class='am-form-group' style="margin-right: 20px;">
+            <label for="class" style="margin-right: 10px;">Class:</label>
             <select data-am-selected=" {searchBox: 1, maxHeight: 400}" id='class' name='class'>
-                <option value='all' <?php if (isset($_GET['class']) && $_GET['class'] == "" || !isset($_GET['class'])) echo "selected"; ?>>全部</option>
+                <option value='all' <?php if (isset($_GET['class']) && $_GET['class'] == "" || !isset($_GET['class'])) echo "selected"; ?>>All</option>
                 <?php
                 foreach ($classSet as $class) {
                     $selected = "";
-                    $class = substr($class, 5);
                     if (isset($_GET['class']) && $_GET['class'] == $class) $selected = "selected";
                     echo "<option value='" . $class . "' " . $selected . ">" . $class . "</option>";
                 }
@@ -25,15 +33,15 @@ require_once("header.php");
             </select>
         </div>
         <div class="am-form-group" style="margin-right: 20px;">
-            <label for="start_date" style="margin-right:10px;">开始日期:</label>
+            <label for="start_date" style="margin-right:10px;">Begin Date:</label>
             <input type="date" id="start_date" style="display:inline-block;width:10vw;" name="start_date" value="<?php echo $start_date; ?>">
         </div>
         <div class="am-form-group" style="margin-right: 20px;">
-            <label for="end_date" style="margin-right: 10px;">结束日期:</label>
+            <label for="end_date" style="margin-right: 10px;">End Date:</label>
             <input type="date" style="display:inline-block;width:10vw;" name="end_date" value="<?php echo $end_date; ?>">
         </div>
         <div class="am-form-group" style="margin-right: 20px;">
-            <label for="order_by" style="margin-right: 10px;">排序:</label>
+            <label for="order_by" style="margin-right: 10px;">Order By:</label>
             <select data-am-selected="{searchBox: 1, maxHeight: 400}" name='order_by'>
                 <option value="solved" <?php echo ($first_order_by == "solved") ? 'selected' : ''; ?>>过题数</option>
                 <option value="submit" <?php echo ($first_order_by == "submit") ? 'selected' : ''; ?>>提交数</option>
@@ -41,7 +49,7 @@ require_once("header.php");
                 <option value="strength" <?php echo ($first_order_by == "strength") ? 'selected' : ''; ?>>能力值</option>
             </select>
         </div>
-        <button type="submit" class="am-btn am-btn-primary">筛选</button>
+        <button type="submit" class="am-btn am-btn-primary">Fliter</button>
     </form>
 
     <table class="am-table am-table-striped am-margin-top">

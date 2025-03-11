@@ -82,7 +82,6 @@ else $_SESSION['tag'] = "N";
         overflow: hidden;
     }
     </style>
-    <script type="text/javascript" src="/OJ/plugins/hznuojai/index.js"></script>
 </head>
 <body class='am-with-topbar-fixed-top bg'>
     <header class="am-topbar-inverse am-topbar-fixed-top">
