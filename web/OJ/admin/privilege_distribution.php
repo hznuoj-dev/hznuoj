@@ -242,6 +242,9 @@ if($_POST['data']){
         <li>
           set_more_settings
         </li>
+        <li>
+          manage_course_team
+        </li>
       </ul>
       </div><!--well-->
     </div><!--col-7-->

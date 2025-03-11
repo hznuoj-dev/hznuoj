@@ -6,7 +6,6 @@ require_once('./include/db_info.inc.php');
 require_once('./include/setlang.php');
 require_once("./include/my_func.inc.php");
 require_once("./include/const.inc.php");
-require_once("./include/classList.inc.php");
 ?>
 <?php
     // ini_set('display_errors', 'On');

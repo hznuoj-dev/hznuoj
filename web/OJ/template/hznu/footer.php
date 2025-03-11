@@ -188,5 +188,7 @@ MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 <script type="text/javascript" async src="/OJ/plugins/MathJax/MathJax.js"></script>
 
 
+<script type="text/javascript" src="/OJ/plugins/hznuojai/index.js"></script>
+
 </body>
 </html>

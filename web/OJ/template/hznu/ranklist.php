@@ -54,7 +54,6 @@ function generate_url($page){
                         <?php
                         foreach($classSet as $class) {
                             $selected = "";
-                            $class=substr($class, 5);
                             if (isset($_GET['class']) && $_GET['class']==$class) $selected = "selected";
                             echo "<option value='".$class."' ".$selected.">".$class."</option>";
                         }

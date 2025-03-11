@@ -1,8 +1,3 @@
-
-// TODO: shift+enter 换行后无法复原
-// TODO: 移动端兼容
-// TODO: 仅AI reload功能
-
 class FloatingChatBox {
     constructor() {
         this.importFile('/OJ/plugins/hznuojai/index.css', 'link');
@@ -18,17 +13,17 @@ class FloatingChatBox {
         this.chatBox.classList.add('chat-box');
         this.chatBox.innerHTML = `
             <div class="chat-box-header">
-                <span class="title"> Hznuoj AI</span>
+                <span class="title"> HZNUOJ AI</span>
                 <span class="close-btn">x</span>
             </div>
             <div class="chat-box-body" id="app">
                 <div class="messages-container" id="chat-messages">
                 </div>
-                <div class="useai-tips">内容由 AI 大模型生成，请仔细甄别。</div>
-                <div class="useai-tips">目前仅支持单次提问，有问题/BUG答疑群反馈</div>
+                <div class="useai-tips">内容由 AI 生成，仅支持单次提问，答疑/BUG反馈QQ群: 364373047</div>
                 <div class="input-area">
                     <textarea rows="1" placeholder="请输入相关问题..." class="chat-input" id="chat-input"></textarea>
-                    <span class="chat-btn" id="chat-btn"></span>
+                    <span class="chatbox-btn" id="reset-btn"></span>
+                    <span class="chatbox-btn" id="chat-btn"></span>
                 </div>
             </div>
             <div class="resizer resizer-left"></div>
@@ -67,14 +62,14 @@ class FloatingChatBox {
                 e.preventDefault();
                 const resize = (e) => {
                     if (resizer.classList.contains('resizer-left')) {
-                        const width = this.chatBox.getBoundingClientRect().right - e.clientX;
-                        if (width > 200 && width < 800) {
-                            this.chatBox.style.width = width + 'px';
+                        const width = (this.chatBox.getBoundingClientRect().right - e.clientX) / window.innerWidth * 100;
+                        if (width > 15 && width < 80) { // 10vw to 80vw
+                            this.chatBox.style.width = width + 'vw';
                         }
                     } else if (resizer.classList.contains('resizer-top')) {
-                        const height = this.chatBox.getBoundingClientRect().bottom - e.clientY;
-                        if (height > 50) {
-                            this.chatBox.style.height = height + 'px';
+                        const height = (this.chatBox.getBoundingClientRect().bottom - e.clientY) / window.innerHeight * 100;
+                        if (height > 10) { // minimum height 5vh
+                            this.chatBox.style.height = height + 'vh';
                         }
                     }
                 };
@@ -121,9 +116,9 @@ class FloatingChatBox {
         }
     }
 
-    openAndChat(chatContent, showContent = chatContent) {
+    openAndChat(chatContent, showContent = chatContent, systemInstruction = '') {
         this.openChatBox();
-        this.chatCore.sendMessage(chatContent, showContent);
+        this.chatCore.sendMessage(chatContent, showContent, systemInstruction);
     }
 
     // 将组件添加到页面
@@ -131,6 +126,7 @@ class FloatingChatBox {
         await this.importFile('/OJ/plugins/hznuojai/dependencies/incremental-dom-min.js', 'script');
         await this.importFile('/OJ/plugins/hznuojai/dependencies/markdown-it.min.js', 'script');
         await this.importFile('/OJ/plugins/hznuojai/dependencies/markdown-it-incremental-dom.min.js', 'script');
+        await this.importFile('/OJ/plugins/hznuojai/dependencies/clipboard.min.js', 'script');
         await this.importFile('/OJ/plugins/highlight/highlight.pack.js', 'script');
         await this.importFile('/OJ/plugins/hznuojai/dependencies/atom-one-dark.min.css', 'link');
         await this.importFile('/OJ/plugins/hznuojai/chat.js', 'script');

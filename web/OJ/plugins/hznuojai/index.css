@@ -30,8 +30,9 @@ body {
     position: fixed;
     bottom: 2vw;
     right: 2vw;
-    width: 30vw;
-    height: 35vw;
+    width: 35vw;
+    height: 42vw;
+    max-height: 70vh;
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -115,7 +116,8 @@ body {
     }
 
     .close-btn {
-        font-size: 20px;
+        font-size: 24px;
+        line-height: 20px;
         margin-left: auto;
         padding: 0 10px;
         cursor: pointer;
@@ -126,13 +128,12 @@ body {
     display: flex;
     flex-direction: column;
     height: 70vh;
-    max-width: 900px;
     flex-grow: 1;
     padding: 6px;
     overflow-y: auto;
     background-color: #f3f6fc;
     border-radius: 0 0 10px 10px;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .messages-container {
@@ -180,10 +181,11 @@ body {
 }
 
 .useai-tips {
-    font-size: 12px;
+    font-size: 13px;
     color: #c3c6cb;
     line-height: 18px;
     margin-left: 10px;
+    margin-bottom: 5px;
 }
 
 .input-area {
@@ -206,7 +208,7 @@ body {
     resize: none;
 }
 
-.chat-btn {
+.chatbox-btn {
     line-height: 29px;
     padding: 0px 5px;
     font-size: 20px;
@@ -215,7 +217,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.chat-btn:hover {
+.chatbox-btn:hover {
     color: rgb(78, 170, 232);
 }
 
@@ -230,5 +232,83 @@ body {
 
     100% {
         opacity: 1;
+    }
+}
+
+
+/* 代码段行号和复制样式 */
+pre.hljs {
+    padding: 12px 2px 12px 30px !important;
+    border-radius: 10px !important;
+    position: relative;
+    overflow: hidden !important;
+
+    code {
+        display: block !important;
+        margin: 0 10px !important;
+        overflow-x: auto !important;
+    }
+
+    .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 12px;
+        bottom: 12px;
+        left: 0;
+        font-size: 100%;
+        width: 30px;
+        text-align: center;
+        letter-spacing: -1px;
+        border-right: 1px solid rgba(0, 0, 0, .66);
+        user-select: none;
+        counter-reset: linenumber;
+
+        span {
+            pointer-events: none;
+            display: block;
+            counter-increment: linenumber;
+
+            &:before {
+                content: counter(linenumber);
+                color: #999;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+
+    b.name {
+        position: absolute;
+        top: 8px;
+        right: 48px;
+        z-index: 10;
+        font-size: 18px;
+        color: #ffffff80;
+        text-align: right;
+        pointer-events: none;
+    }
+
+    .copy-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 10;
+        font-size: 20px;
+        color: #808080;
+        cursor: pointer;
+        background-color: transparent;
+        border: 0;
+        border-radius: 2px;
+        padding: 4px 8px;
+        transition: color 0.3s, transform 0.2s;
+    }
+
+    .copy-btn:hover {
+        color: #e0e0e0;
+    }
+
+    .copy-btn:active {
+        color: #e0e0e0;
+        transform: scale(0.95);
     }
 }

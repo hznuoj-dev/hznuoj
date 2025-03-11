@@ -3,6 +3,7 @@ class ChatCore {
         this.msgDiv = document.getElementById('chat-messages');
         this.input = document.getElementById('chat-input');
         this.chatButton = document.getElementById('chat-btn');
+        this.resetButton = document.getElementById('reset-btn');
         this.eventSource = null;
         this.qaIdx = 0;
         this.answers = {};
@@ -22,28 +23,75 @@ class ChatCore {
         this.md = markdownit({
             html: true,
             highlight: (str, lang) => {
+                const codeIndex = parseInt(Date.now()) + Math.floor(Math.random() * 10000000);
+                let html = `<button class="copy-btn am-icon-copy" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}" data-am-popover="{content: '复制代码', trigger: 'hover focus'}"></button>`;
+                const linesLength = str.split(/\n/).length - 1;
+                // 生成行号
+                let linesNum = '<span aria-hidden="true" class="line-numbers-rows">';
+                for (let index = 0; index < linesLength; index++) {
+                    linesNum = linesNum + `<span></span>`;
+                }
+                linesNum += '</span>';
+                const copyDiv = `<div style="position:absolute;top:-9999px;left:-9999px;z-index:-9999;white-space:pre-wrap;" id="copy${codeIndex}">${this.md.utils.escapeHtml(str).replace(/<\/textarea>/g, '&lt;/textarea>')}</div>`;
                 if (lang && hljs.getLanguage(lang)) {
                     try {
-                        return '<pre class="hljs"><code>' + hljs.highlight(lang, str, true).value + '</code></pre>';
+                        const preCode = hljs.highlight(lang, str, true).value;
+                        html = html + preCode;
+                        if (linesLength) {
+                            html += '<b class="name">' + lang + '</b>';
+                        }
+                        return `<pre class="hljs"><code>${html}</code>${linesNum}</pre>${copyDiv}`;
                     } catch (__) {
                         console.error(__);
                     }
                 }
-                return '<pre class="hljs"><code>' + this.md.utils.escapeHtml(str) + '</code></pre>';
+                const content = this.md.utils.escapeHtml(str);
+                html = html + content;
+                return `<pre class="hljs"><code>${html}</code></pre>${copyDiv}`;
             }
         }).use(markdownitIncrementalDOM);
+
+        this.clipboard = new ClipboardJS('.copy-btn');
 
         this.swapToSend();
         this.addEventListeners();
     }
 
+    resetStatus() {
+        this.isStop = false;
+        this.typingTimer && clearInterval(this.typingTimer);
+        this.answerContent = '';
+        this.answerWords = [];
+        this.answers = {};
+        this.typingIdx = 0;
+        this.contentIdx = 0;
+        this.contentEnd = false;
+        this.lastWord = '';
+        this.lastLastWord = '';
+        this.input.disabled = false;
+        this.chatButton.disabled = false;
+        this.eventSource && this.eventSource.close();
+        this.eventSource = null;
+        this.codeStart = false;
+    }
+
     addEventListeners() {
-        this.input.addEventListener('input', this.adjustInputHeight.bind(this));
+        this.input.addEventListener('input', (e) => {
+                this.adjustInputHeight();
+        });
         this.input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 this.sendMessage(this.input.value);
             }
         });
+        this.resetButton.classList.add('am-icon-rotate-right');
+        this.resetButton.onclick = () => {
+            this.qaIdx = 0;
+            this.msgDiv.innerHTML = '';
+            this.resetStatus();
+            this.swapToSend();
+            this.adjustInputHeight();
+        }
     }
 
     throttle(func, delay) {
@@ -84,10 +132,15 @@ class ChatCore {
     }
 
     adjustInputHeight() {
-        this.input.style.height = this.input.scrollHeight + 'px';
+        this.input.style.height = 'auto';
+        if (this.input.value) {
+            this.input.style.height = this.input.scrollHeight + 'px';
+        } else {
+            this.input.style.height = 'auto';
+        }
     }
 
-    sendMessage(chatContent, showContent = chatContent) {
+    sendMessage(chatContent, showContent = chatContent, systemInstruction = '') {
         if (!chatContent) return;
         if (chatContent.length > 3000) {
             alert('输入内容过长，请控制在3000字以内');
@@ -118,7 +171,7 @@ class ChatCore {
         this.typingTimer = setInterval(() => this.typingWords(), 50);
 
         this.swapToStop();
-        this.getAnswer(chatContent);
+        this.getAnswer(systemInstruction, chatContent);
     }
 
     sendStop() {
@@ -126,10 +179,10 @@ class ChatCore {
         this.swapToSend();
     }
 
-    getAnswer(inputValue) {
+    getAnswer(systemInstruction, inputValue) {
         this.isStop = false;
         inputValue = encodeURIComponent(inputValue.replace(/\+/g, '{[$add$]}'));
-        const url = "./chat.php?q=" + inputValue;
+        let url = `/OJ/api/chat.php?q=${inputValue}${systemInstruction && `&systemInstruction=${encodeURIComponent(systemInstruction)}`}`;
         this.eventSource = new EventSource(url);
 
         let connectionTimeout = null;
@@ -186,12 +239,12 @@ class ChatCore {
 
     typingWords() {
         if (this.contentEnd && this.contentIdx == this.typingIdx || this.isStop) {
+            this.qaIdx += 1;
             this.isStop = false;
             clearInterval(this.typingTimer);
             this.answerContent = '';
             this.answerWords = [];
             this.answers = [];
-            this.qaIdx += 1;
             this.typingIdx = 0;
             this.contentIdx = 0;
             this.contentEnd = false;
@@ -236,8 +289,9 @@ class ChatCore {
                 if (part === '\n' || part === '\r\n' || part.indexOf('`') != -1) {
                     this.answerContent += part;
                 } else {
-                    if (part.trim().length > 0) {
-                        this.answerContent += `<k class="fade-in">${part}</k>`;
+                    if (part.length > 0) {
+                        this.answerContent += `${part}`;
+                        // this.answerContent += `<k class="fade-in">${part}</k>`;
                     }
                 }
             });
@@ -245,7 +299,6 @@ class ChatCore {
 
         this.patchMd(this.answers[this.qaIdx], this.answerContent + (this.codeStart ? '\n\n```' : ''));
 
-        // TODO:除了代码段和行内代码，还有很多需要包裹的 比如加粗等需要处理
         if (content.indexOf('`') != -1 && (this.lastWord + content).indexOf('``') === -1) {
             this.inlineCodeStart = !this.inlineCodeStart;
         }

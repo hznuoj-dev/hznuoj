@@ -1,10 +1,12 @@
 <?php
-require_once './class/Class.StreamHandler.php';
+require_once  __DIR__ . '/Class.StreamHandler.php';
 
 class AICore
 {
     private $api_url = '';
     private $streamHandler;
+    private $system;
+    private $tip;
     private $question;
     private $dfa = NULL;
     private $check_sensitive = TRUE;
@@ -30,8 +32,9 @@ class AICore
 
     public function qa($params)
     {
-
-        $this->question = $params['system'] . $params['question'];
+        $this->system = $params['system'];
+        $this->tip = $params['tip'];
+        $this->question = $params['question'];
         $this->streamHandler = new StreamHandler([
             'qmd5' => md5($this->question . '' . time()),
             'api_type' => $this->api_type
@@ -57,6 +60,12 @@ class AICore
                 'model' => $this->model,
                 'messages' => [[
                     "role" => "system",
+                    "content" => $this->system
+                ], [
+                    "role" => "user",
+                    "content" => $this->tip
+                ], [
+                    "role" => "user",
                     "content" => $this->question
                 ]],
             ], $this->more_params));
